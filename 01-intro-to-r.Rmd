@@ -48,8 +48,8 @@ weight_kg <- 55
 ```
 
 `<-` is the assignment operator. It assigns values on the right to objects on
-the left. So, after executing `x <- 3`, the value of `x` is `3`. The arrow can
-be read as 3 **goes into** `x`.  For historical reasons, you can also use `=`
+the left. So, after executing `weight_kg <- 55`, the value of `weight_kg` is `55`. The arrow can
+be read as 55 **goes into** `weight_kg`.  For historical reasons, you can also use `=`
 for assignments, but not in every context. Because of
 the
 [slight](http://blog.revolutionanalytics.com/2008/12/use-equals-or-arrow-for-assignment.html) [differences](https://web.archive.org/web/20130610005305/https://stat.ethz.ch/pipermail/r-help/2009-March/191462.html) in
