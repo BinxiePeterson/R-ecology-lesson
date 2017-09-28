@@ -9,10 +9,10 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="François Michonneau &amp; Auriel Fournier (Lesson Maintainers)" />
+<meta name="author" content="Bianca Peterson" />
 
 
-<title>Data Carpentry: R for data analysis and visualization of Ecological Data</title>
+<title>Data Carpentry: R for data analysis and visualization of metagenomic Data</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -308,8 +308,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Data Carpentry: R for data analysis and visualization of Ecological Data</h1>
-<h4 class="author"><em>François Michonneau &amp; Auriel Fournier (Lesson Maintainers)</em></h4>
+<h1 class="title toc-ignore">Data Carpentry: R for data analysis and visualization of metagenomic Data</h1>
+<h4 class="author"><em>Bianca Peterson</em></h4>
 
 </div>
 
@@ -324,8 +324,8 @@ div.tocify {
 </div>
 <p>
 </p>
-<p>Data Carpentry’s aim is to teach researchers basic concepts, skills, and tools for working with data so that they can get more done in less time, and with less pain. The lessons below were designed for those interested in working with ecology data in R.</p>
-<p>This is an introduction to R designed for participants with no programming experience. These lessons can be taught in a day (~ 6 hours). They start with some basic information about R syntax, the RStudio interface, and move through how to import CSV files, the structure of data frames, how to deal with factors, how to add/remove rows and columns, how to calculate summary statistics from a data frame, and a brief introduction to plotting. The last lesson demonstrates how to work with databases directly from R.</p>
+<p>Data Carpentry’s aim is to teach researchers basic concepts, skills, and tools for working with data so that they can get more done in less time, and with less pain. The lessons below were designed for those interested in working with metagenomic data in R.</p>
+<p>This is an introduction to R designed for participants with no programming experience. These lessons can be taught in a day (~ 6 hours). They start with some basic information about R syntax, the RStudio interface, and move through how to import CSV files, the structure of data frames, how to deal with factors, how to add/remove rows and columns, and how to calculate summary statistics from a data frame.</p>
 <div id="chapters" class="section level2">
 <h2>Chapters</h2>
 <ol style="list-style-type: decimal">
@@ -334,20 +334,19 @@ div.tocify {
 <li><a href="02-starting-with-data.html">Starting with data</a></li>
 <li><a href="03-dplyr.html">Aggregating and analyzing data with dplyr</a></li>
 <li><a href="04-visualization-ggplot2.html">Data visualization with <strong><code>ggplot2</code></strong></a></li>
-<li><a href="05-r-and-databases.html">R and Databases</a></li>
 </ol>
 </div>
 <div id="requirements" class="section level2">
 <h2>Requirements</h2>
-<p>Data Carpentry’s teaching is hands-on, so participants are encouraged to use their own computers to ensure the proper setup of tools for an efficient workflow. <em>These lessons assume no prior knowledge of the skills or tools</em>, but working through this lesson requires working copies of the software described below. To most effectively use these materials, please make sure to download the data and install everything <em>before</em> working through this lesson.</p>
+<p>Data Carpentry’s teaching is hands-on, so participants are encouraged to use their own computers to ensure the proper setup of tools for an efficient workflow. <em>These lessons assume no prior knowledge of the skills or tools</em>, but working through this lesson requires working copies of the software described below. To most effectively use these materials, please make sure to download and install the required software <em>before</em> working through this lesson.</p>
 <div id="data" class="section level3">
 <h3>Data</h3>
-<p>Data files for the lesson are available and can be downloaded manually here: <a href="http://dx.doi.org/10.6084/m9.figshare.1314459" class="uri">http://dx.doi.org/10.6084/m9.figshare.1314459</a></p>
-<p>However, we will download them directly from R during the lessons when we need them.</p>
+<p>The required data files for the workshop will be available on the HPC.</p>
+<p>However, if you wish to download the data files manually for future reference, these are available here: <a href="https://www.dropbox.com/s/4fqgi6t3so69224/Sinal_Langille_raw_data.tar.gz" class="uri">https://www.dropbox.com/s/4fqgi6t3so69224/Sinal_Langille_raw_data.tar.gz</a></p>
 </div>
 <div id="setup-instructions" class="section level3">
 <h3>Setup instructions</h3>
-<p><strong>R</strong> and <strong>RStudio</strong> are separate downloads and installations. R is the underlying statistical computing environment, but using R alone is no fun. RStudio is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. You need to install R before you install RStudio. After installing both programs, you will need to install the <strong><code>tidyverse</code></strong> package from within RStudio. Follow the instructions below for your operating system, and then follow the instructions to install <strong><code>tidyverse</code></strong> and <strong><code>RSQLite</code></strong>.</p>
+<p><strong>R</strong> and <strong>RStudio</strong> are separate downloads and installations. R is the underlying statistical computing environment, but using R alone is no fun. RStudio is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. You need to install R before you install RStudio. After installing both programs, you will need to install the <strong><code>tidyverse</code></strong> package from within RStudio. Follow the instructions below for your operating system, and then follow the instructions to install <strong><code>tidyverse</code></strong> and <strong><code>phyloseq</code></strong>.</p>
 <div id="windows" class="section level4">
 <h4>Windows</h4>
 <div id="if-you-already-have-r-and-rstudio-installed" class="section level5">
@@ -403,9 +402,9 @@ div.tocify {
 </div>
 <div id="for-everyone" class="section level4">
 <h4>For everyone</h4>
-<p><strong>After installing R and RStudio, you need to install the <code>tidyverse</code> and <code>RSQLite</code> packages.</strong></p>
+<p><strong>After installing R and RStudio, you need to install the <code>tidyverse</code> and <code>phyloseq</code> packages.</strong></p>
 <ul>
-<li>After starting RStudio, at the console type: <code>install.packages(c(&quot;tidyverse&quot;, &quot;RSQLite&quot;))</code></li>
+<li>After starting RStudio, at the console type: <code>install.packages(c(&quot;tidyverse&quot;, &quot;phyloseq&quot;))</code></li>
 </ul>
 </div>
 </div>
@@ -414,7 +413,7 @@ div.tocify {
 <h2>Contributors</h2>
 <p>The list of contributors to this lesson is available <a href="http://datacarpentry.org/R-ecology-lesson/CITATION">here</a>,</p>
 <p style="text-align: right; font-size: small;">
-Page build on: 2017-07-21 07:39:25
+Page build on: 2017-09-28 10:48:29
 </p>
 </div>
 
