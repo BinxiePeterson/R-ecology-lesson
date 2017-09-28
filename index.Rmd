@@ -1,6 +1,6 @@
 ---
 title: "Data Carpentry: R for data analysis and visualization of metagenomic Data"
-author: 
+author: Data Carpentry contributors
 ---
 
 <p></p>
