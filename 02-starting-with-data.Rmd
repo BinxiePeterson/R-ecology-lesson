@@ -48,32 +48,31 @@ Each row holds information for a single mouse, and the columns represent:
 
 
 We are going to use the R function `download.file()` to download the CSV file
-that contains the survey data from figshare, and we will use `read.csv()` to
+that contains the survey data, and we will use `read.csv()` to
 load into memory the content of the CSV file as an object of class `data.frame`.
 
 To download the data into the `data/` subdirectory, run the following:
 
 ```{r, eval=FALSE, purl=TRUE}
-download.file("https://ndownloader.figshare.com/files/2292169",
-              "data/portal_data_joined.csv")
+download.file("???url",
+              "data/mapfile.csv")
 ```
 
 You are now ready to load the data:
 
 ```{r, eval=TRUE,  purl=FALSE}
-surveys <- read.csv('data/portal_data_joined.csv')
+mapfile <- read.csv('data/mapfile.csv')
 ```
 
 This statement doesn't produce any output because, as you might recall,
 assignments don't display anything. If we want to check that our data has been
-loaded, we can print the variable's value: `surveys`.
+loaded, we can print the variable's value: `mapfile`.
 
-Wow... that was a lot of output. At least it means the data loaded
-properly. Let's check the top (the first 6 lines) of this data frame using the
+At least it means the data loaded properly. Let's check the top (the first 6 lines) of this data frame using the
 function `head()`:
 
 ```{r, results='show', purl=FALSE}
-head(surveys)
+head(mapfile)
 ```
 
 > ### Note
@@ -109,7 +108,7 @@ We can see this when inspecting the <b>str</b>ucture of a data frame
 with the function `str()`:
 
 ```{r, purl=FALSE}
-str(surveys)
+str(mapfile)
 ```
 
 ## Inspecting `data.frame` Objects
@@ -119,25 +118,25 @@ content and the structure of a data frame. Here is a non-exhaustive list of
 functions to get a sense of the content/structure of the data. Let's try them out!
 
 * Size:
-    * `dim(surveys)` - returns a vector with the number of rows in the first element,
+    * `dim(mapfile)` - returns a vector with the number of rows in the first element,
           and the number of columns as the second element (the **dim**ensions of
           the object)
-    * `nrow(surveys)` - returns the number of rows
-    * `ncol(surveys)` - returns the number of columns
+    * `nrow(mapfile)` - returns the number of rows
+    * `ncol(mapfile)` - returns the number of columns
 
 * Content:
-    * `head(surveys)` - shows the first 6 rows
-    * `tail(surveys)` - shows the last 6 rows
+    * `head(mapfile)` - shows the first 6 rows
+    * `tail(mapfile)` - shows the last 6 rows
 
 * Names:
-    * `names(surveys)` - returns the column names (synonym of `colnames()` for `data.frame`
+    * `names(mapfile)` - returns the column names (synonym of `colnames()` for `data.frame`
 	   objects)
-    * `rownames(surveys)` - returns the row names
+    * `rownames(mapfile)` - returns the row names
 
 * Summary:
-    * `str(surveys)` - structure of the object and information about the class, length and
+    * `str(mapfile)` - structure of the object and information about the class, length and
 	   content of  each column
-    * `summary(surveys)` - summary statistics for each column
+    * `summary(mapfile)` - summary statistics for each column
 
 Note: most of these functions are "generic", they can be used on other types of
 objects besides `data.frame`.
@@ -145,19 +144,19 @@ objects besides `data.frame`.
 
 > ### Challenge
 >
-> Based on the output of `str(surveys)`, can you answer the following questions?
+> Based on the output of `str(mapfile)`, can you answer the following questions?
 >
-> * What is the class of the object `surveys`?
+> * What is the class of the object `mapfile`?
 > * How many rows and how many columns are in this object?
-> * How many species have been recorded during these surveys?
+> * How many mice were sequenced during this experiment?
 
 ```{r, echo=FALSE, purl=TRUE}
 
 ## Challenge
-## Based on the output of `str(surveys)`, can you answer the following questions?
-## * What is the class of the object `surveys`?
+## Based on the output of `str(mapfile)`, can you answer the following questions?
+## * What is the class of the object `mapfile`?
 ## * How many rows and how many columns are in this object?
-## * How many species have been recorded during these surveys?
+## * How many mice were sequenced during this experiment?
 
 ```
 
@@ -166,8 +165,8 @@ objects besides `data.frame`.
 ## Answers
 ##
 ## * class: data frame
-## * how many rows: 34786,  how many columns: 13
-## * how many species: 48
+## * how many rows: ???,  how many columns: ???
+## * how many species: ???
 ```
 --->
 
@@ -180,20 +179,20 @@ objects besides `data.frame`.
 ```
 
 
-Our survey data frame has rows and columns (it has 2 dimensions), if we want to
+Our data frame has rows and columns (it has 2 dimensions), if we want to
 extract some specific data from it, we need to specify the "coordinates" we
 want from it. Row numbers come first, followed by column numbers. However, note
 that different ways of specifying these coordinates lead to results with
 different classes.
 
 ```{r, purl=FALSE}
-surveys[1, 1]   # first element in the first column of the data frame (as a vector)
-surveys[1, 6]   # first element in the 6th column (as a vector)
-surveys[, 1]    # first column in the data frame (as a vector)
-surveys[1]      # first column in the data frame (as a data.frame)
-surveys[1:3, 7] # first three elements in the 7th column (as a vector)
-surveys[3, ]    # the 3rd element for all columns (as a data.frame)
-head_surveys <- surveys[1:6, ] # equivalent to head_surveys <- head(surveys)
+mapfile[1, 1]   # first element in the first column of the data frame (as a vector)
+mapfile[1, 6]   # first element in the 6th column (as a vector)
+mapfile[, 1]    # first column in the data frame (as a vector)
+mapfile[1]      # first column in the data frame (as a data.frame)
+mapfile[1:3, 7] # first three elements in the 7th column (as a vector)
+mapfile[3, ]    # the 3rd element for all columns (as a data.frame)
+head_mapfile <- mapfile[1:6, ] # equivalent to head_mapfile <- head(mapfile)
 ```
 
 `:` is a special function that creates numeric vectors of integers in increasing
@@ -202,18 +201,18 @@ or decreasing order, test `1:10` and `10:1` for instance.
 You can also exclude certain parts of a data frame using the "`-`" sign:
 
 ```{r, purl=FALSE}
-surveys[,-1]          # The whole data frame, except the first column
-surveys[-c(7:34786),] # Equivalent to head(surveys)
+mapfile[,-1]          # The whole data frame, except the first column
+mapfile[-c(7:116),]   # Equivalent to head(mapfile)
 ```
 
 As well as using numeric values to subset a `data.frame` (or `matrix`), columns
 can be called by name, using one of the four following notations:
 
 ```{r, eval = FALSE, purl=FALSE}
-surveys["species_id"]       # Result is a data.frame
-surveys[, "species_id"]     # Result is a vector
-surveys[["species_id"]]     # Result is a vector
-surveys$species_id          # Result is a vector
+mapfile["SampleID"]       # Result is a data.frame
+mapfile[, "SampleID"]     # Result is a vector
+mapfile[["SampleID"]]     # Result is a vector
+mapfile$SampleID          # Result is a vector
 ```
 
 For our purposes, the last three notations are equivalent. RStudio knows about
@@ -222,8 +221,8 @@ feature to get the full and correct column name.
 
 > ### Challenge
 >
-> 1. Create a `data.frame` (`surveys_200`) containing only the observations from
->    row 200 of the `surveys` dataset.
+> 1. Create a `data.frame` (`mapfile_80`) containing only the observations from
+>    row 80 of the `mapfile` dataset.
 >
 > 2. Notice how `nrow()` gave you the number of rows in a `data.frame`?
 >
@@ -231,21 +230,21 @@ feature to get the full and correct column name.
 >      * Compare that with what you see as the last row using `tail()` to make
 >        sure it's meeting expectations.
 >      * Pull out that last row using `nrow()` instead of the row number.
->      * Create a new data frame object (`surveys_last`) from that last row.
+>      * Create a new data frame object (`mapfile_last`) from that last row.
 >
 > 3. Use `nrow()` to extract the row that is in the middle of the data
->    frame. Store the content of this row in an object named `surveys_middle`.
+>    frame. Store the content of this row in an object named `mapfile_middle`.
 >
 > 4. Combine `nrow()` with the `-` notation above to reproduce the behavior of
->    `head(surveys)` keeping just the first through 6th rows of the surveys
+>    `head(mapfile)` keeping just the first through 6th rows of the mapfile
 >    dataset.
 
 
 ```{r, echo=FALSE, purl=TRUE}
 ### Challenges:
 ###
-### 1. Create a `data.frame` (`surveys_200`) containing only the
-###    observations from row 200 of the `surveys` dataset.
+### 1. Create a `data.frame` (`mapfile_80`) containing only the
+###    observations from row 80 of the `mapfile` dataset.
 ###
 ### 2. Notice how `nrow()` gave you the number of rows in a `data.frame`?
 ###
@@ -253,14 +252,14 @@ feature to get the full and correct column name.
 ###      * Compare that with what you see as the last row using `tail()` to make
 ###        sure it's meeting expectations.
 ###      * Pull out that last row using `nrow()` instead of the row number
-###      * Create a new data frame object (`surveys_last`) from that last row
+###      * Create a new data frame object (`mapfile_last`) from that last row
 ###
 ### 3. Use `nrow()` to extract the row that is in the middle of the
 ###    data frame. Store the content of this row in an object named
-###    `surveys_middle`.
+###    `mapfile_middle`.
 ###
 ### 4. Combine `nrow()` with the `-` notation above to reproduce the behavior of
-###    `head(surveys)` keeping just the first through 6th rows of the surveys
+###    `head(mapfile)` keeping just the first through 6th rows of the mapfile
 ###    dataset.
 
 ```
@@ -268,10 +267,10 @@ feature to get the full and correct column name.
 <!---
 ```{r, purl=FALSE}
 ## Answers
-surveys_200 <- surveys[200, ]
-surveys_last <- surveys[nrow(surveys), ]
-surveys_middle <- surveys[nrow(surveys)/2, ]
-surveys_head <- surveys[-c(7:nrow(surveys)),]
+mapfile_80 <- mapfile[80, ]
+mapfile_last <- mapfile[nrow(mapfile), ]
+mapfile_middle <- mapfile[nrow(mapfile)/2, ]
+mapfile_head <- mapfile[-c(7:nrow(mapfile)),]
 ```
 --->
 
@@ -282,10 +281,8 @@ surveys_head <- surveys[-c(7:nrow(surveys)),]
 ### Factors
 ```
 
-When we did `str(surveys)` we saw that several of the columns consist of
-integers, however, the columns `genus`, `species`, `sex`, `plot_type`, ... are
-of a special class called a `factor`. Factors are very useful and are actually
-something that make R particularly well suited to working with data, so we're
+When we did `str(mapfile)` we saw that some of the columns consist of
+integers, however, the columns `SampleID`, `FileInput`, `Source`, `Genotype`, and `Description` are of a special class called a `factor`. Factors are very useful and are actually something that make R particularly well suited to working with data, so we're
 going to spend a little time introducing them.
 
 Factors are used to represent categorical data. Factors can be ordered or
@@ -372,7 +369,7 @@ the experiment:
 
 ```{r, purl=TRUE}
 ## bar plot of the number of females and males captured during the experiment:
-plot(surveys$sex)
+plot(mapfile$sex)
 ```
 
 In addition to males and females, there are about 1700 individuals for which the
@@ -383,7 +380,7 @@ the data on sex and work with that data, so we're not modifying the working copy
 of the data frame:
 
 ```{r, results=TRUE, purl=FALSE}
-sex <- surveys$sex
+sex <- mapfile$sex
 head(sex)
 levels(sex)
 levels(sex)[1] <- "missing"
@@ -429,19 +426,19 @@ In most cases, it's preferable to set `stringsAsFactors = FALSE` when importing
 your data, and converting as a factor only the columns that require this data
 type.
 
-Compare the output of `str(surveys)` when setting `stringsAsFactors = TRUE`
+Compare the output of `str(mapfile)` when setting `stringsAsFactors = TRUE`
 (default) and `stringsAsFactors = FALSE`:
 
 
 ```{r, eval=FALSE, purl=FALSE}
 ## Compare the difference between when the data are being read as
 ## `factor`, and when they are being read as `character`.
-surveys <- read.csv("data/portal_data_joined.csv", stringsAsFactors = TRUE)
-str(surveys)
-surveys <- read.csv("data/portal_data_joined.csv", stringsAsFactors = FALSE)
-str(surveys)
+mapfile <- read.csv("data/portal_data_joined.csv", stringsAsFactors = TRUE)
+str(mapfile)
+mapfile <- read.csv("data/portal_data_joined.csv", stringsAsFactors = FALSE)
+str(mapfile)
 ## Convert the column "plot_type" into a factor
-surveys$plot_type <- factor(surveys$plot_type)
+mapfile$plot_type <- factor(mapfile$plot_type)
 ```
 
 
@@ -538,7 +535,7 @@ data frame has a separate column for day, month, and year, and each contains
 integer values.
 
 ```{r, eval=FALSE, purl=FALSE}
-str(surveys)
+str(mapfile)
 ```
 
 We're going to be using the `ymd()` function from the package **`lubridate`**
@@ -556,24 +553,24 @@ library(lubridate)
 ```
 
 Create a character vector from the `year`, `month`, and `day` columns of
-`surveys` using `paste()`:
+`mapfile` using `paste()`:
 
 ```{r, eval=FALSE, purl=FALSE}
-paste(surveys$year, surveys$month, surveys$day, sep="-")
+paste(mapfile$year, mapfile$month, mapfile$day, sep="-")
 # sep indicates the character to use to separate each component
 ```
 
 This character vector can be used as the argument for `ymd()`:
 
 ```{r, eval=FALSE, purl=FALSE}
-ymd(paste(surveys$year, surveys$month, surveys$day, sep="-"))
+ymd(paste(mapfile$year, mapfile$month, mapfile$day, sep="-"))
 ```
 
-The resulting POSIXct vector can be added to `surveys` as a new column called `date`:
+The resulting POSIXct vector can be added to `mapfile` as a new column called `date`:
 
 ```{r, eval=TRUE, purl=FALSE}
-surveys$date <- ymd(paste(surveys$year, surveys$month, surveys$day, sep="-"))
-str(surveys) # notice the new column, with 'date' as the class
+mapfile$date <- ymd(paste(mapfile$year, mapfile$month, mapfile$day, sep="-"))
+str(mapfile) # notice the new column, with 'date' as the class
 ```
 
 Did you notice the warning message? Let's investigate what is happening. When
@@ -583,17 +580,17 @@ our data frame that are failing. First, let's create a vector that contains our
 dates as a character vector:
 
 ```{r, eval=TRUE, purl=FALSE}
-surveys_dates <- paste(surveys$year, surveys$month, surveys$day, sep = "-")
-head(surveys_dates)
+mapfile_dates <- paste(mapfile$year, mapfile$month, mapfile$day, sep = "-")
+head(mapfile_dates)
 ```
 
-The vector `surveys_dates` contains all the dates from our dataset, in the same
+The vector `mapfile_dates` contains all the dates from our dataset, in the same
 order as they are in the data frame. We can therefore use the `is.na()` function
-on the `surveys` data frame to locate the elements in the vectors
-`surveys_dates` that failed to parse:
+on the `mapfile` data frame to locate the elements in the vectors
+`mapfile_dates` that failed to parse:
 
 ```{r, eval=TRUE, purl=FALSE}
-surveys_dates[is.na(surveys$date)]
+mapfile_dates[is.na(mapfile$date)]
 ```
 
 Why did these dates fail to parse? If you had to use these data for your
