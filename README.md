@@ -1,6 +1,6 @@
 ---
 layout: lesson
-title: Data carpentry: R for data analysis and visualization of Ecological Data
+title: Data carpentry: R for data analysis and visualization of metagenomic data
 keywords: ["R", "subset", "data.frame", "read.csv", "dplyr", "ggplot2"]
 ---
 
@@ -11,7 +11,7 @@ RStudio interface, and move through to specific programming tasks, such as
 importing CSV files, the structure of data frame objects in R, dealing with
 categorical variables (i.e. factors), basic data manipulation (adding/removing
 rows and columns), and finishing with calculating summary statistics and a brief
-introduction to plotting. There is also a lesson on how to use databases from R that is intended to be taught after the SQL lesson, and ideally at the end of a Data Carpentry workshop.
+introduction to plotting.
 
 ## Prerequisites
 
@@ -26,7 +26,6 @@ introduction to plotting. There is also a lesson on how to use databases from R 
 * [Starting with data](02-starting-with-data.html)
 * [Aggregating and analyzing data with dplyr](03-dplyr.html)
 * [Data visualization with ggplot2](04-visualization-ggplot2.html)
-* [R and Databases](05-r-and-databases.html)
 
 ## Code handout
 
@@ -44,7 +43,6 @@ we encourage you to review our [contributing guide](CONTRIBUTING.Rmd).
 ## Questions
 
 If you have any questions or feedback, please open an issue or contact the
-maintainers:
+maintainer:
 
-* François Michonneau
-* Auriel Fournier
+* Bianca Peterson
