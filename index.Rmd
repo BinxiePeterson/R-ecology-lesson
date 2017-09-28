@@ -1,6 +1,6 @@
 ---
-title: 'Data Carpentry: R for data analysis and visualization of metagenomic Data'
-author: "Bianca Peterson"
+title: "Data Carpentry: R for data analysis and visualization of metagenomic Data"
+author: 
 ---
 
 <p></p>
@@ -21,8 +21,8 @@ This is an introduction to R designed for participants with no programming
 experience. These lessons can be taught in a day (~ 6 hours). They start with
 some basic information about R syntax, the RStudio interface, and move through
 how to import CSV files, the structure of data frames, how to deal with factors,
-how to add/remove rows and columns, and how to calculate summary statistics from a
-data frame.
+how to add/remove rows and columns, how to calculate summary statistics from a
+data frame, and a brief introduction to plotting. 
 
 
 ## Chapters
@@ -42,15 +42,14 @@ their own computers to ensure the proper setup of tools for an efficient
 workflow.  *These lessons assume no prior knowledge of the skills or tools*, but
 working through this lesson requires working copies of the software described
 below.  To most effectively use these materials, please make sure to download
-and install the required software *before* working through this lesson.
+the data and install everything *before* working through this lesson.
 
 ### Data
 
-The required data files for the workshop will be available on the HPC.
+Data files for the lesson are available and can be downloaded manually here: <https://www.dropbox.com/s/4fqgi6t3so69224/Sinal_Langille_raw_data.tar.gz>
 
-However, if you wish to download the data files manually for future reference, these are available here: <https://www.dropbox.com/s/4fqgi6t3so69224/Sinal_Langille_raw_data.tar.gz>
-
-
+However, we will download them directly from R during the lessons when we need
+them.
 
 ### Setup instructions
 
@@ -58,10 +57,9 @@ However, if you wish to download the data files manually for future reference, t
 underlying statistical computing environment, but using R alone is no
 fun. RStudio is a graphical integrated development environment (IDE) that makes
 using R much easier and more interactive. You need to install R before you
-install RStudio. After installing both programs, you will need to install the
-**`tidyverse`** package from within RStudio. Follow the instructions below for
-your operating system, and then follow the instructions to install
-**`tidyverse`** and **`phyloseq`**.
+install RStudio. After installing both programs, you will need to install some packages from within RStudio. Follow the instructions below for
+your operating system, and then follow the instructions to install the 
+**`tidyverse`** and **`phyloseq`** packages.
 
 #### Windows
 
