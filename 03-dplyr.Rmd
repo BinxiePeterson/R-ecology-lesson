@@ -5,11 +5,8 @@ author: Data Carpentry contributors
 
 ```{r, echo=FALSE, purl=FALSE, message = FALSE}
 source("setup.R")
-surveys <- read.csv("data/portal_data_joined.csv")
-suppressWarnings(surveys$date <- lubridate::ymd(paste(surveys$year,
-                                                      surveys$month,
-                                                      surveys$day,
-                                                      sep = "-")))
+mapfile <- read.csv("data/mouse_mapfile.csv")
+
 ```
 
 ```{r, echo=FALSE, purl=TRUE}
@@ -83,16 +80,16 @@ To learn more about **`dplyr`** and **`tidyr`** after the workshop, you may want
 We're going to learn some of the most common **`dplyr`** functions: `select()`,
 `filter()`, `mutate()`, `group_by()`, and `summarize()`. To select columns of a
 data frame, use `select()`. The first argument to this function is the data
-frame (`surveys`), and the subsequent arguments are the columns to keep.
+frame (`mapfile`), and the subsequent arguments are the columns to keep.
 
 ```{r, results = 'hide', purl = FALSE}
-select(surveys, plot_id, species_id, weight)
+select(SampleID, Source, Genotype)
 ```
 
 To choose rows based on a specific criteria, use `filter()`:
 
 ```{r, purl = FALSE}
-filter(surveys, year == 1995)
+filter(mapfile, Genotype == WT)
 ```
 
 ## Pipes
@@ -115,14 +112,14 @@ with **`dplyr`**. If you use RStudio, you can type the pipe with <kbd>Ctrl</kbd>
 <kbd>Shift</kbd> + <kbd>M</kbd> if you have a Mac.
 
 ```{r, purl = FALSE}
-surveys %>%
-  filter(weight < 5) %>%
-  select(species_id, sex, weight)
+mapfile %>%
+  filter(Source == BZ) %>%
+  select(SampleID, Source, Genotype)
 ```
 
-In the above, we use the pipe to send the `surveys` dataset first through
-`filter()` to keep rows where `weight` is less than 5, then through `select()`
-to keep only the `species_id`, `sex`, and `weight` columns. Since `%>%` takes
+In the above, we use the pipe to send the `mapfile` dataset first through
+`filter()` to keep rows where `Source` is equeal to BZ, then through `select()`
+to keep only the `SampleID`, `Source`, and `Genotype` columns. Since `%>%` takes
 the object on its left and passes it as the first argument to the function on
 its right, we don't need to explicitly include it as an argument to the
 `filter()` and `select()` functions anymore.
@@ -131,33 +128,33 @@ If we wanted to create a new object with this smaller version of the data, we
 could do so by assigning it a new name:
 
 ```{r, purl = FALSE}
-surveys_sml <- surveys %>%
-  filter(weight < 5) %>%
-  select(species_id, sex, weight)
+mapfile_sml <- mapfile %>%
+  filter(Source == BZ) %>%
+  select(SampleID, Source, Genotype)
 
-surveys_sml
+mapfile_sml
 ```
 
 Note that the final data frame is the leftmost part of this expression.
 
 > ### Challenge {.challenge}
 >
->  Using pipes, subset the `survey` data to include individuals collected before
->  1995 and retain only the columns `year`, `sex`, and `weight`.
+>  Using pipes, subset the `mapfile` to include individuals collected from
+>  CJS and retain only the columns `SampleID`, and `Genotype`.
 
 <!---
 ```{r, eval=FALSE, purl=FALSE}
 ## Answer
-surveys %>%
-    filter(year < 1995) %>%
-    select(year, sex, weight)
+mapfile %>%
+    filter(Source == CJS) %>%
+    select(SampleID, Genotype)
 ```
 --->
 
     ```{r, eval=FALSE, purl=TRUE, echo=FALSE}
     ## Pipes Challenge:
     ##  Using pipes, subset the data to include individuals collected
-    ##  before 1995, and retain the columns `year`, `sex`, and `weight.`
+    ##  from CJS, and retain the columns `SampleID`, and `Genotype.`
 
     ```
 
@@ -170,14 +167,14 @@ columns. For this we'll use `mutate()`.
 To create a new column of weight in kg:
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   mutate(weight_kg = weight / 1000)
 ```
 
 You can also create a second new column based on the first new column within the same call of `mutate()`:
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   mutate(weight_kg = weight / 1000,
          weight_kg2 = weight_kg * 2)
 ```
@@ -187,7 +184,7 @@ can use a pipe to view the `head()` of the data. (Pipes work with non-**`dplyr`*
 functions, too, as long as the **`dplyr`** or `magrittr` package is loaded).
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   mutate(weight_kg = weight / 1000) %>%
   head
 ```
@@ -200,7 +197,7 @@ The first few rows of the output are full of `NA`s, so if we wanted to remove
 those we could insert a `filter()` in the chain:
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   filter(!is.na(weight)) %>%
   mutate(weight_kg = weight / 1000) %>%
   head
@@ -211,7 +208,7 @@ symbol negates the result, so we're asking for everything that *is not* an `NA`.
 
 > ### Challenge {.challenge}
 >
->  Create a new data frame from the `surveys` data that meets the following
+>  Create a new data frame from the `mapfile` data that meets the following
 >  criteria: contains only the `species_id` column and a new column called
 >  `hindfoot_half` containing values that are half the `hindfoot_length` values.
 >  In this `hindfoot_half` column, there are no `NA`s and all values are less
@@ -222,7 +219,7 @@ symbol negates the result, so we're asking for everything that *is not* an `NA`.
 <!---
 ```{r, eval=FALSE, purl=FALSE}
 ## Answer
-surveys_hindfoot_half <- surveys %>%
+mapfile_hindfoot_half <- mapfile %>%
     filter(!is.na(hindfoot_length)) %>%
     mutate(hindfoot_half = hindfoot_length / 2) %>%
     filter(hindfoot_half < 30) %>%
@@ -232,7 +229,7 @@ surveys_hindfoot_half <- surveys %>%
 
     ```{r, eval=FALSE, purl=TRUE, echo=FALSE}
     ## Mutate Challenge:
-    ##  Create a new data frame from the `surveys` data that meets the following
+    ##  Create a new data frame from the `mapfile` data that meets the following
     ##  criteria: contains only the `species_id` column and a column that
     ##  contains values that are half the `hindfoot_length` values (e.g. a
     ##  new column `hindfoot_half`). In this `hindfoot_half` column, there are
@@ -258,7 +255,7 @@ the column names that contain the **categorical** variables for which you want
 to calculate the summary statistics. So to view the mean `weight` by sex:
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   group_by(sex) %>%
   summarize(mean_weight = mean(weight, na.rm = TRUE))
 ```
@@ -275,7 +272,7 @@ factors.
 You can also group by multiple columns:
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   group_by(sex, species_id) %>%
   summarize(mean_weight = mean(weight, na.rm = TRUE))
 ```
@@ -288,7 +285,7 @@ attempt to calculate the summary statistics on weight. Because the missing
 values are removed, we can omit `na.rm = TRUE` when computing the mean:
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   filter(!is.na(weight)) %>%
   group_by(sex, species_id) %>%
   summarize(mean_weight = mean(weight))
@@ -301,7 +298,7 @@ at the end of your chain with the argument `n` specifying the number of rows to
 display:
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   filter(!is.na(weight)) %>%
   group_by(sex, species_id) %>%
   summarize(mean_weight = mean(weight)) %>%
@@ -313,7 +310,7 @@ time (and not necessarily on the same variable). For instance, we could add a
 column indicating the minimum weight for each species for each sex:
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   filter(!is.na(weight)) %>%
   group_by(sex, species_id) %>%
   summarize(mean_weight = mean(weight),
@@ -329,7 +326,7 @@ provides `tally()`. For example, if we wanted to group by sex and find the
 number of rows of data for each sex, we would do:
 
 ```{r, purl = FALSE}
-surveys %>%
+mapfile %>%
   group_by(sex) %>%
   tally
 ```
@@ -355,12 +352,12 @@ counts the total number of records for each category.
 <!---
 ```{r, echo=FALSE, purl=FALSE}
 ## Answer 1
-surveys %>%
+mapfile %>%
     group_by(plot_type) %>%
     tally
 
 ## Answer 2
-surveys %>%
+mapfile %>%
     filter(!is.na(hindfoot_length)) %>%
     group_by(species_id) %>%
     summarize(
@@ -370,7 +367,7 @@ surveys %>%
     )
 
 ## Answer 3
-surveys %>%
+mapfile %>%
     filter(!is.na(weight)) %>%
     group_by(year) %>%
     filter(weight == max(weight)) %>%
@@ -378,7 +375,7 @@ surveys %>%
     arrange(year)
 
 ## Answer 4
-surveys %>%
+mapfile %>%
   group_by(sex) %>%
   summarize(n = n())
 ```
@@ -413,7 +410,7 @@ structure our data leading to the four rules defining a tidy dataset:
 
 Here we examine the fourth rule: Each type of observational unit forms a table.
 
-In `surveys` , the rows of `surveys` contain the values of variables associated
+In `mapfile` , the rows of `mapfile` contain the values of variables associated
 with each record (the unit), values such the weight or sex of each animal 
 associated with each record. What if instead of comparing records, we 
 wanted to compare the different mean weight of each species between plots? (Ignoring `plot_type` for simplicity).
@@ -444,22 +441,22 @@ and `gather()`.
 Further arguements include `fill` which if set, fills in missing values with 
 that provided.
 
-Let's use `spread()` to transform surveys to find the mean weight of each 
+Let's use `spread()` to transform mapfile to find the mean weight of each 
 species in each plot over the entire survey period. We use `filter()`,
 `group_by()` and `summarise()` to filter our observations and variables of 
 interest, and create a new variable for the `mean_weight`. We use the pipe as 
 before too.
 
 ```{r, purl=FALSE}
-surveys_gw <- surveys %>%
+mapfile_gw <- mapfile %>%
   filter(!is.na(weight)) %>%
   group_by(genus, plot_id) %>%
   summarize(mean_weight = mean(weight))
 
-str(surveys_gw)
+str(mapfile_gw)
 ```
 
-This yields `surveys_gw` where the observation for each plot is spread across
+This yields `mapfile_gw` where the observation for each plot is spread across
 multiple rows, 196 observations of 13 variables.
 
 Using `spread()` to key on `genus` with values from `mean_weight` this becomes
@@ -467,10 +464,10 @@ Using `spread()` to key on `genus` with values from `mean_weight` this becomes
 before too.
 
 ```{r, purl=FALSE}
-surveys_spread <- surveys_gw %>%
+mapfile_spread <- mapfile_gw %>%
   spread(key = genus, value = mean_weight)
 
-str(surveys_spread)
+str(mapfile_spread)
 ```
 
 ![](img/spread_data_R.png)
@@ -479,7 +476,7 @@ We could now plot comparisons between the weight of species on different plots
 for example, although we may wish to fill in the missing values first.
 
 ```{r, purl=FALSE}
-surveys_gw %>%
+mapfile_gw %>%
   spread(genus, mean_weight, fill = 0) %>%
   head()
 ```
@@ -487,7 +484,7 @@ surveys_gw %>%
 #### Gathering
 
 The opposing situation could occur if we had been provided with data in the
-form of `surveys_spread`, where the genus names are column names, but we 
+form of `mapfile_spread`, where the genus names are column names, but we 
 wish to treat them as values of a genus variable instead.
 
 In this situation we are gathering the column names and turning them into a
@@ -502,15 +499,15 @@ the other variable contains the values previously associated with the column nam
 associated with the key.
 4. the names of the columns we use to fill the key variable (or to drop).
 
-To recreate `surveys_gw` from `surveys_spread` we would create a key called
+To recreate `mapfile_gw` from `mapfile_spread` we would create a key called
 `genus` and value called `mean_weight` and use all columns except `plot_id` for
 the key variable. Here we drop `plot_id` column with a minus sign.
 
 ```{r, purl=FALSE}
-surveys_gather <- surveys_spread %>%
+mapfile_gather <- mapfile_spread %>%
   gather(key = genus, value = mean_weight, -plot_id)
 
-str(surveys_gather)
+str(mapfile_gather)
 ```
 
 ![](img/gather_data_R.png)
@@ -525,7 +522,7 @@ specify what to gather than what to leave alone. And if the columns are in a
 row, we don't even need to list them all out - just use the `:` operator!
 
 ```{r, purl=FALSE}
-surveys_spread %>%
+mapfile_spread %>%
   gather(key = genus, value = mean_weight, Baiomys:Spermophilus) %>%
   head()
 ```
@@ -540,7 +537,7 @@ surveys_spread %>%
 > 2. Now take that data frame, and make gather it again, so each row is a unique
 >    `plot_id` `year` combination.
 >
-> 3. The `surveys` data set has
+> 3. The `mapfile` data set has
 >    two columns of measurement: `hindfoot_length` and `weight`.  This makes it
 >    difficult to do things like look at the relationship between mean values of
 >    each measurement per year in different plot types. Let's walk through a
@@ -562,7 +559,7 @@ surveys_spread %>%
 
 ## 2. Now take that data frame, and make it long again, so each row is a unique `plot_id` `year` combination
 
-## 3. The `surveys` data set is not truly wide or long because there are two columns of measurement - `hindfoot_length` and `weight`.  This makes it difficult to do things like look at the relationship between mean values of each measurement per year in different plot types. Let's walk through a common solution for this type of problem. First, use `gather` to create a truly long dataset where we have a key column called `measurement` and a `value` column that takes on the value of either `hindfoot_length` or `weight`. Hint: You'll need to specify which columns are being gathered.
+## 3. The `mapfile` data set is not truly wide or long because there are two columns of measurement - `hindfoot_length` and `weight`.  This makes it difficult to do things like look at the relationship between mean values of each measurement per year in different plot types. Let's walk through a common solution for this type of problem. First, use `gather` to create a truly long dataset where we have a key column called `measurement` and a `value` column that takes on the value of either `hindfoot_length` or `weight`. Hint: You'll need to specify which columns are being gathered.
 
 ## 4. With this new truly long data set, calculate the average of each `measurement` in each `year` for each different `plot_type`. Then `spread` them into a wide data set with a column for `hindfoot_length` and `weight`. Hint: Remember, you only need to specify the key and value columns for `spread`.
 
@@ -571,7 +568,7 @@ surveys_spread %>%
 <!---
   ```{r, echo=FALSE, purl=FALSE}
 ## Answer 1
-rich_time <- surveys %>%
+rich_time <- mapfile %>%
   group_by(plot_id, year) %>%
   summarize(n_genera = n_distinct(genus)) %>%
   spread(year, n_genera)
@@ -583,11 +580,11 @@ rich_time %>%
   gather(year, n_genera, -plot_id)
 
 ## Answer 3
-surveys_long <- surveys %>%
+mapfile_long <- mapfile %>%
   gather(measurement, value, hindfoot_length, weight)
 
 ## Answer 4
-surveys_long %>%
+mapfile_long %>%
   group_by(year, measurement, plot_type) %>%
   summarize(mean_value = mean(value, na.rm=TRUE)) %>%
   spread(measurement, mean_value)
@@ -623,7 +620,7 @@ observations of animals for which the sex has been determined:
 
 
 ```{r, purl=FALSE}
-surveys_complete <- surveys %>%
+mapfile_complete <- mapfile %>%
   filter(species_id != "",         # remove missing species_id
          !is.na(weight),           # remove missing weight
          !is.na(hindfoot_length),  # remove missing hindfoot_length
@@ -639,13 +636,13 @@ observations for these more common species:
 
 ```{r, purl=FALSE}
 ## Extract the most common species_id
-species_counts <- surveys_complete %>%
+species_counts <- mapfile_complete %>%
   group_by(species_id) %>%
   tally %>%
   filter(n >= 50)
 
 ## Only keep the most common species
-surveys_complete <- surveys_complete %>%
+mapfile_complete <- mapfile_complete %>%
   filter(species_id %in% species_counts$species_id)
 ```
 
@@ -653,7 +650,7 @@ surveys_complete <- surveys_complete %>%
 ### Create the dataset for exporting:
 ##  Start by removing observations for which the `species_id`, `weight`,
 ##  `hindfoot_length`, or `sex` data are missing:
-surveys_complete <- surveys %>%
+mapfile_complete <- mapfile %>%
     filter(species_id != "",        # remove missing species_id
            !is.na(weight),                 # remove missing weight
            !is.na(hindfoot_length),        # remove missing hindfoot_length
@@ -661,20 +658,20 @@ surveys_complete <- surveys %>%
 
 ##  Now remove rare species in two steps. First, make a list of species which
 ##  appear at least 50 times in our dataset:
-species_counts <- surveys_complete %>%
+species_counts <- mapfile_complete %>%
     group_by(species_id) %>%
     tally %>%
     filter(n >= 50) %>%
     select(species_id)
 
 ##  Second, keep only those species:
-surveys_complete <- surveys_complete %>%
+mapfile_complete <- mapfile_complete %>%
     filter(species_id %in% species_counts$species_id)
 ```
 
-To make sure that everyone has the same dataset, check that `surveys_complete`
-has `r nrow(surveys_complete)` rows and `r ncol(surveys_complete)` columns by
-typing `dim(surveys_complete)`.
+To make sure that everyone has the same dataset, check that `mapfile_complete`
+has `r nrow(mapfile_complete)` rows and `r ncol(mapfile_complete)` columns by
+typing `dim(mapfile_complete)`.
 
 Now that our dataset is ready, we can save it as a CSV file in our `data_output`
 folder. By default, `write.csv()` includes a column with row names (in our case
@@ -682,13 +679,13 @@ the names are just the row numbers), so we need to add `row.names = FALSE` so
 they are not included:
 
 ```{r, purl=FALSE, eval=FALSE}
-write.csv(surveys_complete, file = "data_output/surveys_complete.csv",
+write.csv(mapfile_complete, file = "data_output/mapfile_complete.csv",
           row.names = FALSE)
 ```
 
 ```{r, purl=FALSE, eval=TRUE, echo=FALSE}
 if (!file.exists("data_output")) dir.create("data_output")
-write.csv(surveys_complete, file = "data_output/surveys_complete.csv")
+write.csv(mapfile_complete, file = "data_output/mapfile_complete.csv")
 ```
 
 <p style="text-align: right; font-size: small;">Page build on: `r format(Sys.time())`</p>
