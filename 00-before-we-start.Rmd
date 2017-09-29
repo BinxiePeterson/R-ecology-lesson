@@ -163,7 +163,11 @@ tutorial.
 * Click on `Create project`
 * Under the `Files` tab on the right of the screen, click on `New Folder` and
   create a folder named `data` within your newly created working directory (e.g., `~/metagenomics/data`)
-* Download the [code handout](./code-handout.R), place it in your working directory and rename it (e.g., `metagenomics-script.R`).
+* Download the [code handout](./code-handout.R), place it in your working directory and rename it (e.g., `metagenomics-script.R`).You can either download the script manually and move it to your working directory, or run the following piece of code to download it directly to your working directory:
+
+```{r, eval=FALSE, purl=TRUE}
+download.file("https://tinyurl.com/ybzhbwtp", "metagenomics-script.R")
+```
 
 Your working directory should now look like this:
 

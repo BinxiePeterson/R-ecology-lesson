@@ -4,6 +4,10 @@ author: "Data Carpentry contributors"
 minutes: 20
 ---
 
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(error=TRUE)
+```
+
 ```{r, echo=FALSE, purl=FALSE, message = FALSE}
 source("setup.R")
 ```
@@ -48,17 +52,17 @@ Each row holds information for a single mouse, and the columns represent:
 
 
 We are going to use the R function `download.file()` to download the CSV file
-that contains the survey data, and we will use `read.csv()` to
+that contains the metadata, and we will use `read.csv()` to
 load into memory the content of the CSV file as an object of class `data.frame`.
 
-To download the data into the `data/` subdirectory, run the following:
+To download the metadata into the `data/` subdirectory, run the following:
 
 ```{r, eval=FALSE, purl=TRUE}
-download.file("???url",
+download.file("https://ndownloader.figshare.com/files/2292169",
               "data/mapfile.csv")
 ```
 
-You are now ready to load the data:
+You are now ready to load the metadata:
 
 ```{r, eval=TRUE,  purl=FALSE}
 mapfile <- read.csv('data/mapfile.csv')
@@ -68,8 +72,7 @@ This statement doesn't produce any output because, as you might recall,
 assignments don't display anything. If we want to check that our data has been
 loaded, we can print the variable's value: `mapfile`.
 
-At least it means the data loaded properly. Let's check the top (the first 6 lines) of this data frame using the
-function `head()`:
+This means the data loaded properly. Let's check the top (the first 6 lines) of this data frame using the function `head()`:
 
 ```{r, results='show', purl=FALSE}
 head(mapfile)
@@ -299,17 +302,17 @@ Once created, factors can only contain a pre-defined set of values, known as
 instance, if you have a factor with 2 levels:
 
 ```{r, purl=TRUE}
-sex <- factor(c("male", "female", "female", "male"))
+mouse_source <- factor(c("CJS", "BZ", "BZ", "CJS"))
 ```
 
-R will assign `1` to the level `"female"` and `2` to the level `"male"` (because
-`f` comes before `m`, even though the first element in this vector is
-`"male"`). You can check this by using the function `levels()`, and check the
+R will assign `1` to the level `"BZ"` and `2` to the level `"CJS"` (because
+`B` comes before `C`, even though the first element in this vector is
+`"CJS"`). You can check this by using the function `levels()`, and check the
 number of levels using `nlevels()`:
 
 ```{r, purl=FALSE}
-levels(sex)
-nlevels(sex)
+levels(mouse_source)
+nlevels(mouse_source)
 ```
 
 Sometimes, the order of the factors does not matter, other times you might want
@@ -318,17 +321,17 @@ it improves your visualization, or it is required by a particular type of
 analysis. Here, one way to reorder our levels in the `sex` vector would be:
 
 ```{r, results=TRUE, purl=FALSE}
-sex # current order
-sex <- factor(sex, levels = c("male", "female"))
-sex # after re-ordering
+mouse_source # current order
+mouse_source <- factor(mouse_source, levels = c("CJS", "BZ"))
+mouse_source # after re-ordering
 ```
 
 In R's memory, these factors are represented by integers (1, 2, 3), but are more
-informative than integers because factors are self describing: `"female"`,
-`"male"` is more descriptive than `1`, `2`. Which one is "male"?  You wouldn't
+informative than integers because factors are self describing: `"CJS"`,
+`"BZ"` is more descriptive than `1`, `2`. Which one is "BZ"?  You wouldn't
 be able to tell just from the integer data. Factors, on the other hand, have
 this information built in. It is particularly helpful when there are many levels
-(like the species names in our example dataset).
+(like the SampleID in our example dataset).
 
 ### Converting factors
 
@@ -336,7 +339,7 @@ If you need to convert a factor to a character vector, you use
 `as.character(x)`.
 
 ```{r, purl=FALSE}
-as.character(sex)
+as.character(mouse_source)
 ```
 
 Converting factors where the levels appear as numbers (such as concentration
@@ -368,11 +371,11 @@ level. Let's look at the number of males and females captured over the course of
 the experiment:
 
 ```{r, purl=TRUE}
-## bar plot of the number of females and males captured during the experiment:
-plot(mapfile$sex)
+## bar plot of the number of mice collected from BZ and CJS:
+#plot(mapfile$Source)
 ```
 
-In addition to males and females, there are about 1700 individuals for which the
+In addition to male and females, there are about 1700 individuals for which the
 sex information hasn't been recorded. Additionally, for these individuals,
 there is no label to indicate that the information is missing. Let's rename this
 label to something more meaningful. Before doing that, we're going to pull out
@@ -433,9 +436,9 @@ Compare the output of `str(mapfile)` when setting `stringsAsFactors = TRUE`
 ```{r, eval=FALSE, purl=FALSE}
 ## Compare the difference between when the data are being read as
 ## `factor`, and when they are being read as `character`.
-mapfile <- read.csv("data/portal_data_joined.csv", stringsAsFactors = TRUE)
+mapfile <- read.csv("data/mapfile.csv", stringsAsFactors = TRUE)
 str(mapfile)
-mapfile <- read.csv("data/portal_data_joined.csv", stringsAsFactors = FALSE)
+mapfile <- read.csv("data/mapfile.csv", stringsAsFactors = FALSE)
 str(mapfile)
 ## Convert the column "plot_type" into a factor
 mapfile$plot_type <- factor(mapfile$plot_type)
@@ -523,77 +526,5 @@ annoyance. Be aware that it exists, learn the rules, and double check that data
 you import in R are of the correct type within your data frame. If not, use it
 to your advantage to detect mistakes that might have been introduced during data
 entry (a letter in a column that should only contain numbers for instance).
-
-## Formatting Dates
-
-One of the most common issues that new (and experienced!) R users have is
-converting date and time information into a variable that is appropriate and
-usable during analyses. As a reminder from earlier in this lesson, the best
-practice for dealing with date data is to ensure that each component of your
-date is stored as a separate variable. Using `str()`, We can confirm that our
-data frame has a separate column for day, month, and year, and each contains
-integer values.
-
-```{r, eval=FALSE, purl=FALSE}
-str(mapfile)
-```
-
-We're going to be using the `ymd()` function from the package **`lubridate`**
-(this package gets installed during the installation of the **`tidyverse`**
-package). This function is designed to take a vector representing year, month,
-and day and convert that information to a POSIXct vector. POSIXct is a class of
-data recognized by R as being a date or date and time. The argument that the
-function requires is relatively flexible, but, as a best practice, is a
-character vector formatted as "YYYY-MM-DD".
-
-Start by loading the required package:
-
-```{r load-package, message=FALSE, purl=FALSE}
-library(lubridate)
-```
-
-Create a character vector from the `year`, `month`, and `day` columns of
-`mapfile` using `paste()`:
-
-```{r, eval=FALSE, purl=FALSE}
-paste(mapfile$year, mapfile$month, mapfile$day, sep="-")
-# sep indicates the character to use to separate each component
-```
-
-This character vector can be used as the argument for `ymd()`:
-
-```{r, eval=FALSE, purl=FALSE}
-ymd(paste(mapfile$year, mapfile$month, mapfile$day, sep="-"))
-```
-
-The resulting POSIXct vector can be added to `mapfile` as a new column called `date`:
-
-```{r, eval=TRUE, purl=FALSE}
-mapfile$date <- ymd(paste(mapfile$year, mapfile$month, mapfile$day, sep="-"))
-str(mapfile) # notice the new column, with 'date' as the class
-```
-
-Did you notice the warning message? Let's investigate what is happening. When
-**`lubridate`** fails to parse a date, it will return `NA`. We can use the
-functions we saw previously to deal with missing data to identify the rows in
-our data frame that are failing. First, let's create a vector that contains our
-dates as a character vector:
-
-```{r, eval=TRUE, purl=FALSE}
-mapfile_dates <- paste(mapfile$year, mapfile$month, mapfile$day, sep = "-")
-head(mapfile_dates)
-```
-
-The vector `mapfile_dates` contains all the dates from our dataset, in the same
-order as they are in the data frame. We can therefore use the `is.na()` function
-on the `mapfile` data frame to locate the elements in the vectors
-`mapfile_dates` that failed to parse:
-
-```{r, eval=TRUE, purl=FALSE}
-mapfile_dates[is.na(mapfile$date)]
-```
-
-Why did these dates fail to parse? If you had to use these data for your
-analyses, how would you deal with this situation?
 
 <p style="text-align: right; font-size: small;">Page build on: `r format(Sys.time())`</p>
