@@ -4,13 +4,9 @@ author: "Data Carpentry contributors"
 minutes: 25
 ---
 
-```{r setup, echo=FALSE}
-knitr::opts_chunk$set(error=TRUE)
-```
 
-```{r, echo=FALSE, purl=FALSE, message = FALSE}
-source("setup.R")
-```
+
+
 
 ------------
 
@@ -25,9 +21,7 @@ source("setup.R")
 
 # Looking at Metadata
 
-```{r, echo=FALSE, purl=TRUE}
-# Looking at metadata
-```
+
 
 We will be looking at a subset of the metadata of the [Human Microbiome Project](https://www.hmpdacc.org/hmp/)(HMP). This particular production phase represents pyrosequencing of 16S rRNA genes amplified from multiple body sites across hundreds of human subjects. 16S rRNA sequencing was used to characterize the complexity of microbial communities at individual body sites, and to determine whether there was a core microbiome at each site. Several body sites were studied, including the gastrointestinal and female urogenital tracts, oral cavity, nasal and pharyngeal tract, and skin.
 
@@ -73,14 +67,16 @@ load into memory the content of the CSV file as an object of class `data.frame`.
 
 To download the metadata into the `data/` subdirectory, run the following:
 
-```{r, eval=FALSE, purl=TRUE}
+
+```r
 download.file("https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mappingfile_HMP.txt",
               "data/metadata.csv")
 ```
 
 You are now ready to load the metadata:
 
-```{r, eval=TRUE,  purl=FALSE}
+
+```r
 metadata <- read.csv('data/metadata.csv', header = TRUE, sep = "\t")
 ```
 
@@ -90,8 +86,61 @@ loaded, we can print the variable's value: `metadata`.
 
 This means the data loaded properly. Let's check the top (the first 6 lines) of this data frame using the function `head()`:
 
-```{r, results='show', purl=FALSE}
+
+```r
 head(metadata)
+```
+
+```
+#>    SampleID        SraSample BarcodeSequence LinkerPrimerSequence
+#> 1 SRR040576 SRS017663.575350    TCAGACGAGAAC   CCGTCAATTCMTTTRAGT
+#> 2 SRR040577 SRS022006.571394      TCAGACTTGC   CCGTCAATTCMTTTRAGT
+#> 3 SRR040578 SRS020030.572850   TCAGTTAAGATTC   CCGTCAATTCMTTTRAGT
+#> 4 SRR040579 SRS023617.570981     TCAGAAGCCGC   CCGTCAATTCMTTTRAGT
+#> 5 SRR040580 SRS016529.574547    TCAGACGAAGTC   CCGTCAATTCMTTTRAGT
+#> 6 SRR040581 SRS017428.573106    TCAGTGTCGGAC   CCGTCAATTCMTTTRAGT
+#>   SampleCollectDevice ExperimentCenter                     Title Depth
+#> 1                swab               BI HMP_production_phase_1161     0
+#> 2                swab               BI HMP_production_phase_2070     0
+#> 3                swab               BI HMP_production_phase_1601     0
+#> 4                swab               BI HMP_production_phase_2470     0
+#> 5                swab               BI  HMP_production_phase_901     0
+#> 6                swab               BI HMP_production_phase_1117     0
+#>   PFPH    Sex    BodySuperSite AnonymizedName Mislabeled Age AgeUnit
+#> 1  0.0   male             Oral         241775      FALSE  19   years
+#> 2  3.7 female          Airways         241747      FALSE  27   years
+#> 3  3.8 female Urogenital_tract         241847      FALSE  24   years
+#> 4  4.5 female             Oral         241702      FALSE  20   years
+#> 5  3.7 female             Oral         241831      FALSE  23   years
+#> 6  0.0   male             Skin         241703      FALSE  30   years
+#>   BodyMassIndex Obesity   EnvMatter Contaminated ChronicCondition
+#> 1            22       n ENVO:saliva        FALSE                n
+#> 2            23       n  ENVO:mucus        FALSE                n
+#> 3            30       n  ENVO:mucus        FALSE                y
+#> 4            26       n ENVO:saliva        FALSE                n
+#> 5            20       n ENVO:saliva        FALSE                n
+#> 6            24       n  ENVO:sebum        FALSE                n
+#>   MyocardInfarc StudyID CollectDay Atheroschlerosis Smoker
+#> 1             n     969          0                n   None
+#> 2             n     969        224                n   None
+#> 3             n     969          0                n   None
+#> 4             n     969        245                n   None
+#> 5             n     969          0                n   None
+#> 6             n     969          0                n   None
+#>                                              PCRPrimer VisitNo
+#> 1 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
+#> 2 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       2
+#> 3 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
+#> 4 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       2
+#> 5 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
+#> 6 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
+#>   Hypertension INTPH Description
+#> 1            n   0.0   SRR040576
+#> 2            n   4.1   SRR040577
+#> 3            n   4.3   SRR040578
+#> 4            n   4.9   SRR040579
+#> 5            n   4.0   SRR040580
+#> 6            n   0.0   SRR040581
 ```
 
 > ### Note
@@ -126,7 +175,8 @@ numeric, a character and a logical vector.
 We can see this when inspecting the <b>str</b>ucture of a data frame
 with the function `str()`:
 
-```{r, purl=FALSE}
+
+```r
 str(metadata)
 ```
 
@@ -168,30 +218,16 @@ objects besides `data.frame`.
 > * What is the class of the object `metadata`?
 > * How many rows and how many columns are in this object?
 
-```{r, echo=FALSE, purl=TRUE}
 
-## Challenge
-## Based on the output of `str(metadata)`, can you answer the following questions?
-## * What is the class of the object `metadata`?
-## * How many rows and how many columns are in this object?
-```
 
 <!---
-```{r, echo=FALSE, purl=FALSE}
-## Answers
-##
-## * class: data frame
-## * how many rows: 113,  how many columns: 30
-```
+
 --->
 
 
 ## Indexing and subsetting data frames
 
-```{r, echo=FALSE, purl=TRUE}
 
-## Indexing and subsetting data frames
-```
 
 
 Our data frame has rows and columns (it has 2 dimensions), if we want to
@@ -200,7 +236,8 @@ want from it. Row numbers come first, followed by column numbers. However, note
 that different ways of specifying these coordinates lead to results with
 different classes.
 
-```{r, purl=FALSE}
+
+```r
 metadata[1, 1]   # first element in the first column of the data frame (as a vector)
 metadata[1, 6]   # first element in the 6th column (as a vector)
 metadata[, 1]    # first column in the data frame (as a vector)
@@ -215,7 +252,8 @@ or decreasing order, test `1:10` and `10:1` for instance.
 
 You can also exclude certain parts of a data frame using the "`-`" sign:
 
-```{r, purl=FALSE}
+
+```r
 metadata[,-1]          # The whole data frame, except the first column
 metadata[-c(7:116),]   # Equivalent to head(metadata)
 ```
@@ -223,7 +261,8 @@ metadata[-c(7:116),]   # Equivalent to head(metadata)
 As well as using numeric values to subset a `data.frame` (or `matrix`), columns
 can be called by name, using one of the four following notations:
 
-```{r, eval = FALSE, purl=FALSE}
+
+```r
 metadata["SampleID"]       # Result is a data.frame
 metadata[, "SampleID"]     # Result is a vector
 metadata[["SampleID"]]     # Result is a vector
@@ -254,31 +293,11 @@ feature to get the full and correct column name.
 >    `head(metadata)` keeping just the first through 6th rows of the metadata.
 
 
-```{r, echo=FALSE, purl=TRUE}
-### Challenges:
-###
-### 1. Create a `data.frame` (`metadata_80`) containing only the
-###    observations from row 80 of the `metadata`.
-###
-### 2. Notice how `nrow()` gave you the number of rows in a `data.frame`?
-###
-###      * Use that number to pull out just that last row in the data frame
-###      * Compare that with what you see as the last row using `tail()` to make
-###        sure it's meeting expectations.
-###      * Pull out that last row using `nrow()` instead of the row number
-###      * Create a new data frame object (`metadata_last`) from that last row
-###
-### 3. Use `nrow()` to extract the row that is in the middle of the
-###    data frame. Store the content of this row in an object named
-###    `metadata_middle`.
-###
-### 4. Combine `nrow()` with the `-` notation above to reproduce the behavior of
-###    `head(metadata)` keeping just the first through 6th rows of the metadata.
 
-```
 
 <!---
-```{r, purl=FALSE}
+
+```r
 ## Answers
 metadata_80 <- metadata[80, ]
 metadata_last <- metadata[nrow(metadata), ]
@@ -290,9 +309,7 @@ metadata_head <- metadata[-c(7:nrow(metadata)),]
 
 ## Factors
 
-```{r, echo=FALSE, purl=TRUE}
-### Factors
-```
+
 
 When we did `str(metadata)` we saw that some of the columns consist of
 integers, however, multiple columns, such as `SampleID`, `ExperimentCenter`, `Sex`, `BodySuperSite`, and `ChronicCondition` are of a special class called a `factor`. Factors are very useful and are actually something that make R particularly well suited to working with data, so we're
@@ -308,7 +325,8 @@ they are actually integers under the hood, and you need to be careful when
 treating them like strings.
 
 In the data frame we just imported, let's do 
-```{r, purl=TRUE}
+
+```r
 str(metadata)
 ```
 
@@ -324,7 +342,8 @@ For instance, we see that `Sex` is a Factor w/ 2 levels, `femail` and `male`.
 You can check this by using the function `levels()`, and check the
 number of levels using `nlevels()`:
 
-```{r, purl=FALSE, eval=FALSE}
+
+```r
 levels(metadata$Sex)
 nlevels(metadata$Sex)
 ```
@@ -332,7 +351,8 @@ nlevels(metadata$Sex)
 For
 instance, if you have a factor with 2 levels:
 
-```{r, purl=TRUE}
+
+```r
 hmp_sex <- factor(c("male", "female", "female", "male"))
 ```
 
@@ -341,7 +361,8 @@ R assigned `1` to the level `"female"` and `2` to the level `"mail"` (because
 `"male"`). You can check this by using the function `levels()`, and check the
 number of levels using `nlevels()`:
 
-```{r, purl=FALSE}
+
+```r
 levels(hmp_sex)
 nlevels(hmp_sex)
 ```
@@ -352,7 +373,8 @@ it improves your visualization, or it is required by a particular type of
 analysis. Additionally, specifying the
 order of the levels allows to compare levels:
 
-```{r, purl=FALSE, error=TRUE, eval=FALSE}
+
+```r
 expression <- factor(c("low", "high", "medium", "high", "low", "medium", "high"))
 levels(expression)
 expression <- factor(expression, levels=c("low", "medium", "high"))
@@ -378,8 +400,13 @@ If you need to convert a factor to a character vector, you use
 Converting a factor to a numeric vector is however a little trickier, and you
 have to go via a character vector. Compare:
 
-```{r, purl=FALSE}
+
+```r
 as.character(mouse_source)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'mouse_source' not found
 ```
 
 Notice that in the `levels()` approach, three important steps occur:
@@ -397,7 +424,8 @@ quick glance at the number of observations represented by each factor
 level. Let's look at the number of males and females captured over the course of
 the experiment:
 
-```{r, purl=TRUE}
+
+```r
 ## bar plot of the number of male and female participants in the study:
 #plot(metadata$Sex)
 ```
@@ -408,20 +436,35 @@ the experiment:
 The function `table()` tabulates observations and can be used to create
 bar plots quickly. For instance:
 
-```{r wrong-order, results='show', purl=TRUE}
+
+```r
 ## Question: How can you recreate this plot but by having "control"
 ## being listed last instead of first?
 exprmt <- factor(c("treat1", "treat2", "treat1", "treat3", "treat1", "control",
                    "treat1", "treat2", "treat3"))
 table(exprmt)
+```
+
+```
+#> exprmt
+#> control  treat1  treat2  treat3 
+#>       1       4       2       2
+```
+
+```r
 barplot(table(exprmt))
 ```
 
+![plot of chunk wrong-order](img/R-ecology-wrong-order-1.png)
+
 <!---
-```{r correct-order, purl=FALSE}
+
+```r
 exprmt <- factor(exprmt, levels=c("treat1", "treat2", "treat3", "control"))
 barplot(table(exprmt))
 ```
+
+![plot of chunk correct-order](img/R-ecology-correct-order-1.png)
 --->
 
 ### Using `stringsAsFactors=FALSE`
@@ -440,7 +483,8 @@ Compare the output of `str(metadata)` when setting `stringsAsFactors = TRUE`
 (default) and `stringsAsFactors = FALSE`:
 
 
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 ## Compare the difference between when the data are being read as
 ## `factor`, and when they are being read as `character`.
 metadata <- read.csv("data/metadata.csv", sep = "\t", stringsAsFactors = TRUE)
@@ -460,20 +504,14 @@ str(metadata)
 >   a few mistakes in this hand-crafted `data.frame`, can you spot and fix them?
 >   Don't hesitate to experiment!
 >
->     ```{r, eval=FALSE, purl=FALSE}
+>     
+>     ```r
 >     animal_data <- data.frame(animal=c("dog", "cat", "sea cucumber", "sea urchin"),
 >                               feel=c("furry", "squishy", "spiny"),
 >                               weight=c(45, 8 1.1, 0.8))
 >     ```
 >
->     ```{r, eval=FALSE, purl=TRUE, echo=FALSE}
->     ## Challenge:
->     ##  There are a few mistakes in this hand-crafted `data.frame`,
->     ##  can you spot and fix them? Don't hesitate to experiment!
->     animal_data <- data.frame(animal=c(dog, cat, sea cucumber, sea urchin),
->                               feel=c("furry", "squishy", "spiny"),
->                               weight=c(45, 8 1.1, 0.8))
->     ```
+>     
 >
 > 2. Can you predict the class for each of the columns in the following example?
 >    Check your guesses using `str(country_climate)`:
@@ -481,7 +519,8 @@ str(metadata)
 >      * What would have been different if we had added `stringsAsFactors = FALSE` to this call?
 >      * What would you need to change to ensure that each column had the accurate data type?
 >
->     ```{r, eval=FALSE, purl=FALSE}
+>     
+>     ```r
 >     country_climate <- data.frame(
 >            country=c("Canada", "Panama", "South Africa", "Australia"),
 >            climate=c("cold", "hot", "temperate", "hot/temperate"),
@@ -491,40 +530,11 @@ str(metadata)
 >            )
 >     ```
 >
->    ```{r, eval=FALSE, purl=TRUE, echo=FALSE}
->    ## Challenge:
->    ##   Can you predict the class for each of the columns in the following
->    ##   example?
->    ##   Check your guesses using `str(country_climate)`:
->    ##   * Are they what you expected? Why? why not?
->    ##   * What would have been different if we had added `stringsAsFactors = FALSE`
->    ##     to this call?
->    ##   * What would you need to change to ensure that each column had the
->    ##     accurate data type?
->    country_climate <- data.frame(country=c("Canada", "Panama", "South Africa", "Australia"),
->                                   climate=c("cold", "hot", "temperate", "hot/temperate"),
->                                   temperature=c(10, 30, 18, "15"),
->                                   northern_hemisphere=c(TRUE, TRUE, FALSE, "FALSE"),
->                                   has_kangaroo=c(FALSE, FALSE, FALSE, 1))
->    ```
+>    
 >
 >    <!--- Answers
 >
->    ```{r, eval=FALSE, echo=FALSE, purl=FALSE}
->    ## Answers
->    ## * missing quotations around the names of the animals
->    ## * missing one entry in the "feel" column (probably for one of the furry animals)
->    ## * missing one comma in the weight column
->
->    ## Answers
->    ## * `country`, `climate`, `temperature`, and `northern_hemisphere` are
->    ##    factors; `has_kangaroo` is numeric.
->    ## * using `stringsAsFactors=FALSE` would have made them character instead of
->    ##   factors
->    ## * removing the quotes in temperature, northern_hemisphere, and replacing 1
->    ##   by TRUE in the `has_kangaroo` column would probably what was originally
->    ##   intended.
->    ```
+>    
 >
 >    -->
 >
@@ -535,4 +545,4 @@ you import in R are of the correct type within your data frame. If not, use it
 to your advantage to detect mistakes that might have been introduced during data
 entry (a letter in a column that should only contain numbers for instance).
 
-<p style="text-align: right; font-size: small;">Page build on: `r format(Sys.time())`</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-08 21:10:16</p>

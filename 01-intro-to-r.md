@@ -5,9 +5,7 @@ minutes: 45
 ---
 
 
-```{r, echo=FALSE, purl=FALSE, message = FALSE}
-source("setup.R")
-```
+
 
 ------------
 
@@ -28,20 +26,20 @@ source("setup.R")
 
 ## Creating objects in R
 
-```{r, echo=FALSE, purl=TRUE}
-### Creating objects in R
-```
+
 
 You can get output from R simply by typing math in the console:
 
-```{r, purl=FALSE}
+
+```r
 3 + 5
 12 / 7
 ```
 
 We can also comment what it is we're doing
 
-```{r, purl=FALSE}
+
+```r
 # I am adding 3 and 5. R is fun!
 3+5
 ```
@@ -64,7 +62,8 @@ To do useful and interesting things, we need to assign _values_ to
 _objects_. To create an object, we need to give it a name followed by the
 assignment operator `<-`, and the value we want to give it:
 
-```{r, purl=FALSE}
+
+```r
 # Assign 3 to a
 a <- 3
 # Assign 5 to b
@@ -128,7 +127,8 @@ in the styling of your code.
 
 When assigning a value to an object, R does not print anything. You can force R to print the value by using parentheses or by typing the object name:
 
-```{r, purl=FALSE}
+
+```r
 c <- a + b    # doesn't print anything
 (c <- a + b)  # but putting parenthesis around the call prints the value of `c`
 c          # and so does typing the name of the object
@@ -146,7 +146,8 @@ input (the argument) must be a number, and the return value (in fact, the
 output) is the square root of that number. Executing a function ('running it')
 is called *calling* the function. An example of a function call is:
 
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 b <- sqrt(a)
 ```
 
@@ -169,8 +170,13 @@ of your choice which will be used instead of the default.
 
 Let's try a function that can take multiple arguments: `round()`.
 
-```{r, results='show', purl=FALSE}
+
+```r
 round(3.14159)
+```
+
+```
+#> [1] 3
 ```
 
 Here, we've called `round()` with just one argument, `3.14159`, and it has
@@ -179,32 +185,54 @@ whole number. If we want more digits we can see how to do that by getting
 information about the `round` function.  We can use `args(round)` or look at the
 help for this function using `?round`.
 
-```{r, results='show', purl=FALSE}
+
+```r
 args(round)
 ```
 
-```{r, eval=FALSE, purl=FALSE}
+```
+#> function (x, digits = 0) 
+#> NULL
+```
+
+
+```r
 ?round
 ```
 
 We see that if we want a different number of digits, we can
 type `digits=2` or however many we want.
 
-```{r, results='show', purl=FALSE}
+
+```r
 round(3.14159, digits = 2)
+```
+
+```
+#> [1] 3.14
 ```
 
 If you provide the arguments in the exact same order as they are defined, you
 don't have to name them:
 
-```{r, results='show', purl=FALSE}
+
+```r
 round(3.14159, 2)
+```
+
+```
+#> [1] 3.14
 ```
 
 And if you do name the arguments, you can switch their order:
 
-```{r, results='show', purl=FALSE}
+
+```r
 round(digits = 2, x = 3.14159)
+```
+
+```
+#> [1] 3.14
 ```
 
 It's good practice to put the non-optional arguments (like the number you're
@@ -229,7 +257,8 @@ We're going to work with genome lengths.
 
 ## Solution
 
-```{r, purl=FALSE}
+
+```r
 (genome_length_mb <- 4.6)
 genome_length_mb
 ```
@@ -243,7 +272,8 @@ genome length in Mb by 978.
 
 ### Solution
 
-```{r, purl=FALSE}
+
+```r
 genome_length_mb / 978.0
 ```
 
@@ -257,7 +287,8 @@ genome.
 
 ### Solution
 
-```{r, purl=FALSE}
+
+```r
 genome_length_mb <- 3000.0
 genome_length_mb / 978.0
 ```
@@ -265,13 +296,15 @@ genome_length_mb / 978.0
 This means that assigning a value to one variable does not change the values of
 other variables.  For example, let's store the genome's weight in a variable.
 
-```{r, purl=FALSE}
+
+```r
 genome_weight_pg <- genome_length_mb / 978.0
 ```
 
 and then change `genome_length_mb` to 100.
 
-```{r, purl=FALSE}
+
+```r
 genome_length_mb <- 100
 ```
 
@@ -283,23 +316,23 @@ What do you think is the current content of the object `genome_weight_pg`? 3.06 
 
 ## Vectors and data types
 
-```{r, echo=FALSE, purl=TRUE}
-### Vectors and data types
-```
+
 
 A vector is the most common and basic data type in R, and is pretty much
 the workhorse of R. A vector is composed by a series of values, which can be
 either numbers or characters. We can assign a series of values to a vector using
 the `c()` function. For example we can create a vector of genome lengths:
 
-```{r, purl=FALSE}
+
+```r
 glengths <- c(4.6, 3000, 50000)
 glengths
 ```
 
 A vector can also contain characters:
 
-```{r, purl=FALSE}
+
+```r
 species <- c("ecoli", "human", "dog")
 species
 ```
@@ -312,7 +345,8 @@ don't exist in R's memory, there will be an error message.
 There are many functions that allow you to inspect the content of a
 vector. `length()` tells you how many elements are in a particular vector:
 
-```{r, purl=FALSE}
+
+```r
 length(glengths)
 length(species)
 ```
@@ -320,13 +354,15 @@ length(species)
 
 You can also do math with whole vectors. For instance if we wanted to multiply the genome lengths of all the genomes in the list, we can do
 
-```{r, purl=FALSE}
+
+```r
 5 * glengths
 ```
 
 or we can add the data in the two vectors together
 
-```{r, purl=FALSE}
+
+```r
 new_lengths <- glengths + glengths
 new_lengths
 ```
@@ -337,7 +373,8 @@ want to combine or work with.
 An important feature of a vector, is that all of the elements are the same type of data.
 The function `class()` indicates the class (the type of element) of an object:
 
-```{r, purl=FALSE}
+
+```r
 class(glengths)
 class(species)
 ```
@@ -346,13 +383,15 @@ The function `str()` provides an overview of the structure of an object and its
 elements. It is a useful function when working with large and complex
 objects:
 
-```{r, purl=FALSE}
+
+```r
 str(glengths)
 str(species)
 ```
 
 You can use the `c()` function to add other elements to your vector:
-```{r, purl=FALSE}
+
+```r
 lengths <- c(glengths, 90) # adding at the end
 lengths <- c(30, glengths) # adding at the beginning
 lengths
@@ -413,49 +452,42 @@ factors (`factor`) and arrays (`array`).
 >   these data types are coerced?
 > <!-- * _Answer_: `logical -> numeric -> character <-- logical` -->
 
-```{r, echo=FALSE, eval=FALSE, purl=TRUE}
-## We’ve seen that atomic vectors can be of type character, numeric, integer, and
-## logical. But what happens if we try to mix these types in a single
-## vector?
 
-## What will happen in each of these examples? (hint: use `class()` to
-## check the data type of your object)
-num_char <- c(1, 2, 3, "a")
-
-num_logical <- c(1, 2, 3, TRUE)
-
-char_logical <- c("a", "b", "c", TRUE)
-
-tricky <- c(1, 2, 3, "4")
-
-## Why do you think it happens?
-
-## You've probably noticed that objects of different types get
-## converted into a single, shared type within a vector. In R, we call
-## converting objects from one class into another class
-## _coercion_. These conversions happen according to a hierarchy,
-## whereby some types get preferentially coerced into other types. Can
-## you draw a diagram that represents the hierarchy of how these data
-## types are coerced?
-```
 
 ## Subsetting vectors
 
 If we want to extract one or several values from a vector, we must provide one
 or several indices in square brackets. For instance:
 
-```{r, results='show', purl=FALSE}
+
+```r
 animals <- c("mouse", "rat", "dog", "cat")
 animals[2]
+```
+
+```
+#> [1] "rat"
+```
+
+```r
 animals[c(3, 2)]
+```
+
+```
+#> [1] "dog" "rat"
 ```
 
 We can also repeat the indices to create an object with more elements than the
 original one:
 
-```{r, results='show', purl=FALSE}
+
+```r
 more_animals <- animals[c(1, 2, 3, 2, 1, 4)]
 more_animals
+```
+
+```
+#> [1] "mouse" "rat"   "dog"   "rat"   "mouse" "cat"
 ```
 
 R indices start at 1. Programming languages like Fortran, MATLAB, Julia, and R start
@@ -468,27 +500,56 @@ simpler for computers to do.
 Another common way of subsetting is by using a logical vector. `TRUE` will
 select the element with the same index, while `FALSE` will not:
 
-```{r, results='show', purl=FALSE}
+
+```r
 genome_length_mb <- c(21, 34, 39, 54, 55)
 genome_length_mb[c(TRUE, FALSE, TRUE, TRUE, FALSE)]
+```
+
+```
+#> [1] 21 39 54
 ```
 
 Typically, these logical vectors are not typed by hand, but are the output of
 other functions or logical tests. For instance, if you wanted to select only the
 values above 50:
 
-```{r, results='show', purl=FALSE}
+
+```r
 genome_length_mb > 50    # will return logicals with TRUE for the indices that meet the condition
+```
+
+```
+#> [1] FALSE FALSE FALSE  TRUE  TRUE
+```
+
+```r
 ## so we can use this to select only the values above 50
 genome_length_mb[genome_length_mb > 50]
+```
+
+```
+#> [1] 54 55
 ```
 
 You can combine multiple tests using `&` (both conditions are true, AND) or `|`
 (at least one of the conditions is true, OR):
 
-```{r, results='show', purl=FALSE}
+
+```r
 genome_length_mb[genome_length_mb < 30 | genome_length_mb > 50]
+```
+
+```
+#> [1] 21 54 55
+```
+
+```r
 genome_length_mb[genome_length_mb >= 30 & genome_length_mb == 39]
+```
+
+```
+#> [1] 39
 ```
 
 Here, `<` stands for "less than", `>` for "greater than", `>=` for "greater than
@@ -502,25 +563,41 @@ A common task is to search for certain strings in a vector.  One could use the
 become tedious. The function `%in%` allows you to test if any of the elements of
 a search vector are found:
 
-```{r, results='show', purl=FALSE}
+
+```r
 animals <- c("mouse", "rat", "dog", "cat")
 animals[animals == "cat" | animals == "rat"] # returns both rat and cat
+```
+
+```
+#> [1] "rat" "cat"
+```
+
+```r
 animals %in% c("rat", "cat", "dog", "duck", "goat")
+```
+
+```
+#> [1] FALSE  TRUE  TRUE  TRUE
+```
+
+```r
 animals[animals %in% c("rat", "cat", "dog", "duck", "goat")]
+```
+
+```
+#> [1] "rat" "dog" "cat"
 ```
 
 > ### Challenge (optional){.challenge}
 >
 > * Can you figure out why `"four" > "five"` returns `TRUE`?
 
-```{r, echo=FALSE, purl=TRUE}
-### Challenge (optional)
-##
-## * Can you figure out why `"four" > "five"` returns `TRUE`?
-```
+
 
 <!--
-```{r, purl=FALSE}
+
+```r
 ## Answers
 ## * When using ">" or "<" on strings, R compares their alphabetical order. Here
 ##   "four" comes after "five", and therefore is "greater than" it.
@@ -540,7 +617,8 @@ makes it harder to overlook the cases where you are dealing with missing data.
 You can add the argument `na.rm=TRUE` to calculate the result while ignoring
 the missing values.
 
-```{r, purl=FALSE}
+
+```r
 ages <- c(2, 4, 4, NA, 6)
 mean(ages)
 max(ages)
@@ -553,7 +631,8 @@ functions `is.na()`, `na.omit()`, and `complete.cases()`. See below for
 examples.
 
 
-```{r, purl=FALSE}
+
+```r
 ## Extract those elements which are not missing values.
 ages[!is.na(ages)]
 
@@ -570,4 +649,4 @@ structures, we are ready to start working with the mappingfile we have been
 using in the other lessons, and learn about data frames.
 
 
-<p style="text-align: right; font-size: small;">Page build on: `r format(Sys.time())`</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-08 09:13:37</p>

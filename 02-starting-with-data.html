@@ -1,716 +1,704 @@
 <!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<html>
 <head>
-
-<meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="pandoc" />
-
-
-<meta name="author" content="Data Carpentry contributors" />
-
-
-<title>Starting with data</title>
-
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
-
-
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
-
-
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+  <title>Starting with data</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Starting with data">
+  <meta name="author" content="Data Carpentry contributors">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
 
 </head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Starting with data</h1>
+    <h2></h2>
+    <p>Data Carpentry contributors<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
 
-<body>
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
-img {
-  max-width:100%;
-  height: auto;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-</style>
+<slide class="" id="slide-2" style="background:;">
+  <article data-timings="">
+    <blockquote>
+<h3>Learning Objectives</h3>
 
-
-<style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-</style>
-
-<script>
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.parent().addClass('active');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-});
-</script>
-
-
-<div class="container-fluid main-container">
-
-<!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
-
-<!-- code folding -->
-
-
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-}
-
-</style>
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
-
-
-<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html"></a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">Home</a>
-</li>
-<li>
-  <a href="00-before-we-start.html">Before we start</a>
-</li>
-<li>
-  <a href="01-intro-to-r.html">Intro to R</a>
-</li>
-<li>
-  <a href="02-starting-with-data.html">Starting with data</a>
-</li>
-<li>
-  <a href="03-dplyr.html">Manipulating data frames</a>
-</li>
-<li>
-  <a href="04-visualization-ggplot2.html">Visualizing data</a>
-</li>
-<li>
-  <a href="05-r-and-databases.html">R and SQL</a>
-</li>
-<li>
-  <a href="code-handout.R">Code Handout</a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/datacarpentry/R-ecology-lesson">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
-
-<div class="fluid-row" id="header">
-
-
-
-<h1 class="title toc-ignore">Starting with data</h1>
-<h4 class="author"><em>Data Carpentry contributors</em></h4>
-
-</div>
-
-
-<hr />
-<blockquote>
-<h3 id="learning-objectives">Learning Objectives</h3>
 <ul>
-<li>Describe what a data frame is.</li>
-<li>Load external data from a .csv file into a data frame in R.</li>
+<li>Describe what an R data frame is.</li>
+<li>Load external data from a .csv file into R.</li>
 <li>Summarize the contents of a data frame in R.</li>
 <li>Manipulate categorical data in R.</li>
-<li>Change how character strings are handled in a data frame.</li>
-<li>Format dates in R</li>
 </ul>
-</blockquote>
-<hr />
-<div id="presentation-of-the-survey-data" class="section level2">
-<h2>Presentation of the Survey Data</h2>
-<p>We are studying the 16S rRNA gene V6-to-V8 sequencing data extracted from 116 mouse fecal samples. This data set was generated to compare the microbiomes of chemerin-knockout strains compared to wild-type strains and serves as our example tutorial data on the <a href="https://github.com/LangilleLab/microbiome_helper/wiki">Microbiome Helper wiki</a>.</p>
-<p>All of the information about the samples are stored in a metadata mapping file. The metadata mapping file of this dataset is stored as a comma separated value (CSV) file. Each row holds information for a single mouse, and the columns represent:</p>
-<table>
-<thead>
-<tr class="header">
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h1>Looking at Metadata</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>We will be looking at a subset of the metadata of the <a href="https://www.hmpdacc.org/hmp/">Human Microbiome Project</a>(HMP). This particular production phase represents pyrosequencing of 16S rRNA genes amplified from multiple body sites across hundreds of human subjects. 16S rRNA sequencing was used to characterize the complexity of microbial communities at individual body sites, and to determine whether there was a core microbiome at each site. Several body sites were studied, including the gastrointestinal and female urogenital tracts, oral cavity, nasal and pharyngeal tract, and skin.</p>
+
+<p>All of the information about the samples are stored in a metadata mapping file. The metadata mapping file of this dataset is stored as a comma separated value (CSV) file.
+Each row holds information for a single sample, and the columns represent:</p>
+
+<table><thead>
+<tr>
 <th>Column</th>
 <th>Description</th>
 </tr>
-</thead>
-<tbody>
-<tr class="odd">
+</thead><tbody>
+<tr>
 <td>SampleID</td>
-<td>Unique id for each mouse</td>
+<td>Unique id for each sample</td>
 </tr>
-<tr class="even">
+<tr>
+<td>SraSample</td>
+<td>xxxx</td>
+</tr>
+<tr>
 <td>BarcodeSequence</td>
 <td>Barcode sequence used for each sample</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>LinkerPrimerSequence</td>
 <td>Linker/primer sequence used to amplify the sample</td>
 </tr>
-<tr class="even">
-<td>FileInput</td>
+<tr>
+<td>SampleCollectDevice</td>
 <td>Name of .fastq input file</td>
 </tr>
-<tr class="odd">
-<td>Source</td>
+<tr>
+<td>ExperimentCenter</td>
 <td>BZ = ??? or CJS = ???</td>
 </tr>
-<tr class="even">
-<td>Mouse</td>
+<tr>
+<td>Title</td>
 <td>Unique number for each mouse</td>
 </tr>
-<tr class="odd">
-<td>Cage</td>
-<td>Cage in which each mouse was kept</td>
-</tr>
-<tr class="even">
-<td>Genotype</td>
+<tr>
+<td>Depth</td>
 <td>WT = wild type, chemerin_KO = chemerin_knockout,</td>
 </tr>
-<tr class="odd">
-<td></td>
+<tr>
+<td>PFPH</td>
 <td>CMKLR1_HE = ???, CMKLR1_KO = ???</td>
 </tr>
-<tr class="even">
-<td>SamplingWeek</td>
+<tr>
+<td>Sex</td>
 <td>Week in which mouse was sampled</td>
 </tr>
-<tr class="odd">
+<tr>
+<td>BodySuperSite</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>AnonymizedName</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>Mislabeled</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>AgeUnit</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>BodyMassIndex</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>Obesity</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>EnvMatter</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>Contaminated</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>ChronicCondition</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>MyocardInfarc</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>StudyID</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>CollectDay</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>Atheroschlerosis</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>Smoker</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>PCRPrimer</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>VisitNo</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>Hypertension</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
+<td>INTPH</td>
+<td>Unique id for each mouse</td>
+</tr>
+<tr>
 <td>Description</td>
 <td>Unique id for each mouse</td>
 </tr>
-</tbody>
-</table>
-<p>We are going to use the R function <code>download.file()</code> to download the CSV file that contains the metadata, and we will use <code>read.csv()</code> to load into memory the content of the CSV file as an object of class <code>data.frame</code>.</p>
+</tbody></table>
+
+<p>We are going to use the R function <code>download.file()</code> to download the CSV file
+that contains the metadata, and we will use <code>read.csv()</code> to
+load into memory the content of the CSV file as an object of class <code>data.frame</code>.</p>
+
 <p>To download the metadata into the <code>data/</code> subdirectory, run the following:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">download.file</span>(<span class="st">&quot;https://ndownloader.figshare.com/files/2292169&quot;</span>,
-              <span class="st">&quot;data/mapfile.csv&quot;</span>)</code></pre></div>
+
+<pre><code class="r">download.file(&quot;https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mappingfile_HMP.txt&quot;,
+              &quot;data/metadata.csv&quot;)
+</code></pre>
+
 <p>You are now ready to load the metadata:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mapfile &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;data/mapfile.csv&#39;</span>)</code></pre></div>
-<p>This statement doesn’t produce any output because, as you might recall, assignments don’t display anything. If we want to check that our data has been loaded, we can print the variable’s value: <code>mapfile</code>.</p>
-<p>This means the data loaded properly. Let’s check the top (the first 6 lines) of this data frame using the function <code>head()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mapfile)</code></pre></div>
-<pre><code>#&gt;   record_id month day year plot_id species_id sex hindfoot_length weight
-#&gt; 1         1     7  16 1977       2         NL   M              32     NA
-#&gt; 2        72     8  19 1977       2         NL   M              31     NA
-#&gt; 3       224     9  13 1977       2         NL                  NA     NA
-#&gt; 4       266    10  16 1977       2         NL                  NA     NA
-#&gt; 5       349    11  12 1977       2         NL                  NA     NA
-#&gt; 6       363    11  12 1977       2         NL                  NA     NA
-#&gt;     genus  species   taxa plot_type
-#&gt; 1 Neotoma albigula Rodent   Control
-#&gt; 2 Neotoma albigula Rodent   Control
-#&gt; 3 Neotoma albigula Rodent   Control
-#&gt; 4 Neotoma albigula Rodent   Control
-#&gt; 5 Neotoma albigula Rodent   Control
-#&gt; 6 Neotoma albigula Rodent   Control</code></pre>
+
+<pre><code class="r">metadata &lt;- read.csv(&#39;data/metadata.csv&#39;, header = TRUE, sep = &quot;\t&quot;)
+</code></pre>
+
+<p>This statement doesn&#39;t produce any output because, as you might recall,
+assignments don&#39;t display anything. If we want to check that our data has been
+loaded, we can print the variable&#39;s value: <code>metadata</code>.</p>
+
+<p>This means the data loaded properly. Let&#39;s check the top (the first 6 lines) of this data frame using the function <code>head()</code>:</p>
+
+<pre><code class="r">head(metadata)
+</code></pre>
+
+<pre><code>#&gt;    SampleID        SraSample BarcodeSequence LinkerPrimerSequence
+#&gt; 1 SRR040576 SRS017663.575350    TCAGACGAGAAC   CCGTCAATTCMTTTRAGT
+#&gt; 2 SRR040577 SRS022006.571394      TCAGACTTGC   CCGTCAATTCMTTTRAGT
+#&gt; 3 SRR040578 SRS020030.572850   TCAGTTAAGATTC   CCGTCAATTCMTTTRAGT
+#&gt; 4 SRR040579 SRS023617.570981     TCAGAAGCCGC   CCGTCAATTCMTTTRAGT
+#&gt; 5 SRR040580 SRS016529.574547    TCAGACGAAGTC   CCGTCAATTCMTTTRAGT
+#&gt; 6 SRR040581 SRS017428.573106    TCAGTGTCGGAC   CCGTCAATTCMTTTRAGT
+#&gt;   SampleCollectDevice ExperimentCenter                     Title Depth
+#&gt; 1                swab               BI HMP_production_phase_1161     0
+#&gt; 2                swab               BI HMP_production_phase_2070     0
+#&gt; 3                swab               BI HMP_production_phase_1601     0
+#&gt; 4                swab               BI HMP_production_phase_2470     0
+#&gt; 5                swab               BI  HMP_production_phase_901     0
+#&gt; 6                swab               BI HMP_production_phase_1117     0
+#&gt;   PFPH    Sex    BodySuperSite AnonymizedName Mislabeled Age AgeUnit
+#&gt; 1  0.0   male             Oral         241775      FALSE  19   years
+#&gt; 2  3.7 female          Airways         241747      FALSE  27   years
+#&gt; 3  3.8 female Urogenital_tract         241847      FALSE  24   years
+#&gt; 4  4.5 female             Oral         241702      FALSE  20   years
+#&gt; 5  3.7 female             Oral         241831      FALSE  23   years
+#&gt; 6  0.0   male             Skin         241703      FALSE  30   years
+#&gt;   BodyMassIndex Obesity   EnvMatter Contaminated ChronicCondition
+#&gt; 1            22       n ENVO:saliva        FALSE                n
+#&gt; 2            23       n  ENVO:mucus        FALSE                n
+#&gt; 3            30       n  ENVO:mucus        FALSE                y
+#&gt; 4            26       n ENVO:saliva        FALSE                n
+#&gt; 5            20       n ENVO:saliva        FALSE                n
+#&gt; 6            24       n  ENVO:sebum        FALSE                n
+#&gt;   MyocardInfarc StudyID CollectDay Atheroschlerosis Smoker
+#&gt; 1             n     969          0                n   None
+#&gt; 2             n     969        224                n   None
+#&gt; 3             n     969          0                n   None
+#&gt; 4             n     969        245                n   None
+#&gt; 5             n     969          0                n   None
+#&gt; 6             n     969          0                n   None
+#&gt;                                              PCRPrimer VisitNo
+#&gt; 1 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
+#&gt; 2 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       2
+#&gt; 3 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
+#&gt; 4 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       2
+#&gt; 5 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
+#&gt; 6 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
+#&gt;   Hypertension INTPH Description
+#&gt; 1            n   0.0   SRR040576
+#&gt; 2            n   4.1   SRR040577
+#&gt; 3            n   4.3   SRR040578
+#&gt; 4            n   4.9   SRR040579
+#&gt; 5            n   4.0   SRR040580
+#&gt; 6            n   0.0   SRR040581
+</code></pre>
+
 <blockquote>
-<h3 id="note">Note</h3>
-<p><code>read.csv</code> assumes that fields are delineated by commas, however, in several countries, the comma is used as a decimal separator and the semicolon (;) is used as a field delineator. If you want to read in this type of files in R, you can use the <code>read.csv2</code> function. It behaves exactly like <code>read.csv</code> but uses different parameters for the decimal and the field separators. If you are working with other format, they can be both specified by the user. Check out the help for <code>read.csv()</code> to learn more.</p>
+<h3>Note</h3>
+
+<p><code>read.csv</code> assumes that fields are delineated by commas, however, in several
+countries, the comma is used as a decimal separator and the semicolon (;) is
+used as a field delineator. If you want to read in this type of files in R,
+you can use the <code>read.csv2</code> function. It behaves exactly like <code>read.csv</code> but
+uses different parameters for the decimal and the field separators. If you are
+working with another format, they can be both specified by the user. Check out
+the help for <code>read.csv()</code> to learn more.</p>
 </blockquote>
-</div>
-<div id="what-are-data-frames" class="section level2">
+
 <h2>What are data frames?</h2>
-<p>Data frames are the <em>de facto</em> data structure for most tabular data, and what we use for statistics and plotting.</p>
-<p>A data frame can be created by hand, but most commonly they are generated by the functions <code>read.csv()</code> or <code>read.table()</code>; in other words, when importing spreadsheets from your hard drive (or the web).</p>
-<p>A data frame is the representation of data in the format of a table where the columns are vectors that all have the same length. Because the column are vectors, they all contain the same type of data (e.g., characters, integers, factors). For example, here is a figure depicting a data frame comprising of a numeric, a character and a logical vector.</p>
-<div class="figure">
-<img src="img/data-frame.svg" />
 
-</div>
-<p>We can see this when inspecting the <b>str</b>ucture of a data frame with the function <code>str()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(mapfile)</code></pre></div>
-</div>
-<div id="inspecting-data.frame-objects" class="section level2">
+<p>Data frames are the <em>de facto</em> data structure for most tabular data, and what we
+use for statistics and plotting.</p>
+
+<p>A data frame can be created by hand, but most commonly they are generated by the
+functions <code>read.csv()</code> or <code>read.table()</code>; in other words, when importing
+spreadsheets from your hard drive (or the web).</p>
+
+<p>A data frame is the representation of data in the format of a table where the
+columns are vectors that all have the same length. Because the column are
+vectors, they all contain the same type of data (e.g., characters, integers,
+factors). For example, here is a figure depicting a data frame comprising of a
+numeric, a character and a logical vector.</p>
+
+<p><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSI0ODBweCIgaGVpZ2h0PSIyODFweCIgdmlld0JveD0iMCAwIDQ4MCAyODEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ4MCAyODE7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxnPg0KCTxyZWN0IHg9IjguOTc3IiB5PSIyNi4yNzMiIHN0eWxlPSJmaWxsOm5vbmU7IiB3aWR0aD0iMTg3LjI3MyIgaGVpZ2h0PSI1OC4xODIiLz4NCgk8cGF0aCBkPSJNMTkuNzgyLDQyLjc5aC0wLjEwNWMtMC44OTgsMS4zMDUtMi4yNDIsMS45NTctNC4wMzEsMS45NTdjLTEuNjgsMC0yLjk4Ni0wLjU3NC0zLjkyLTEuNzIzcy0xLjQtMi43ODEtMS40LTQuODk4DQoJCXMwLjQ2OS0zLjc2MiwxLjQwNi00LjkzNHMyLjI0Mi0xLjc1OCwzLjkxNC0xLjc1OGMxLjc0MiwwLDMuMDc4LDAuNjMzLDQuMDA4LDEuODk4aDAuMTUybC0wLjA4Mi0wLjkyNmwtMC4wNDctMC45MDJ2LTUuMjI3aDEuOTQ1DQoJCXYxOC4yMzRIMjAuMDRMMTkuNzgyLDQyLjc5eiBNMTUuODkxLDQzLjExOGMxLjMyOCwwLDIuMjkxLTAuMzYxLDIuODg5LTEuMDg0czAuODk2LTEuODg5LDAuODk2LTMuNDk4di0wLjQxDQoJCWMwLTEuODItMC4zMDMtMy4xMTktMC45MDgtMy44OTZzLTEuNTcyLTEuMTY2LTIuOS0xLjE2NmMtMS4xNDEsMC0yLjAxNCwwLjQ0My0yLjYxOSwxLjMzcy0wLjkwOCwyLjEzOS0wLjkwOCwzLjc1Ng0KCQljMCwxLjY0MSwwLjMwMSwyLjg3OSwwLjkwMiwzLjcxNVMxNC43MjcsNDMuMTE4LDE1Ljg5MSw0My4xMTh6Ii8+DQoJPHBhdGggZD0iTTMzLjY0NSw0NC41MTNsLTAuMzg3LTEuODI4aC0wLjA5NGMtMC42NDEsMC44MDUtMS4yNzksMS4zNS0xLjkxNiwxLjYzNXMtMS40MzIsMC40MjgtMi4zODUsMC40MjgNCgkJYy0xLjI3MywwLTIuMjcxLTAuMzI4LTIuOTk0LTAuOTg0cy0xLjA4NC0xLjU5LTEuMDg0LTIuODAxYzAtMi41OTQsMi4wNzQtMy45NTMsNi4yMjMtNC4wNzhsMi4xOC0wLjA3di0wLjc5Nw0KCQljMC0xLjAwOC0wLjIxNy0xLjc1Mi0wLjY1LTIuMjMycy0xLjEyNy0wLjcyMS0yLjA4LTAuNzIxYy0xLjA3LDAtMi4yODEsMC4zMjgtMy42MzMsMC45ODRsLTAuNTk4LTEuNDg4DQoJCWMwLjYzMy0wLjM0NCwxLjMyNi0wLjYxMywyLjA4LTAuODA5czEuNTEtMC4yOTMsMi4yNjgtMC4yOTNjMS41MzEsMCwyLjY2NiwwLjM0LDMuNDA0LDEuMDJzMS4xMDcsMS43NywxLjEwNywzLjI3djguNzY2SDMzLjY0NXoNCgkJIE0yOS4yNSw0My4xNDJjMS4yMTEsMCwyLjE2Mi0wLjMzMiwyLjg1NC0wLjk5NnMxLjAzNy0xLjU5NCwxLjAzNy0yLjc4OXYtMS4xNmwtMS45NDUsMC4wODJjLTEuNTQ3LDAuMDU1LTIuNjYyLDAuMjk1LTMuMzQ2LDAuNzIxDQoJCXMtMS4wMjUsMS4wODgtMS4wMjUsMS45ODZjMCwwLjcwMywwLjIxMywxLjIzOCwwLjYzOSwxLjYwNVMyOC40ODUsNDMuMTQyLDI5LjI1LDQzLjE0MnoiLz4NCgk8cGF0aCBkPSJNNDMuMjQzLDQzLjE0MmMwLjM0NCwwLDAuNjc2LTAuMDI1LDAuOTk2LTAuMDc2czAuNTc0LTAuMTA0LDAuNzYyLTAuMTU4djEuNDg4Yy0wLjIxMSwwLjEwMi0wLjUyMSwwLjE4Ni0wLjkzMiwwLjI1Mg0KCQlzLTAuNzc5LDAuMS0xLjEwNywwLjFjLTIuNDg0LDAtMy43MjctMS4zMDktMy43MjctMy45MjZ2LTcuNjQxaC0xLjg0di0wLjkzOGwxLjg0LTAuODA5bDAuODItMi43NDJoMS4xMjV2Mi45NzdoMy43Mjd2MS41MTJINDEuMTgNCgkJdjcuNTU5YzAsMC43NzMsMC4xODQsMS4zNjcsMC41NTEsMS43ODFTNDIuNjAyLDQzLjE0Miw0My4yNDMsNDMuMTQyeiIvPg0KCTxwYXRoIGQ9Ik01NS40NjUsNDQuNTEzbC0wLjM4Ny0xLjgyOGgtMC4wOTRjLTAuNjQxLDAuODA1LTEuMjc5LDEuMzUtMS45MTYsMS42MzVzLTEuNDMyLDAuNDI4LTIuMzg1LDAuNDI4DQoJCWMtMS4yNzMsMC0yLjI3MS0wLjMyOC0yLjk5NC0wLjk4NHMtMS4wODQtMS41OS0xLjA4NC0yLjgwMWMwLTIuNTk0LDIuMDc0LTMuOTUzLDYuMjIzLTQuMDc4bDIuMTgtMC4wN3YtMC43OTcNCgkJYzAtMS4wMDgtMC4yMTctMS43NTItMC42NS0yLjIzMnMtMS4xMjctMC43MjEtMi4wOC0wLjcyMWMtMS4wNywwLTIuMjgxLDAuMzI4LTMuNjMzLDAuOTg0bC0wLjU5OC0xLjQ4OA0KCQljMC42MzMtMC4zNDQsMS4zMjYtMC42MTMsMi4wOC0wLjgwOXMxLjUxLTAuMjkzLDIuMjY4LTAuMjkzYzEuNTMxLDAsMi42NjYsMC4zNCwzLjQwNCwxLjAyczEuMTA3LDEuNzcsMS4xMDcsMy4yN3Y4Ljc2Nkg1NS40NjV6DQoJCSBNNTEuMDcxLDQzLjE0MmMxLjIxMSwwLDIuMTYyLTAuMzMyLDIuODU0LTAuOTk2czEuMDM3LTEuNTk0LDEuMDM3LTIuNzg5di0xLjE2bC0xLjk0NSwwLjA4Mg0KCQljLTEuNTQ3LDAuMDU1LTIuNjYyLDAuMjk1LTMuMzQ2LDAuNzIxcy0xLjAyNSwxLjA4OC0xLjAyNSwxLjk4NmMwLDAuNzAzLDAuMjEzLDEuMjM4LDAuNjM5LDEuNjA1UzUwLjMwNSw0My4xNDIsNTEuMDcxLDQzLjE0MnoiLz4NCgk8cGF0aCBkPSJNNzIuOTM4LDMzLjE4MWgtMy4yN3YxMS4zMzJoLTEuOTQ1VjMzLjE4MWgtMi4yOTd2LTAuODc5bDIuMjk3LTAuNzAzdi0wLjcxNWMwLTMuMTU2LDEuMzc5LTQuNzM0LDQuMTM3LTQuNzM0DQoJCWMwLjY4LDAsMS40NzcsMC4xMzcsMi4zOTEsMC40MWwtMC41MDQsMS41NTljLTAuNzUtMC4yNDItMS4zOTEtMC4zNjMtMS45MjItMC4zNjNjLTAuNzM0LDAtMS4yNzcsMC4yNDQtMS42MjksMC43MzINCgkJcy0wLjUyNywxLjI3MS0wLjUyNywyLjM1djAuODMyaDMuMjdWMzMuMTgxeiIvPg0KCTxwYXRoIGQ9Ik04MS4xNDEsMzEuNDM1YzAuNTcsMCwxLjA4MiwwLjA0NywxLjUzNSwwLjE0MWwtMC4yNywxLjgwNWMtMC41MzEtMC4xMTctMS0wLjE3Ni0xLjQwNi0wLjE3Ng0KCQljLTEuMDM5LDAtMS45MjgsMC40MjItMi42NjYsMS4yNjZzLTEuMTA3LDEuODk1LTEuMTA3LDMuMTUydjYuODkxaC0xLjk0NVYzMS42NjloMS42MDVsMC4yMjMsMi4zNzloMC4wOTQNCgkJYzAuNDc3LTAuODM2LDEuMDUxLTEuNDgsMS43MjMtMS45MzRTODAuMzM2LDMxLjQzNSw4MS4xNDEsMzEuNDM1eiIvPg0KCTxwYXRoIGQ9Ik05Mi45NzcsNDQuNTEzbC0wLjM4Ny0xLjgyOGgtMC4wOTRjLTAuNjQxLDAuODA1LTEuMjc5LDEuMzUtMS45MTYsMS42MzVzLTEuNDMyLDAuNDI4LTIuMzg1LDAuNDI4DQoJCWMtMS4yNzMsMC0yLjI3MS0wLjMyOC0yLjk5NC0wLjk4NHMtMS4wODQtMS41OS0xLjA4NC0yLjgwMWMwLTIuNTk0LDIuMDc0LTMuOTUzLDYuMjIzLTQuMDc4bDIuMTgtMC4wN3YtMC43OTcNCgkJYzAtMS4wMDgtMC4yMTctMS43NTItMC42NS0yLjIzMnMtMS4xMjctMC43MjEtMi4wOC0wLjcyMWMtMS4wNywwLTIuMjgxLDAuMzI4LTMuNjMzLDAuOTg0bC0wLjU5OC0xLjQ4OA0KCQljMC42MzMtMC4zNDQsMS4zMjYtMC42MTMsMi4wOC0wLjgwOXMxLjUxLTAuMjkzLDIuMjY4LTAuMjkzYzEuNTMxLDAsMi42NjYsMC4zNCwzLjQwNCwxLjAyczEuMTA3LDEuNzcsMS4xMDcsMy4yN3Y4Ljc2Nkg5Mi45Nzd6DQoJCSBNODguNTgzLDQzLjE0MmMxLjIxMSwwLDIuMTYyLTAuMzMyLDIuODU0LTAuOTk2czEuMDM3LTEuNTk0LDEuMDM3LTIuNzg5di0xLjE2bC0xLjk0NSwwLjA4Mg0KCQljLTEuNTQ3LDAuMDU1LTIuNjYyLDAuMjk1LTMuMzQ2LDAuNzIxcy0xLjAyNSwxLjA4OC0xLjAyNSwxLjk4NmMwLDAuNzAzLDAuMjEzLDEuMjM4LDAuNjM5LDEuNjA1Uzg3LjgxNyw0My4xNDIsODguNTgzLDQzLjE0MnoiLz4NCgk8cGF0aCBkPSJNMTE0Ljc5Nyw0NC41MTN2LTguMzU1YzAtMS4wMjMtMC4yMTktMS43OTEtMC42NTYtMi4zMDNzLTEuMTE3LTAuNzY4LTIuMDM5LTAuNzY4Yy0xLjIxMSwwLTIuMTA1LDAuMzQ4LTIuNjg0LDEuMDQzDQoJCXMtMC44NjcsMS43NjYtMC44NjcsMy4yMTF2Ny4xNzJoLTEuOTQ1di04LjM1NWMwLTEuMDIzLTAuMjE5LTEuNzkxLTAuNjU2LTIuMzAzcy0xLjEyMS0wLjc2OC0yLjA1MS0wLjc2OA0KCQljLTEuMjE5LDAtMi4xMTEsMC4zNjUtMi42NzgsMS4wOTZzLTAuODUsMS45MjgtMC44NSwzLjU5MnY2LjczOGgtMS45NDVWMzEuNjY5aDEuNTgybDAuMzE2LDEuNzU4aDAuMDk0DQoJCWMwLjM2Ny0wLjYyNSwwLjg4NS0xLjExMywxLjU1My0xLjQ2NXMxLjQxNi0wLjUyNywyLjI0NC0wLjUyN2MyLjAwOCwwLDMuMzIsMC43MjcsMy45MzgsMi4xOGgwLjA5NA0KCQljMC4zODMtMC42NzIsMC45MzgtMS4yMDMsMS42NjQtMS41OTRzMS41NTUtMC41ODYsMi40ODQtMC41ODZjMS40NTMsMCwyLjU0MSwwLjM3MywzLjI2NCwxLjExOXMxLjA4NCwxLjkzOSwxLjA4NCwzLjU4djguMzc5DQoJCUgxMTQuNzk3eiIvPg0KCTxwYXRoIGQ9Ik0xMjYuMTc2LDQ0Ljc0N2MtMS44OTgsMC0zLjM5Ni0wLjU3OC00LjQ5NC0xLjczNHMtMS42NDYtMi43NjItMS42NDYtNC44MTZjMC0yLjA3LDAuNTEtMy43MTUsMS41MjktNC45MzQNCgkJczIuMzg5LTEuODI4LDQuMTA3LTEuODI4YzEuNjA5LDAsMi44ODMsMC41MjksMy44MiwxLjU4OHMxLjQwNiwyLjQ1NSwxLjQwNiw0LjE4OXYxLjIzaC04Ljg0OGMwLjAzOSwxLjUwOCwwLjQyLDIuNjUyLDEuMTQzLDMuNDM0DQoJCXMxLjc0LDEuMTcyLDMuMDUzLDEuMTcyYzEuMzgzLDAsMi43NS0wLjI4OSw0LjEwMi0wLjg2N3YxLjczNGMtMC42ODgsMC4yOTctMS4zMzgsMC41MS0xLjk1MSwwLjYzOVMxMjcuMDQzLDQ0Ljc0NywxMjYuMTc2LDQ0Ljc0Nw0KCQl6IE0xMjUuNjQ5LDMzLjA2M2MtMS4wMzEsMC0xLjg1NCwwLjMzNi0yLjQ2NywxLjAwOHMtMC45NzUsMS42MDItMS4wODQsMi43ODloNi43MTVjMC0xLjIyNy0wLjI3My0yLjE2Ni0wLjgyLTIuODE4DQoJCVMxMjYuNjY1LDMzLjA2MywxMjUuNjQ5LDMzLjA2M3oiLz4NCjwvZz4NCjxyZWN0IHg9IjE0NCIgeT0iMjgiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjQ7c3Ryb2tlLW1pdGVybGltaXQ6MTA7IiB3aWR0aD0iOTMiIGhlaWdodD0iNjgiLz4NCjxyZWN0IHg9IjI0OCIgeT0iMjgiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMyOUFCRTI7c3Ryb2tlLXdpZHRoOjQ7c3Ryb2tlLW1pdGVybGltaXQ6MTA7IiB3aWR0aD0iOTMiIGhlaWdodD0iNjgiLz4NCjxyZWN0IHg9IjM1MCIgeT0iMjgiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiNGRjAwMDA7c3Ryb2tlLXdpZHRoOjQ7c3Ryb2tlLW1pdGVybGltaXQ6MTA7IiB3aWR0aD0iOTMiIGhlaWdodD0iNjgiLz4NCjxyZWN0IHg9IjM1MCIgeT0iMTAzIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTojRkYwMDAwO3N0cm9rZS13aWR0aDo0O3N0cm9rZS1taXRlcmxpbWl0OjEwOyIgd2lkdGg9IjkzIiBoZWlnaHQ9IjY4Ii8+DQo8cmVjdCB4PSIzNTAiIHk9IjE3OCIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6I0ZGMDAwMDtzdHJva2Utd2lkdGg6NDtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiIHdpZHRoPSI5MyIgaGVpZ2h0PSI2OCIvPg0KPHJlY3QgeD0iMTQ0IiB5PSIxMDMiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjQ7c3Ryb2tlLW1pdGVybGltaXQ6MTA7IiB3aWR0aD0iOTMiIGhlaWdodD0iNjgiLz4NCjxyZWN0IHg9IjI0OCIgeT0iMTAzIiBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTojMjlBQkUyO3N0cm9rZS13aWR0aDo0O3N0cm9rZS1taXRlcmxpbWl0OjEwOyIgd2lkdGg9IjkzIiBoZWlnaHQ9IjY4Ii8+DQo8cmVjdCB4PSIxNDQiIHk9IjE3OCIgc3R5bGU9ImZpbGw6bm9uZTtzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6NDtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiIHdpZHRoPSI5MyIgaGVpZ2h0PSI2OCIvPg0KPHJlY3QgeD0iMjQ4IiB5PSIxNzgiIHN0eWxlPSJmaWxsOm5vbmU7c3Ryb2tlOiMyOUFCRTI7c3Ryb2tlLXdpZHRoOjQ7c3Ryb2tlLW1pdGVybGltaXQ6MTA7IiB3aWR0aD0iOTMiIGhlaWdodD0iNjgiLz4NCjxnPg0KCTxyZWN0IHg9IjE4MS4xNjciIHk9IjQ1Ljc1IiBzdHlsZT0iZmlsbDpub25lOyIgd2lkdGg9IjIxIiBoZWlnaHQ9IjI5LjUiLz4NCgk8cGF0aCBkPSJNMTg5LjU0NSw2My45OWgtMS44OThWNTEuNzc5YzAtMS4wMTYsMC4wMzEtMS45NzcsMC4wOTQtMi44ODNjLTAuMTY0LDAuMTY0LTAuMzQ4LDAuMzM2LTAuNTUxLDAuNTE2DQoJCXMtMS4xMzMsMC45NDEtMi43ODksMi4yODVsLTEuMDMxLTEuMzM2bDQuNTM1LTMuNTA0aDEuNjQxVjYzLjk5eiIvPg0KPC9nPg0KPGc+DQoJPHJlY3QgeD0iMzYzIiB5PSIxMjUuNSIgc3R5bGU9ImZpbGw6bm9uZTsiIHdpZHRoPSI3MiIgaGVpZ2h0PSIyNCIvPg0KCTxwYXRoIGQ9Ik0zNjcuMzQ4LDE0My43NGgtMS45OTJ2LTE3LjEzM2g5LjU1MXYxLjc3aC03LjU1OXY2LjI3aDcuMTAydjEuNzdoLTcuMTAyVjE0My43NHoiLz4NCgk8cGF0aCBkPSJNMzg4LjUxMiwxNDMuNzRsLTIuMTMzLTUuNDQ5aC02Ljg2N2wtMi4xMDksNS40NDloLTIuMDE2bDYuNzczLTE3LjIwM2gxLjY3Nmw2LjczOCwxNy4yMDNIMzg4LjUxMnogTTM4NS43NTgsMTM2LjQ5OA0KCQlsLTEuOTkyLTUuMzA5Yy0wLjI1OC0wLjY3Mi0wLjUyMy0xLjQ5Ni0wLjc5Ny0yLjQ3M2MtMC4xNzIsMC43NS0wLjQxOCwxLjU3NC0wLjczOCwyLjQ3M2wtMi4wMTYsNS4zMDlIMzg1Ljc1OHoiLz4NCgk8cGF0aCBkPSJNMzkyLjkzLDE0My43NHYtMTcuMTMzaDEuOTkydjE1LjMyOGg3LjU1OXYxLjgwNUgzOTIuOTN6Ii8+DQoJPHBhdGggZD0iTTQxNS4wNTUsMTM5LjE4MWMwLDEuNTA4LTAuNTQ3LDIuNjg0LTEuNjQxLDMuNTI3cy0yLjU3OCwxLjI2Ni00LjQ1MywxLjI2NmMtMi4wMzEsMC0zLjU5NC0wLjI2Mi00LjY4OC0wLjc4NXYtMS45MjINCgkJYzAuNzAzLDAuMjk3LDEuNDY5LDAuNTMxLDIuMjk3LDAuNzAzczEuNjQ4LDAuMjU4LDIuNDYxLDAuMjU4YzEuMzI4LDAsMi4zMjgtMC4yNTIsMy0wLjc1NnMxLjAwOC0xLjIwNSwxLjAwOC0yLjEwNA0KCQljMC0wLjU5NC0wLjExOS0xLjA4LTAuMzU3LTEuNDU5cy0wLjYzNy0wLjcyOS0xLjE5NS0xLjA0OXMtMS40MDgtMC42ODQtMi41NDktMS4wOWMtMS41OTQtMC41Ny0yLjczMi0xLjI0Ni0zLjQxNi0yLjAyNw0KCQlzLTEuMDI1LTEuODAxLTEuMDI1LTMuMDU5YzAtMS4zMiwwLjQ5Ni0yLjM3MSwxLjQ4OC0zLjE1MnMyLjMwNS0xLjE3MiwzLjkzOC0xLjE3MmMxLjcwMywwLDMuMjcsMC4zMTMsNC42OTksMC45MzhMNDE0LDEyOS4wMzMNCgkJYy0xLjQxNC0wLjU5NC0yLjc4OS0wLjg5MS00LjEyNS0wLjg5MWMtMS4wNTUsMC0xLjg3OSwwLjIyNy0yLjQ3MywwLjY4cy0wLjg5MSwxLjA4Mi0wLjg5MSwxLjg4N2MwLDAuNTk0LDAuMTA5LDEuMDgsMC4zMjgsMS40NTkNCgkJczAuNTg4LDAuNzI3LDEuMTA3LDEuMDQzczEuMzE0LDAuNjY2LDIuMzg1LDEuMDQ5YzEuNzk3LDAuNjQxLDMuMDMzLDEuMzI4LDMuNzA5LDIuMDYzUzQxNS4wNTUsMTM4LjAwOSw0MTUuMDU1LDEzOS4xODF6Ii8+DQoJPHBhdGggZD0iTTQyOC4xMDksMTQzLjc0aC05LjU1MXYtMTcuMTMzaDkuNTUxdjEuNzdoLTcuNTU5djUuNTJoNy4xMDJ2MS43NThoLTcuMTAydjYuMzA1aDcuNTU5VjE0My43NHoiLz4NCjwvZz4NCjxnPg0KCTxyZWN0IHg9IjM2MyIgeT0iNDguNSIgc3R5bGU9ImZpbGw6bm9uZTsiIHdpZHRoPSI3MiIgaGVpZ2h0PSIyNCIvPg0KCTxwYXRoIGQ9Ik0zNzAuNjI5LDY2Ljc0aC0xLjk5MlY1MS4zNzZoLTUuNDI2di0xLjc3aDEyLjg0NHYxLjc3aC01LjQyNlY2Ni43NHoiLz4NCgk8cGF0aCBkPSJNMzgwLjYyNSw1OS42MTV2Ny4xMjVoLTEuOTkyVjQ5LjYwN2g0LjY5OWMyLjEwMiwwLDMuNjU0LDAuNDAyLDQuNjU4LDEuMjA3czEuNTA2LDIuMDE2LDEuNTA2LDMuNjMzDQoJCWMwLDIuMjY2LTEuMTQ4LDMuNzk3LTMuNDQ1LDQuNTk0bDQuNjUyLDcuNjk5aC0yLjM1NWwtNC4xNDgtNy4xMjVIMzgwLjYyNXogTTM4MC42MjUsNTcuOTA0aDIuNzNjMS40MDYsMCwyLjQzOC0wLjI3OSwzLjA5NC0wLjgzOA0KCQlzMC45ODQtMS4zOTYsMC45ODQtMi41MTRjMC0xLjEzMy0wLjMzNC0xLjk0OS0xLjAwMi0yLjQ0OXMtMS43NC0wLjc1LTMuMjE3LTAuNzVoLTIuNTlWNTcuOTA0eiIvPg0KCTxwYXRoIGQ9Ik00MDYuNDA2LDQ5LjYwN3YxMS4wODZjMCwxLjk1My0wLjU5LDMuNDg4LTEuNzcsNC42MDVzLTIuODAxLDEuNjc2LTQuODYzLDEuNjc2cy0zLjY1OC0wLjU2My00Ljc4Ny0xLjY4OA0KCQlzLTEuNjkzLTIuNjcyLTEuNjkzLTQuNjQxVjQ5LjYwN2gxLjk5MnYxMS4xOGMwLDEuNDMsMC4zOTEsMi41MjcsMS4xNzIsMy4yOTNzMS45MywxLjE0OCwzLjQ0NSwxLjE0OA0KCQljMS40NDUsMCwyLjU1OS0wLjM4NSwzLjM0LTEuMTU0czEuMTcyLTEuODczLDEuMTcyLTMuMzExVjQ5LjYwN0g0MDYuNDA2eiIvPg0KCTxwYXRoIGQ9Ik00MjAuNDkyLDY2Ljc0aC05LjU1MVY0OS42MDdoOS41NTF2MS43N2gtNy41NTl2NS41Mmg3LjEwMnYxLjc1OGgtNy4xMDJ2Ni4zMDVoNy41NTlWNjYuNzR6Ii8+DQo8L2c+DQo8Zz4NCgk8cmVjdCB4PSIzNjMiIHk9IjE5OS41IiBzdHlsZT0iZmlsbDpub25lOyIgd2lkdGg9IjcyIiBoZWlnaHQ9IjI0Ii8+DQoJPHBhdGggZD0iTTM3MC42MjksMjE3Ljc0aC0xLjk5MnYtMTUuMzYzaC01LjQyNnYtMS43N2gxMi44NDR2MS43N2gtNS40MjZWMjE3Ljc0eiIvPg0KCTxwYXRoIGQ9Ik0zODAuNjI1LDIxMC42MTV2Ny4xMjVoLTEuOTkydi0xNy4xMzNoNC42OTljMi4xMDIsMCwzLjY1NCwwLjQwMiw0LjY1OCwxLjIwN3MxLjUwNiwyLjAxNiwxLjUwNiwzLjYzMw0KCQljMCwyLjI2Ni0xLjE0OCwzLjc5Ny0zLjQ0NSw0LjU5NGw0LjY1Miw3LjY5OWgtMi4zNTVsLTQuMTQ4LTcuMTI1SDM4MC42MjV6IE0zODAuNjI1LDIwOC45MDRoMi43Mw0KCQljMS40MDYsMCwyLjQzOC0wLjI3OSwzLjA5NC0wLjgzOHMwLjk4NC0xLjM5NiwwLjk4NC0yLjUxNGMwLTEuMTMzLTAuMzM0LTEuOTQ5LTEuMDAyLTIuNDQ5cy0xLjc0LTAuNzUtMy4yMTctMC43NWgtMi41OVYyMDguOTA0eiINCgkJLz4NCgk8cGF0aCBkPSJNNDA2LjQwNiwyMDAuNjA3djExLjA4NmMwLDEuOTUzLTAuNTksMy40ODgtMS43Nyw0LjYwNXMtMi44MDEsMS42NzYtNC44NjMsMS42NzZzLTMuNjU4LTAuNTYzLTQuNzg3LTEuNjg4DQoJCXMtMS42OTMtMi42NzItMS42OTMtNC42NDF2LTExLjAzOWgxLjk5MnYxMS4xOGMwLDEuNDMsMC4zOTEsMi41MjcsMS4xNzIsMy4yOTNzMS45MywxLjE0OCwzLjQ0NSwxLjE0OA0KCQljMS40NDUsMCwyLjU1OS0wLjM4NSwzLjM0LTEuMTU0czEuMTcyLTEuODczLDEuMTcyLTMuMzExdi0xMS4xNTZINDA2LjQwNnoiLz4NCgk8cGF0aCBkPSJNNDIwLjQ5MiwyMTcuNzRoLTkuNTUxdi0xNy4xMzNoOS41NTF2MS43N2gtNy41NTl2NS41Mmg3LjEwMnYxLjc1OGgtNy4xMDJ2Ni4zMDVoNy41NTlWMjE3Ljc0eiIvPg0KPC9nPg0KPGc+DQoJPHJlY3QgeD0iMjc4LjUiIHk9IjQ4LjUiIHN0eWxlPSJmaWxsOm5vbmU7IiB3aWR0aD0iMzIiIGhlaWdodD0iMjQiLz4NCgk8cGF0aCBkPSJNMjc4LjkzNCw1NS40NzhsLTAuMTQxLTAuMjU4YzAuMTcyLTAuNzAzLDAuNDQ5LTEuNTc4LDAuODMyLTIuNjI1czAuNzkzLTIuMDQzLDEuMjMtMi45ODhoMS40NDENCgkJYy0wLjUxNiwxLjk4NC0wLjkxOCwzLjk0MS0xLjIwNyw1Ljg3MUgyNzguOTM0eiBNMjgzLjI1OCw1NS40NzhsLTAuMTc2LTAuMjU4YzAuNDM4LTEuNjgsMS4xMzMtMy41NTEsMi4wODYtNS42MTNoMS40NDENCgkJYy0wLjIzNCwwLjg5OC0wLjQ2NywxLjkxMi0wLjY5NywzLjA0MXMtMC4zOTYsMi4wNzItMC40OTgsMi44M0gyODMuMjU4eiIvPg0KCTxwYXRoIGQ9Ik0yOTguOTI2LDYyLjE4MWMwLDEuNTA4LTAuNTQ3LDIuNjg0LTEuNjQxLDMuNTI3cy0yLjU3OCwxLjI2Ni00LjQ1MywxLjI2NmMtMi4wMzEsMC0zLjU5NC0wLjI2Mi00LjY4OC0wLjc4NXYtMS45MjINCgkJYzAuNzAzLDAuMjk3LDEuNDY5LDAuNTMxLDIuMjk3LDAuNzAzczEuNjQ4LDAuMjU4LDIuNDYxLDAuMjU4YzEuMzI4LDAsMi4zMjgtMC4yNTIsMy0wLjc1NnMxLjAwOC0xLjIwNSwxLjAwOC0yLjEwNA0KCQljMC0wLjU5NC0wLjExOS0xLjA4LTAuMzU3LTEuNDU5cy0wLjYzNy0wLjcyOS0xLjE5NS0xLjA0OXMtMS40MDgtMC42ODQtMi41NDktMS4wOWMtMS41OTQtMC41Ny0yLjczMi0xLjI0Ni0zLjQxNi0yLjAyNw0KCQlzLTEuMDI1LTEuODAxLTEuMDI1LTMuMDU5YzAtMS4zMiwwLjQ5Ni0yLjM3MSwxLjQ4OC0zLjE1MnMyLjMwNS0xLjE3MiwzLjkzOC0xLjE3MmMxLjcwMywwLDMuMjcsMC4zMTMsNC42OTksMC45MzhsLTAuNjIxLDEuNzM0DQoJCWMtMS40MTQtMC41OTQtMi43ODktMC44OTEtNC4xMjUtMC44OTFjLTEuMDU1LDAtMS44NzksMC4yMjctMi40NzMsMC42OHMtMC44OTEsMS4wODItMC44OTEsMS44ODdjMCwwLjU5NCwwLjEwOSwxLjA4LDAuMzI4LDEuNDU5DQoJCXMwLjU4OCwwLjcyNywxLjEwNywxLjA0M3MxLjMxNCwwLjY2NiwyLjM4NSwxLjA0OWMxLjc5NywwLjY0MSwzLjAzMywxLjMyOCwzLjcwOSwyLjA2M1MyOTguOTI2LDYxLjAwOSwyOTguOTI2LDYyLjE4MXoiLz4NCgk8cGF0aCBkPSJNMzAzLjY5NSw0OS42MDdsMC4xNzYsMC4yNThjLTAuMjAzLDAuNzgxLTAuNDk2LDEuNjg5LTAuODc5LDIuNzI1cy0wLjc4MSwxLjk5OC0xLjE5NSwyLjg4OWgtMS40Mw0KCQljMC41NDctMi4yMjcsMC45NDUtNC4xODQsMS4xOTUtNS44NzFIMzAzLjY5NXogTTMwOC4wMiw0OS42MDdsMC4xNjQsMC4yNThjLTAuMTg4LDAuNzExLTAuNDY5LDEuNTg2LTAuODQ0LDIuNjI1DQoJCXMtMC43ODEsMi4wMzUtMS4yMTksMi45ODhoLTEuNDY1YzAuMjAzLTAuNzgxLDAuNDM0LTEuNzczLDAuNjkxLTIuOTc3czAuNDM4LTIuMTY4LDAuNTM5LTIuODk1SDMwOC4wMnoiLz4NCjwvZz4NCjxnPg0KCTxyZWN0IHg9IjI3Ny41IiB5PSIxMjUuNSIgc3R5bGU9ImZpbGw6bm9uZTsiIHdpZHRoPSIzMiIgaGVpZ2h0PSIyNCIvPg0KCTxwYXRoIGQ9Ik0yNzcuOTM0LDEzMi40NzhsLTAuMTQxLTAuMjU4YzAuMTcyLTAuNzAzLDAuNDQ5LTEuNTc4LDAuODMyLTIuNjI1czAuNzkzLTIuMDQzLDEuMjMtMi45ODhoMS40NDENCgkJYy0wLjUxNiwxLjk4NC0wLjkxOCwzLjk0MS0xLjIwNyw1Ljg3MUgyNzcuOTM0eiBNMjgyLjI1OCwxMzIuNDc4bC0wLjE3Ni0wLjI1OGMwLjQzOC0xLjY4LDEuMTMzLTMuNTUxLDIuMDg2LTUuNjEzaDEuNDQxDQoJCWMtMC4yMzQsMC44OTgtMC40NjcsMS45MTItMC42OTcsMy4wNDFzLTAuMzk2LDIuMDcyLTAuNDk4LDIuODNIMjgyLjI1OHoiLz4NCgk8cGF0aCBkPSJNMjk5LjAyNywxNDMuNzRsLTIuMTMzLTUuNDQ5aC02Ljg2N2wtMi4xMDksNS40NDloLTIuMDE2bDYuNzczLTE3LjIwM2gxLjY3Nmw2LjczOCwxNy4yMDNIMjk5LjAyN3ogTTI5Ni4yNzMsMTM2LjQ5OA0KCQlsLTEuOTkyLTUuMzA5Yy0wLjI1OC0wLjY3Mi0wLjUyMy0xLjQ5Ni0wLjc5Ny0yLjQ3M2MtMC4xNzIsMC43NS0wLjQxOCwxLjU3NC0wLjczOCwyLjQ3M2wtMi4wMTYsNS4zMDlIMjk2LjI3M3oiLz4NCgk8cGF0aCBkPSJNMzA0LjcxMSwxMjYuNjA3bDAuMTc2LDAuMjU4Yy0wLjIwMywwLjc4MS0wLjQ5NiwxLjY4OS0wLjg3OSwyLjcyNXMtMC43ODEsMS45OTgtMS4xOTUsMi44ODloLTEuNDMNCgkJYzAuNTQ3LTIuMjI3LDAuOTQ1LTQuMTg0LDEuMTk1LTUuODcxSDMwNC43MTF6IE0zMDkuMDM1LDEyNi42MDdsMC4xNjQsMC4yNThjLTAuMTg4LDAuNzExLTAuNDY5LDEuNTg2LTAuODQ0LDIuNjI1DQoJCXMtMC43ODEsMi4wMzUtMS4yMTksMi45ODhoLTEuNDY1YzAuMjAzLTAuNzgxLDAuNDM0LTEuNzczLDAuNjkxLTIuOTc3czAuNDM4LTIuMTY4LDAuNTM5LTIuODk1SDMwOS4wMzV6Ii8+DQo8L2c+DQo8Zz4NCgk8cmVjdCB4PSIyNzQiIHk9IjE5OS41IiBzdHlsZT0iZmlsbDpub25lOyIgd2lkdGg9IjQxIiBoZWlnaHQ9IjI0Ii8+DQoJPHBhdGggZD0iTTI3NC40MzQsMjA2LjQ3OGwtMC4xNDEtMC4yNThjMC4xNzItMC43MDMsMC40NDktMS41NzgsMC44MzItMi42MjVzMC43OTMtMi4wNDMsMS4yMy0yLjk4OGgxLjQ0MQ0KCQljLTAuNTE2LDEuOTg0LTAuOTE4LDMuOTQxLTEuMjA3LDUuODcxSDI3NC40MzR6IE0yNzguNzU4LDIwNi40NzhsLTAuMTc2LTAuMjU4YzAuNDM4LTEuNjgsMS4xMzMtMy41NTEsMi4wODYtNS42MTNoMS40NDENCgkJYy0wLjIzNCwwLjg5OC0wLjQ2NywxLjkxMi0wLjY5NywzLjA0MXMtMC4zOTYsMi4wNzItMC40OTgsMi44M0gyNzguNzU4eiIvPg0KCTxwYXRoIGQ9Ik0yOTcuNjk1LDIwMC42MDd2MTEuMDg2YzAsMS45NTMtMC41OSwzLjQ4OC0xLjc3LDQuNjA1cy0yLjgwMSwxLjY3Ni00Ljg2MywxLjY3NnMtMy42NTgtMC41NjMtNC43ODctMS42ODgNCgkJcy0xLjY5My0yLjY3Mi0xLjY5My00LjY0MXYtMTEuMDM5aDEuOTkydjExLjE4YzAsMS40MywwLjM5MSwyLjUyNywxLjE3MiwzLjI5M3MxLjkzLDEuMTQ4LDMuNDQ1LDEuMTQ4DQoJCWMxLjQ0NSwwLDIuNTU5LTAuMzg1LDMuMzQtMS4xNTRzMS4xNzItMS44NzMsMS4xNzItMy4zMTF2LTExLjE1NkgyOTcuNjk1eiIvPg0KCTxwYXRoIGQ9Ik0zMDMuNDk2LDIwMC42MDdsMC4xNzYsMC4yNThjLTAuMjAzLDAuNzgxLTAuNDk2LDEuNjg5LTAuODc5LDIuNzI1cy0wLjc4MSwxLjk5OC0xLjE5NSwyLjg4OWgtMS40Mw0KCQljMC41NDctMi4yMjcsMC45NDUtNC4xODQsMS4xOTUtNS44NzFIMzAzLjQ5NnogTTMwNy44MiwyMDAuNjA3bDAuMTY0LDAuMjU4Yy0wLjE4OCwwLjcxMS0wLjQ2OSwxLjU4Ni0wLjg0NCwyLjYyNQ0KCQlzLTAuNzgxLDIuMDM1LTEuMjE5LDIuOTg4aC0xLjQ2NWMwLjIwMy0wLjc4MSwwLjQzNC0xLjc3MywwLjY5MS0yLjk3N3MwLjQzOC0yLjE2OCwwLjUzOS0yLjg5NUgzMDcuODJ6Ii8+DQo8L2c+DQo8Zz4NCgk8cmVjdCB4PSIxODEuMTY3IiB5PSIxMjIuNzUiIHN0eWxlPSJmaWxsOm5vbmU7IiB3aWR0aD0iMjEiIGhlaWdodD0iMjkuNSIvPg0KCTxwYXRoIGQ9Ik0xODQuNTA2LDE0MC45OWw3LjEwMi0xNS4zNGgtOS4zNHYtMS43OTNoMTEuNDAydjEuNTU5bC03LjAwOCwxNS41NzRIMTg0LjUwNnoiLz4NCjwvZz4NCjxnPg0KCTxyZWN0IHg9IjE4MS4xNjciIHk9IjE5Ni43NSIgc3R5bGU9ImZpbGw6bm9uZTsiIHdpZHRoPSIyMSIgaGVpZ2h0PSIyOS41Ii8+DQoJPHBhdGggZD0iTTE5Mi45NTYsMjAxLjg4OGMwLDEuMDk0LTAuMzA3LDEuOTg4LTAuOTIsMi42ODRzLTEuNDgyLDEuMTYtMi42MDcsMS4zOTV2MC4wOTRjMS4zNzUsMC4xNzIsMi4zOTUsMC42MDksMy4wNTksMS4zMTMNCgkJczAuOTk2LDEuNjI1LDAuOTk2LDIuNzY2YzAsMS42MzMtMC41NjYsMi44ODktMS42OTksMy43NjhzLTIuNzQyLDEuMzE4LTQuODI4LDEuMzE4Yy0wLjkwNiwwLTEuNzM2LTAuMDY4LTIuNDktMC4yMDUNCgkJcy0xLjQ4Ni0wLjM3Ny0yLjE5Ny0wLjcyMXYtMS44NTJjMC43NDIsMC4zNjcsMS41MzMsMC42NDYsMi4zNzMsMC44MzhzMS42MzUsMC4yODcsMi4zODUsMC4yODdjMi45NjEsMCw0LjQ0MS0xLjE2LDQuNDQxLTMuNDgNCgkJYzAtMi4wNzgtMS42MzMtMy4xMTctNC44OTgtMy4xMTdoLTEuNjg4di0xLjY3NmgxLjcxMWMxLjMzNiwwLDIuMzk1LTAuMjk1LDMuMTc2LTAuODg1czEuMTcyLTEuNDA4LDEuMTcyLTIuNDU1DQoJCWMwLTAuODM2LTAuMjg3LTEuNDkyLTAuODYxLTEuOTY5cy0xLjM1NC0wLjcxNS0yLjMzOC0wLjcxNWMtMC43NSwwLTEuNDU3LDAuMTAyLTIuMTIxLDAuMzA1cy0xLjQyMiwwLjU3OC0yLjI3MywxLjEyNQ0KCQlsLTAuOTg0LTEuMzEzYzAuNzAzLTAuNTU1LDEuNTE0LTAuOTksMi40MzItMS4zMDdzMS44ODUtMC40NzUsMi45LTAuNDc1YzEuNjY0LDAsMi45NTcsMC4zODEsMy44NzksMS4xNDMNCgkJUzE5Mi45NTYsMjAwLjU2LDE5Mi45NTYsMjAxLjg4OHoiLz4NCjwvZz4NCjxnPg0KCTxyZWN0IHg9IjE1NS41IiB5PSIyNTIiIHN0eWxlPSJmaWxsOm5vbmU7IiB3aWR0aD0iODEuNSIgaGVpZ2h0PSIyOSIvPg0KCTxwYXRoIGQ9Ik0xNjMuNjM5LDI2NS42OHYtNi4yMzFjMC0wLjc4NS0wLjE3OS0xLjM3MS0wLjUzNi0xLjc1OHMtMC45MTctMC41OC0xLjY3OS0wLjU4Yy0xLjAwOCwwLTEuNzQ2LDAuMjcyLTIuMjE1LDAuODE3DQoJCXMtMC43MDMsMS40NDQtMC43MDMsMi42OTh2NS4wNTRoLTEuNDU5di05LjYzM2gxLjE4N2wwLjIzNywxLjMxOGgwLjA3YzAuMjk5LTAuNDc1LDAuNzE4LTAuODQyLDEuMjU3LTEuMTAzDQoJCXMxLjE0LTAuMzkxLDEuODAyLTAuMzkxYzEuMTYsMCwyLjAzMywwLjI4LDIuNjE5LDAuODM5czAuODc5LDEuNDU1LDAuODc5LDIuNjg1djYuMjg0SDE2My42Mzl6Ii8+DQoJPHBhdGggZD0iTTE2OS40NjYsMjU2LjA0N3Y2LjI0OWMwLDAuNzg1LDAuMTc5LDEuMzcxLDAuNTM2LDEuNzU4czAuOTE3LDAuNTgsMS42NzksMC41OGMxLjAwOCwwLDEuNzQ1LTAuMjc1LDIuMjEtMC44MjYNCgkJczAuNjk5LTEuNDUsMC42OTktMi42OTh2LTUuMDYzaDEuNDU5djkuNjMzaC0xLjIwNGwtMC4yMTEtMS4yOTJoLTAuMDc5Yy0wLjI5OSwwLjQ3NS0wLjcxMywwLjgzOC0xLjI0NCwxLjA5DQoJCXMtMS4xMzUsMC4zNzgtMS44MTUsMC4zNzhjLTEuMTcyLDAtMi4wNDktMC4yNzgtMi42MzItMC44MzVzLTAuODc1LTEuNDQ3LTAuODc1LTIuNjcydi02LjMwMkgxNjkuNDY2eiIvPg0KCTxwYXRoIGQ9Ik0xOTEuNDIxLDI2NS42OHYtNi4yNjdjMC0wLjc2OC0wLjE2NC0xLjM0My0wLjQ5Mi0xLjcyN3MtMC44MzgtMC41NzYtMS41MjktMC41NzZjLTAuOTA4LDAtMS41NzksMC4yNjEtMi4wMTMsMC43ODINCgkJcy0wLjY1LDEuMzI0LTAuNjUsMi40MDh2NS4zNzloLTEuNDU5di02LjI2N2MwLTAuNzY4LTAuMTY0LTEuMzQzLTAuNDkyLTEuNzI3cy0wLjg0MS0wLjU3Ni0xLjUzOC0wLjU3Ng0KCQljLTAuOTE0LDAtMS41ODMsMC4yNzQtMi4wMDgsMC44MjJzLTAuNjM3LDEuNDQ2LTAuNjM3LDIuNjk0djUuMDU0aC0xLjQ1OXYtOS42MzNoMS4xODdsMC4yMzcsMS4zMThoMC4wNw0KCQljMC4yNzUtMC40NjksMC42NjQtMC44MzUsMS4xNjUtMS4wOTlzMS4wNjItMC4zOTYsMS42ODMtMC4zOTZjMS41MDYsMCwyLjQ5LDAuNTQ1LDIuOTUzLDEuNjM1aDAuMDcNCgkJYzAuMjg3LTAuNTA0LDAuNzAzLTAuOTAyLDEuMjQ4LTEuMTk1czEuMTY2LTAuNDM5LDEuODYzLTAuNDM5YzEuMDksMCwxLjkwNiwwLjI4LDIuNDQ4LDAuODM5czAuODEzLDEuNDU1LDAuODEzLDIuNjg1djYuMjg0DQoJCUgxOTEuNDIxeiIvPg0KCTxwYXRoIGQ9Ik0xOTkuOTU1LDI2NS44NTVjLTEuNDI0LDAtMi41NDctMC40MzQtMy4zNzEtMS4zMDFzLTEuMjM1LTIuMDcxLTEuMjM1LTMuNjEyYzAtMS41NTMsMC4zODItMi43ODYsMS4xNDctMy43DQoJCXMxLjc5Mi0xLjM3MSwzLjA4MS0xLjM3MWMxLjIwNywwLDIuMTYyLDAuMzk3LDIuODY1LDEuMTkxczEuMDU1LDEuODQxLDEuMDU1LDMuMTQydjAuOTIzaC02LjYzNg0KCQljMC4wMjksMS4xMzEsMC4zMTUsMS45ODksMC44NTcsMi41NzVzMS4zMDUsMC44NzksMi4yOSwwLjg3OWMxLjAzNywwLDIuMDYzLTAuMjE3LDMuMDc2LTAuNjV2MS4zMDENCgkJYy0wLjUxNiwwLjIyMy0xLjAwMywwLjM4Mi0xLjQ2MywwLjQ3OVMyMDAuNjA1LDI2NS44NTUsMTk5Ljk1NSwyNjUuODU1eiBNMTk5LjU2LDI1Ny4wOTNjLTAuNzczLDAtMS4zOSwwLjI1Mi0xLjg1LDAuNzU2DQoJCXMtMC43MzEsMS4yMDEtMC44MTMsMi4wOTJoNS4wMzZjMC0wLjkyLTAuMjA1LTEuNjI1LTAuNjE1LTIuMTE0UzIwMC4zMjEsMjU3LjA5MywxOTkuNTYsMjU3LjA5M3oiLz4NCgk8cGF0aCBkPSJNMjEwLjM3OSwyNTUuODcxYzAuNDI4LDAsMC44MTIsMC4wMzUsMS4xNTEsMC4xMDVsLTAuMjAyLDEuMzU0Yy0wLjM5OC0wLjA4OC0wLjc1LTAuMTMyLTEuMDU1LTAuMTMyDQoJCWMtMC43NzksMC0xLjQ0NiwwLjMxNi0yLDAuOTQ5cy0wLjgzMSwxLjQyMS0wLjgzMSwyLjM2NHY1LjE2OGgtMS40NTl2LTkuNjMzaDEuMjA0bDAuMTY3LDEuNzg0aDAuMDcNCgkJYzAuMzU3LTAuNjI3LDAuNzg4LTEuMTEsMS4yOTItMS40NVMyMDkuNzc1LDI1NS44NzEsMjEwLjM3OSwyNTUuODcxeiIvPg0KCTxwYXRoIGQ9Ik0yMTMuMjA5LDI1My40MzdjMC0wLjMzNCwwLjA4Mi0wLjU3OSwwLjI0Ni0wLjczNHMwLjM2OS0wLjIzMywwLjYxNS0wLjIzM2MwLjIzNCwwLDAuNDM3LDAuMDc5LDAuNjA2LDAuMjM3DQoJCXMwLjI1NSwwLjQwMSwwLjI1NSwwLjcyOXMtMC4wODUsMC41NzMtMC4yNTUsMC43MzRzLTAuMzcyLDAuMjQyLTAuNjA2LDAuMjQyYy0wLjI0NiwwLTAuNDUxLTAuMDgxLTAuNjE1LTAuMjQyDQoJCVMyMTMuMjA5LDI1My43NjUsMjEzLjIwOSwyNTMuNDM3eiBNMjE0Ljc5MSwyNjUuNjhoLTEuNDU5di05LjYzM2gxLjQ1OVYyNjUuNjh6Ii8+DQoJPHBhdGggZD0iTTIyMS43MzQsMjY1Ljg1NWMtMS4zOTUsMC0yLjQ3NC0wLjQyOS0zLjIzOS0xLjI4OHMtMS4xNDctMi4wNzMtMS4xNDctMy42NDNjMC0xLjYxMSwwLjM4OC0yLjg1NiwxLjE2NS0zLjczNQ0KCQlzMS44ODItMS4zMTgsMy4zMTgtMS4zMThjMC40NjMsMCwwLjkyNiwwLjA1LDEuMzg5LDAuMTQ5czAuODI2LDAuMjE3LDEuMDksMC4zNTJsLTAuNDQ4LDEuMjM5DQoJCWMtMC4zMjItMC4xMjktMC42NzQtMC4yMzYtMS4wNTUtMC4zMjFzLTAuNzE4LTAuMTI3LTEuMDExLTAuMTI3Yy0xLjk1NywwLTIuOTM2LDEuMjQ4LTIuOTM2LDMuNzQ0DQoJCWMwLDEuMTg0LDAuMjM5LDIuMDkyLDAuNzE2LDIuNzI1czEuMTg1LDAuOTQ5LDIuMTIzLDAuOTQ5YzAuODAzLDAsMS42MjYtMC4xNzMsMi40Ny0wLjUxOXYxLjI5Mg0KCQlDMjIzLjUyNCwyNjUuNjg4LDIyMi43MTMsMjY1Ljg1NSwyMjEuNzM0LDI2NS44NTV6Ii8+DQo8L2c+DQo8Zz4NCgk8cmVjdCB4PSIyNTUuMjUiIHk9IjI1MiIgc3R5bGU9ImZpbGw6bm9uZTsiIHdpZHRoPSI4MS41IiBoZWlnaHQ9IjI5Ii8+DQoJPHBhdGggZD0iTTI2MC42NDYsMjY1Ljg1NWMtMS4zOTUsMC0yLjQ3NC0wLjQyOS0zLjIzOS0xLjI4OHMtMS4xNDctMi4wNzMtMS4xNDctMy42NDNjMC0xLjYxMSwwLjM4OC0yLjg1NiwxLjE2NS0zLjczNQ0KCQlzMS44ODItMS4zMTgsMy4zMTgtMS4zMThjMC40NjMsMCwwLjkyNiwwLjA1LDEuMzg5LDAuMTQ5czAuODI2LDAuMjE3LDEuMDksMC4zNTJsLTAuNDQ4LDEuMjM5DQoJCWMtMC4zMjItMC4xMjktMC42NzQtMC4yMzYtMS4wNTUtMC4zMjFzLTAuNzE4LTAuMTI3LTEuMDExLTAuMTI3Yy0xLjk1NywwLTIuOTM2LDEuMjQ4LTIuOTM2LDMuNzQ0DQoJCWMwLDEuMTg0LDAuMjM5LDIuMDkyLDAuNzE2LDIuNzI1czEuMTg1LDAuOTQ5LDIuMTIzLDAuOTQ5YzAuODAzLDAsMS42MjYtMC4xNzMsMi40Ny0wLjUxOXYxLjI5Mg0KCQlDMjYyLjQzNywyNjUuNjg4LDI2MS42MjUsMjY1Ljg1NSwyNjAuNjQ2LDI2NS44NTV6Ii8+DQoJPHBhdGggZD0iTTI3MS45NTgsMjY1LjY4di02LjIzMWMwLTAuNzg1LTAuMTc5LTEuMzcxLTAuNTM2LTEuNzU4cy0wLjkxNy0wLjU4LTEuNjc5LTAuNThjLTEuMDE0LDAtMS43NTMsMC4yNzUtMi4yMTksMC44MjYNCgkJcy0wLjY5OSwxLjQ1My0wLjY5OSwyLjcwN3Y1LjAzNmgtMS40NTl2LTEzLjY3NmgxLjQ1OXY0LjE0YzAsMC40OTgtMC4wMjMsMC45MTEtMC4wNywxLjIzOWgwLjA4OA0KCQljMC4yODctMC40NjMsMC42OTYtMC44MjgsMS4yMjYtMS4wOTRzMS4xMzUtMC40LDEuODE1LTAuNGMxLjE3OCwwLDIuMDYxLDAuMjgsMi42NSwwLjgzOXMwLjg4MywxLjQ0OSwwLjg4MywyLjY2N3Y2LjI4NEgyNzEuOTU4eiINCgkJLz4NCgk8cGF0aCBkPSJNMjgyLjMzOCwyNjUuNjhsLTAuMjktMS4zNzFoLTAuMDdjLTAuNDgsMC42MDQtMC45NTksMS4wMTItMS40MzcsMS4yMjZzLTEuMDc0LDAuMzIxLTEuNzg5LDAuMzIxDQoJCWMtMC45NTUsMC0xLjcwNC0wLjI0Ni0yLjI0Ni0wLjczOHMtMC44MTMtMS4xOTItMC44MTMtMi4xMDFjMC0xLjk0NSwxLjU1Ni0yLjk2NSw0LjY2Ny0zLjA1OWwxLjYzNS0wLjA1M3YtMC41OTgNCgkJYzAtMC43NTYtMC4xNjMtMS4zMTQtMC40ODgtMS42NzRzLTAuODQ1LTAuNTQxLTEuNTYtMC41NDFjLTAuODAzLDAtMS43MTEsMC4yNDYtMi43MjUsMC43MzhsLTAuNDQ4LTEuMTE2DQoJCWMwLjQ3NS0wLjI1OCwwLjk5NS0wLjQ2LDEuNTYtMC42MDZzMS4xMzItMC4yMiwxLjcwMS0wLjIyYzEuMTQ4LDAsMiwwLjI1NSwyLjU1MywwLjc2NXMwLjgzMSwxLjMyNywwLjgzMSwyLjQ1MnY2LjU3NEgyODIuMzM4eg0KCQkgTTI3OS4wNDIsMjY0LjY1MWMwLjkwOCwwLDEuNjIyLTAuMjQ5LDIuMTQtMC43NDdzMC43NzgtMS4xOTUsMC43NzgtMi4wOTJ2LTAuODdsLTEuNDU5LDAuMDYyDQoJCWMtMS4xNiwwLjA0MS0xLjk5NywwLjIyMS0yLjUwOSwwLjU0MXMtMC43NjksMC44MTYtMC43NjksMS40OWMwLDAuNTI3LDAuMTYsMC45MjksMC40NzksMS4yMDRTMjc4LjQ2OCwyNjQuNjUxLDI3OS4wNDIsMjY0LjY1MXoiDQoJCS8+DQoJPHBhdGggZD0iTTI5MC44MTksMjU1Ljg3MWMwLjQyOCwwLDAuODEyLDAuMDM1LDEuMTUxLDAuMTA1bC0wLjIwMiwxLjM1NGMtMC4zOTgtMC4wODgtMC43NS0wLjEzMi0xLjA1NS0wLjEzMg0KCQljLTAuNzc5LDAtMS40NDYsMC4zMTYtMiwwLjk0OXMtMC44MzEsMS40MjEtMC44MzEsMi4zNjR2NS4xNjhoLTEuNDU5di05LjYzM2gxLjIwNGwwLjE2NywxLjc4NGgwLjA3DQoJCWMwLjM1Ny0wLjYyNywwLjc4OC0xLjExLDEuMjkyLTEuNDVTMjkwLjIxNiwyNTUuODcxLDI5MC44MTksMjU1Ljg3MXoiLz4NCgk8cGF0aCBkPSJNMjk5LjY5NiwyNjUuNjhsLTAuMjktMS4zNzFoLTAuMDdjLTAuNDgsMC42MDQtMC45NTksMS4wMTItMS40MzcsMS4yMjZzLTEuMDc0LDAuMzIxLTEuNzg5LDAuMzIxDQoJCWMtMC45NTUsMC0xLjcwNC0wLjI0Ni0yLjI0Ni0wLjczOHMtMC44MTMtMS4xOTItMC44MTMtMi4xMDFjMC0xLjk0NSwxLjU1Ni0yLjk2NSw0LjY2Ny0zLjA1OWwxLjYzNS0wLjA1M3YtMC41OTgNCgkJYzAtMC43NTYtMC4xNjMtMS4zMTQtMC40ODgtMS42NzRzLTAuODQ1LTAuNTQxLTEuNTYtMC41NDFjLTAuODAzLDAtMS43MTEsMC4yNDYtMi43MjUsMC43MzhsLTAuNDQ4LTEuMTE2DQoJCWMwLjQ3NS0wLjI1OCwwLjk5NS0wLjQ2LDEuNTYtMC42MDZzMS4xMzItMC4yMiwxLjcwMS0wLjIyYzEuMTQ4LDAsMiwwLjI1NSwyLjU1MywwLjc2NXMwLjgzMSwxLjMyNywwLjgzMSwyLjQ1MnY2LjU3NEgyOTkuNjk2eg0KCQkgTTI5Ni40LDI2NC42NTFjMC45MDgsMCwxLjYyMi0wLjI0OSwyLjE0LTAuNzQ3czAuNzc4LTEuMTk1LDAuNzc4LTIuMDkydi0wLjg3bC0xLjQ1OSwwLjA2MmMtMS4xNiwwLjA0MS0xLjk5NywwLjIyMS0yLjUwOSwwLjU0MQ0KCQlzLTAuNzY5LDAuODE2LTAuNzY5LDEuNDljMCwwLjUyNywwLjE2LDAuOTI5LDAuNDc5LDEuMjA0UzI5NS44MjYsMjY0LjY1MSwyOTYuNCwyNjQuNjUxeiIvPg0KCTxwYXRoIGQ9Ik0zMDcuNjMzLDI2NS44NTVjLTEuMzk1LDAtMi40NzQtMC40MjktMy4yMzktMS4yODhzLTEuMTQ3LTIuMDczLTEuMTQ3LTMuNjQzYzAtMS42MTEsMC4zODgtMi44NTYsMS4xNjUtMy43MzUNCgkJczEuODgyLTEuMzE4LDMuMzE4LTEuMzE4YzAuNDYzLDAsMC45MjYsMC4wNSwxLjM4OSwwLjE0OXMwLjgyNiwwLjIxNywxLjA5LDAuMzUybC0wLjQ0OCwxLjIzOQ0KCQljLTAuMzIyLTAuMTI5LTAuNjc0LTAuMjM2LTEuMDU1LTAuMzIxcy0wLjcxOC0wLjEyNy0xLjAxMS0wLjEyN2MtMS45NTcsMC0yLjkzNiwxLjI0OC0yLjkzNiwzLjc0NA0KCQljMCwxLjE4NCwwLjIzOSwyLjA5MiwwLjcxNiwyLjcyNXMxLjE4NSwwLjk0OSwyLjEyMywwLjk0OWMwLjgwMywwLDEuNjI2LTAuMTczLDIuNDctMC41MTl2MS4yOTINCgkJQzMwOS40MjMsMjY1LjY4OCwzMDguNjExLDI2NS44NTUsMzA3LjYzMywyNjUuODU1eiIvPg0KCTxwYXRoIGQ9Ik0zMTUuNDY0LDI2NC42NTFjMC4yNTgsMCwwLjUwNy0wLjAxOSwwLjc0Ny0wLjA1N3MwLjQzMS0wLjA3OCwwLjU3MS0wLjExOXYxLjExNmMtMC4xNTgsMC4wNzYtMC4zOTEsMC4xMzktMC42OTksMC4xODkNCgkJcy0wLjU4NCwwLjA3NS0wLjgzMSwwLjA3NWMtMS44NjMsMC0yLjc5NS0wLjk4MS0yLjc5NS0yLjk0NHYtNS43M2gtMS4zOHYtMC43MDNsMS4zOC0wLjYwNmwwLjYxNS0yLjA1N2gwLjg0NHYyLjIzMmgyLjc5NXYxLjEzNA0KCQloLTIuNzk1djUuNjY5YzAsMC41OCwwLjEzOCwxLjAyNSwwLjQxMywxLjMzNlMzMTQuOTgzLDI2NC42NTEsMzE1LjQ2NCwyNjQuNjUxeiIvPg0KCTxwYXRoIGQ9Ik0zMjIuNzc2LDI2NS44NTVjLTEuNDI0LDAtMi41NDctMC40MzQtMy4zNzEtMS4zMDFzLTEuMjM1LTIuMDcxLTEuMjM1LTMuNjEyYzAtMS41NTMsMC4zODItMi43ODYsMS4xNDctMy43DQoJCXMxLjc5Mi0xLjM3MSwzLjA4MS0xLjM3MWMxLjIwNywwLDIuMTYyLDAuMzk3LDIuODY1LDEuMTkxczEuMDU1LDEuODQxLDEuMDU1LDMuMTQydjAuOTIzaC02LjYzNg0KCQljMC4wMjksMS4xMzEsMC4zMTUsMS45ODksMC44NTcsMi41NzVzMS4zMDUsMC44NzksMi4yOSwwLjg3OWMxLjAzNywwLDIuMDYzLTAuMjE3LDMuMDc2LTAuNjV2MS4zMDENCgkJYy0wLjUxNiwwLjIyMy0xLjAwMywwLjM4Mi0xLjQ2MywwLjQ3OVMzMjMuNDI3LDI2NS44NTUsMzIyLjc3NiwyNjUuODU1eiBNMzIyLjM4MSwyNTcuMDkzYy0wLjc3MywwLTEuMzksMC4yNTItMS44NSwwLjc1Ng0KCQlzLTAuNzMxLDEuMjAxLTAuODEzLDIuMDkyaDUuMDM2YzAtMC45Mi0wLjIwNS0xLjYyNS0wLjYxNS0yLjExNFMzMjMuMTQzLDI1Ny4wOTMsMzIyLjM4MSwyNTcuMDkzeiIvPg0KCTxwYXRoIGQ9Ik0zMzMuMiwyNTUuODcxYzAuNDI4LDAsMC44MTIsMC4wMzUsMS4xNTEsMC4xMDVsLTAuMjAyLDEuMzU0Yy0wLjM5OC0wLjA4OC0wLjc1LTAuMTMyLTEuMDU1LTAuMTMyDQoJCWMtMC43NzksMC0xLjQ0NiwwLjMxNi0yLDAuOTQ5cy0wLjgzMSwxLjQyMS0wLjgzMSwyLjM2NHY1LjE2OGgtMS40NTl2LTkuNjMzaDEuMjA0bDAuMTY3LDEuNzg0aDAuMDcNCgkJYzAuMzU3LTAuNjI3LDAuNzg4LTEuMTEsMS4yOTItMS40NVMzMzIuNTk3LDI1NS44NzEsMzMzLjIsMjU1Ljg3MXoiLz4NCjwvZz4NCjxnPg0KCTxyZWN0IHg9IjM2NSIgeT0iMjUyIiBzdHlsZT0iZmlsbDpub25lOyIgd2lkdGg9IjgxLjUiIGhlaWdodD0iMjkiLz4NCgk8cGF0aCBkPSJNMzY4LjAwNiwyNjUuNjhoLTEuNDU5di0xMy42NzZoMS40NTlWMjY1LjY4eiIvPg0KCTxwYXRoIGQ9Ik0zNzkuNDE0LDI2MC44NTRjMCwxLjU3LTAuMzk2LDIuNzk2LTEuMTg3LDMuNjc4cy0xLjg4NCwxLjMyMy0zLjI3OCwxLjMyM2MtMC44NjEsMC0xLjYyNi0wLjIwMi0yLjI5NC0wLjYwNg0KCQlzLTEuMTg0LTAuOTg0LTEuNTQ3LTEuNzRzLTAuNTQ1LTEuNjQxLTAuNTQ1LTIuNjU0YzAtMS41NywwLjM5My0yLjc5MywxLjE3OC0zLjY2OXMxLjg3NS0xLjMxNCwzLjI3LTEuMzE0DQoJCWMxLjM0OCwwLDIuNDE5LDAuNDQ4LDMuMjEyLDEuMzQ1QzM3OS4wMTgsMjU4LjExMiwzNzkuNDE0LDI1OS4zMjUsMzc5LjQxNCwyNjAuODU0eiBNMzcyLjA3NSwyNjAuODU0DQoJCWMwLDEuMjMsMC4yNDYsMi4xNjgsMC43MzgsMi44MTNzMS4yMTYsMC45NjcsMi4xNzEsMC45NjdzMS42OC0wLjMyMSwyLjE3Ni0wLjk2MmMwLjQ5NC0wLjY0MiwwLjc0Mi0xLjU4MSwwLjc0Mi0yLjgxNw0KCQljMC0xLjIyNS0wLjI0OC0yLjE1NS0wLjc0Mi0yLjc5MWMtMC40OTYtMC42MzYtMS4yMjctMC45NTQtMi4xOTMtMC45NTRjLTAuOTU1LDAtMS42NzYsMC4zMTMtMi4xNjIsMC45NA0KCQlTMzcyLjA3NSwyNTkuNjEyLDM3Mi4wNzUsMjYwLjg1NHoiLz4NCgk8cGF0aCBkPSJNMzg5Ljg1NSwyNTYuMDQ3djAuOTIzbC0xLjc4NCwwLjIxMWMwLjE2NCwwLjIwNSwwLjMxMSwwLjQ3MywwLjQzOSwwLjgwNHMwLjE5MywwLjcwNSwwLjE5MywxLjEyMQ0KCQljMCwwLjk0My0wLjMyMiwxLjY5Ni0wLjk2NywyLjI1OXMtMS41MjksMC44NDQtMi42NTQsMC44NDRjLTAuMjg3LDAtMC41NTctMC4wMjMtMC44MDktMC4wN2MtMC42MjEsMC4zMjgtMC45MzIsMC43NDEtMC45MzIsMS4yMzkNCgkJYzAsMC4yNjQsMC4xMDgsMC40NTgsMC4zMjUsMC41ODRzMC41ODksMC4xODksMS4xMTYsMC4xODloMS43MDVjMS4wNDMsMCwxLjg0NSwwLjIyLDIuNDAzLDAuNjU5DQoJCWMwLjU2MSwwLjQzOSwwLjg0LDEuMDc4LDAuODQsMS45MTZjMCwxLjA2Ni0wLjQyOCwxLjg3OS0xLjI4MywyLjQzOXMtMi4xMDQsMC44MzktMy43NDQsMC44MzljLTEuMjYsMC0yLjIzLTAuMjM0LTIuOTE0LTAuNzAzDQoJCWMtMC42ODItMC40NjktMS4wMjMtMS4xMzEtMS4wMjMtMS45ODZjMC0wLjU4NiwwLjE4OC0xLjA5MywwLjU2My0xLjUyMXMwLjkwMi0wLjcxOCwxLjU4Mi0wLjg3DQoJCWMtMC4yNDYtMC4xMTEtMC40NTMtMC4yODQtMC42MTktMC41MTljLTAuMTY4LTAuMjM0LTAuMjUxLTAuNTA3LTAuMjUxLTAuODE3YzAtMC4zNTIsMC4wOTQtMC42NTksMC4yODEtMC45MjMNCgkJczAuNDgzLTAuNTE5LDAuODg4LTAuNzY1Yy0wLjQ5OC0wLjIwNS0wLjkwNC0wLjU1NC0xLjIxNy0xLjA0NmMtMC4zMTQtMC40OTItMC40NzEtMS4wNTUtMC40NzEtMS42ODgNCgkJYzAtMS4wNTUsMC4zMTYtMS44NjgsMC45NDktMi40MzlzMS41MjktMC44NTcsMi42ODktMC44NTdjMC41MDQsMCwwLjk1OCwwLjA1OSwxLjM2MiwwLjE3NkgzODkuODU1eiBNMzgyLjE3NCwyNjcuMjk3DQoJCWMwLDAuNTIxLDAuMjIsMC45MTcsMC42NTksMS4xODdzMS4wNjksMC40MDQsMS44OSwwLjQwNGMxLjIyNSwwLDIuMTMxLTAuMTgzLDIuNzIxLTAuNTQ5YzAuNTg4LTAuMzY2LDAuODgzLTAuODYzLDAuODgzLTEuNDkNCgkJYzAtMC41MjEtMC4xNjEtMC44ODMtMC40ODMtMS4wODVzLTAuOTI5LTAuMzAzLTEuODE5LTAuMzAzaC0xLjc0OWMtMC42NjIsMC0xLjE3OCwwLjE1OC0xLjU0NywwLjQ3NQ0KCQlTMzgyLjE3NCwyNjYuNzA1LDM4Mi4xNzQsMjY3LjI5N3ogTTM4Mi45NjUsMjU5LjEzMmMwLDAuNjc0LDAuMTksMS4xODQsMC41NzEsMS41MjlzMC45MTEsMC41MTksMS41OTEsMC41MTkNCgkJYzEuNDI0LDAsMi4xMzYtMC42OTEsMi4xMzYtMi4wNzRjMC0xLjQ0Ny0wLjcyMS0yLjE3MS0yLjE2Mi0yLjE3MWMtMC42ODYsMC0xLjIxMywwLjE4NS0xLjU4MiwwLjU1NA0KCQlTMzgyLjk2NSwyNTguNDA1LDM4Mi45NjUsMjU5LjEzMnoiLz4NCgk8cGF0aCBkPSJNMzkxLjcxLDI1My40MzdjMC0wLjMzNCwwLjA4Mi0wLjU3OSwwLjI0Ni0wLjczNHMwLjM2OS0wLjIzMywwLjYxNS0wLjIzM2MwLjIzNCwwLDAuNDM3LDAuMDc5LDAuNjA2LDAuMjM3DQoJCXMwLjI1NSwwLjQwMSwwLjI1NSwwLjcyOXMtMC4wODUsMC41NzMtMC4yNTUsMC43MzRzLTAuMzcyLDAuMjQyLTAuNjA2LDAuMjQyYy0wLjI0NiwwLTAuNDUxLTAuMDgxLTAuNjE1LTAuMjQyDQoJCVMzOTEuNzEsMjUzLjc2NSwzOTEuNzEsMjUzLjQzN3ogTTM5My4yOTIsMjY1LjY4aC0xLjQ1OXYtOS42MzNoMS40NTlWMjY1LjY4eiIvPg0KCTxwYXRoIGQ9Ik00MDAuMjM1LDI2NS44NTVjLTEuMzk1LDAtMi40NzQtMC40MjktMy4yMzktMS4yODhjLTAuNzY0LTAuODU4LTEuMTQ2LTIuMDczLTEuMTQ2LTMuNjQzYzAtMS42MTEsMC4zODktMi44NTYsMS4xNjQtMy43MzUNCgkJYzAuNzc3LTAuODc5LDEuODgzLTEuMzE4LDMuMzE4LTEuMzE4YzAuNDYzLDAsMC45MjYsMC4wNSwxLjM4OSwwLjE0OXMwLjgyNiwwLjIxNywxLjA5LDAuMzUybC0wLjQ0OCwxLjIzOQ0KCQljLTAuMzIyLTAuMTI5LTAuNjc0LTAuMjM2LTEuMDU1LTAuMzIxcy0wLjcxOC0wLjEyNy0xLjAxMS0wLjEyN2MtMS45NTcsMC0yLjkzNiwxLjI0OC0yLjkzNiwzLjc0NA0KCQljMCwxLjE4NCwwLjIzOCwyLjA5MiwwLjcxNywyLjcyNWMwLjQ3NywwLjYzMywxLjE4NSwwLjk0OSwyLjEyMiwwLjk0OWMwLjgwMywwLDEuNjI2LTAuMTczLDIuNDctMC41MTl2MS4yOTINCgkJQzQwMi4wMjUsMjY1LjY4OCw0MDEuMjE0LDI2NS44NTUsNDAwLjIzNSwyNjUuODU1eiIvPg0KCTxwYXRoIGQ9Ik00MTAuODc5LDI2NS42OGwtMC4yOS0xLjM3MWgtMC4wN2MtMC40OCwwLjYwNC0wLjk2LDEuMDEyLTEuNDM3LDEuMjI2Yy0wLjQ3OSwwLjIxNC0xLjA3NCwwLjMyMS0xLjc4OSwwLjMyMQ0KCQljLTAuOTU1LDAtMS43MDMtMC4yNDYtMi4yNDYtMC43MzhjLTAuNTQxLTAuNDkyLTAuODEzLTEuMTkyLTAuODEzLTIuMTAxYzAtMS45NDUsMS41NTYtMi45NjUsNC42NjctMy4wNTlsMS42MzUtMC4wNTN2LTAuNTk4DQoJCWMwLTAuNzU2LTAuMTYzLTEuMzE0LTAuNDg3LTEuNjc0Yy0wLjMyNi0wLjM2LTAuODQ2LTAuNTQxLTEuNTYxLTAuNTQxYy0wLjgwMywwLTEuNzExLDAuMjQ2LTIuNzI1LDAuNzM4bC0wLjQ0OC0xLjExNg0KCQljMC40NzUtMC4yNTgsMC45OTUtMC40NiwxLjU2LTAuNjA2YzAuNTY2LTAuMTQ2LDEuMTMzLTAuMjIsMS43MDEtMC4yMmMxLjE0OCwwLDIsMC4yNTUsMi41NTMsMC43NjUNCgkJYzAuNTU1LDAuNTEsMC44MzEsMS4zMjcsMC44MzEsMi40NTJ2Ni41NzRINDEwLjg3OXogTTQwNy41ODMsMjY0LjY1MWMwLjkwOCwwLDEuNjIyLTAuMjQ5LDIuMTQtMC43NDcNCgkJYzAuNTItMC40OTgsMC43NzgtMS4xOTUsMC43NzgtMi4wOTJ2LTAuODdsLTEuNDU5LDAuMDYyYy0xLjE2LDAuMDQxLTEuOTk3LDAuMjIxLTIuNTA5LDAuNTQxYy0wLjUxNCwwLjMxOS0wLjc3LDAuODE2LTAuNzcsMS40OQ0KCQljMCwwLjUyNywwLjE2LDAuOTI5LDAuNDc5LDEuMjA0QzQwNi41NjMsMjY0LjUxNCw0MDcuMDA5LDI2NC42NTEsNDA3LjU4MywyNjQuNjUxeiIvPg0KCTxwYXRoIGQ9Ik00MTYuNDI1LDI2NS42OGgtMS40NTl2LTEzLjY3NmgxLjQ1OVYyNjUuNjh6Ii8+DQo8L2c+DQo8L3N2Zz4NCg==" alt=""></p>
+
+<p>We can see this when inspecting the <b>str</b>ucture of a data frame
+with the function <code>str()</code>:</p>
+
+<pre><code class="r">str(metadata)
+</code></pre>
+
 <h2>Inspecting <code>data.frame</code> Objects</h2>
-<p>We already saw how the functions <code>head()</code> and <code>str()</code> can be useful to check the content and the structure of a data frame. Here is a non-exhaustive list of functions to get a sense of the content/structure of the data. Let’s try them out!</p>
-<ul>
-<li>Size:
-<ul>
-<li><code>dim(mapfile)</code> - returns a vector with the number of rows in the first element, and the number of columns as the second element (the <strong>dim</strong>ensions of the object)</li>
-<li><code>nrow(mapfile)</code> - returns the number of rows</li>
-<li><code>ncol(mapfile)</code> - returns the number of columns</li>
-</ul></li>
-<li>Content:
-<ul>
-<li><code>head(mapfile)</code> - shows the first 6 rows</li>
-<li><code>tail(mapfile)</code> - shows the last 6 rows</li>
-</ul></li>
-<li>Names:
-<ul>
-<li><code>names(mapfile)</code> - returns the column names (synonym of <code>colnames()</code> for <code>data.frame</code> objects)</li>
-<li><code>rownames(mapfile)</code> - returns the row names</li>
-</ul></li>
-<li>Summary:
-<ul>
-<li><code>str(mapfile)</code> - structure of the object and information about the class, length and content of each column</li>
-<li><code>summary(mapfile)</code> - summary statistics for each column</li>
-</ul></li>
-</ul>
-<p>Note: most of these functions are “generic”, they can be used on other types of objects besides <code>data.frame</code>.</p>
-<blockquote>
-<h3 id="challenge">Challenge</h3>
-<p>Based on the output of <code>str(mapfile)</code>, can you answer the following questions?</p>
-<ul>
-<li>What is the class of the object <code>mapfile</code>?</li>
-<li>How many rows and how many columns are in this object?</li>
-<li>How many mice were sequenced during this experiment?</li>
-</ul>
-</blockquote>
-<!---
 
---->
-</div>
-<div id="indexing-and-subsetting-data-frames" class="section level2">
-<h2>Indexing and subsetting data frames</h2>
-<p>Our data frame has rows and columns (it has 2 dimensions), if we want to extract some specific data from it, we need to specify the “coordinates” we want from it. Row numbers come first, followed by column numbers. However, note that different ways of specifying these coordinates lead to results with different classes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mapfile[<span class="dv">1</span>, <span class="dv">1</span>]   <span class="co"># first element in the first column of the data frame (as a vector)</span>
-mapfile[<span class="dv">1</span>, <span class="dv">6</span>]   <span class="co"># first element in the 6th column (as a vector)</span>
-mapfile[, <span class="dv">1</span>]    <span class="co"># first column in the data frame (as a vector)</span>
-mapfile[<span class="dv">1</span>]      <span class="co"># first column in the data frame (as a data.frame)</span>
-mapfile[<span class="dv">1</span>:<span class="dv">3</span>, <span class="dv">7</span>] <span class="co"># first three elements in the 7th column (as a vector)</span>
-mapfile[<span class="dv">3</span>, ]    <span class="co"># the 3rd element for all columns (as a data.frame)</span>
-head_mapfile &lt;-<span class="st"> </span>mapfile[<span class="dv">1</span>:<span class="dv">6</span>, ] <span class="co"># equivalent to head_mapfile &lt;- head(mapfile)</span></code></pre></div>
-<p><code>:</code> is a special function that creates numeric vectors of integers in increasing or decreasing order, test <code>1:10</code> and <code>10:1</code> for instance.</p>
-<p>You can also exclude certain parts of a data frame using the “<code>-</code>” sign:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mapfile[,-<span class="dv">1</span>]          <span class="co"># The whole data frame, except the first column</span>
-mapfile[-<span class="kw">c</span>(<span class="dv">7</span>:<span class="dv">116</span>),]   <span class="co"># Equivalent to head(mapfile)</span></code></pre></div>
-<p>As well as using numeric values to subset a <code>data.frame</code> (or <code>matrix</code>), columns can be called by name, using one of the four following notations:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mapfile[<span class="st">&quot;SampleID&quot;</span>]       <span class="co"># Result is a data.frame</span>
-mapfile[, <span class="st">&quot;SampleID&quot;</span>]     <span class="co"># Result is a vector</span>
-mapfile[[<span class="st">&quot;SampleID&quot;</span>]]     <span class="co"># Result is a vector</span>
-mapfile$SampleID          <span class="co"># Result is a vector</span></code></pre></div>
-<p>For our purposes, the last three notations are equivalent. RStudio knows about the columns in your data frame, so you can take advantage of the autocompletion feature to get the full and correct column name.</p>
-<blockquote>
-<h3 id="challenge-1">Challenge</h3>
-<ol style="list-style-type: decimal">
-<li><p>Create a <code>data.frame</code> (<code>mapfile_80</code>) containing only the observations from row 80 of the <code>mapfile</code> dataset.</p></li>
-<li><p>Notice how <code>nrow()</code> gave you the number of rows in a <code>data.frame</code>?</p>
+<p>We already saw how the functions <code>head()</code> and <code>str()</code> can be useful to check the
+content and the structure of a data frame. Here is a non-exhaustive list of
+functions to get a sense of the content/structure of the data. Let&#39;s try them out!</p>
+
 <ul>
-<li>Use that number to pull out just that last row in the data frame.</li>
-<li>Compare that with what you see as the last row using <code>tail()</code> to make sure it’s meeting expectations.</li>
-<li>Pull out that last row using <code>nrow()</code> instead of the row number.</li>
-<li>Create a new data frame object (<code>mapfile_last</code>) from that last row.</li>
+<li><p>Size:</p>
+
+<ul>
+<li><code>dim(metadata)</code> - returns a vector with the number of rows in the first element,
+  and the number of columns as the second element (the <strong>dim</strong>ensions of
+  the object)</li>
+<li><code>nrow(metadata)</code> - returns the number of rows</li>
+<li><code>ncol(metadata)</code> - returns the number of columns</li>
 </ul></li>
-<li><p>Use <code>nrow()</code> to extract the row that is in the middle of the data frame. Store the content of this row in an object named <code>mapfile_middle</code>.</p></li>
-<li><p>Combine <code>nrow()</code> with the <code>-</code> notation above to reproduce the behavior of <code>head(mapfile)</code> keeping just the first through 6th rows of the mapfile dataset.</p></li>
+<li><p>Content:</p>
+
+<ul>
+<li><code>head(metadata)</code> - shows the first 6 rows</li>
+<li><code>tail(metadata)</code> - shows the last 6 rows</li>
+</ul></li>
+<li><p>Names:</p>
+
+<ul>
+<li><code>names(metadata)</code> - returns the column names (synonym of <code>colnames()</code> for <code>data.frame</code>
+objects)</li>
+<li><code>rownames(metadata)</code> - returns the row names</li>
+</ul></li>
+<li><p>Summary:</p>
+
+<ul>
+<li><code>str(metadata)</code> - structure of the object and information about the class, length and
+content of  each column</li>
+<li><code>summary(metadata)</code> - summary statistics for each column</li>
+</ul></li>
+</ul>
+
+<p>Note: most of these functions are &quot;generic&quot;, they can be used on other types of
+objects besides <code>data.frame</code>.</p>
+
+<blockquote>
+<h3>Challenge</h3>
+
+<p>Based on the output of <code>str(metadata)</code>, can you answer the following questions?</p>
+
+<ul>
+<li>What is the class of the object <code>metadata</code>?</li>
+<li>How many rows and how many columns are in this object?</li>
+</ul>
+
+<p>&lt;!---</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Indexing and subsetting data frames</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Our data frame has rows and columns (it has 2 dimensions), if we want to
+extract some specific data from it, we need to specify the &quot;coordinates&quot; we
+want from it. Row numbers come first, followed by column numbers. However, note
+that different ways of specifying these coordinates lead to results with
+different classes.</p>
+
+<pre><code class="r">metadata[1, 1]   # first element in the first column of the data frame (as a vector)
+metadata[1, 6]   # first element in the 6th column (as a vector)
+metadata[, 1]    # first column in the data frame (as a vector)
+metadata[1]      # first column in the data frame (as a data.frame)
+metadata[1:3, 7] # first three elements in the 7th column (as a vector)
+metadata[3, ]    # the 3rd element for all columns (as a data.frame)
+head_metadata &lt;- metadata[1:6, ] # equivalent to head_metadata &lt;- head(metadata)
+</code></pre>
+
+<p><code>:</code> is a special function that creates numeric vectors of integers in increasing
+or decreasing order, test <code>1:10</code> and <code>10:1</code> for instance.</p>
+
+<p>You can also exclude certain parts of a data frame using the &quot;<code>-</code>&quot; sign:</p>
+
+<pre><code class="r">metadata[,-1]          # The whole data frame, except the first column
+metadata[-c(7:116),]   # Equivalent to head(metadata)
+</code></pre>
+
+<p>As well as using numeric values to subset a <code>data.frame</code> (or <code>matrix</code>), columns
+can be called by name, using one of the four following notations:</p>
+
+<pre><code class="r">metadata[&quot;SampleID&quot;]       # Result is a data.frame
+metadata[, &quot;SampleID&quot;]     # Result is a vector
+metadata[[&quot;SampleID&quot;]]     # Result is a vector
+metadata$SampleID          # Result is a vector
+</code></pre>
+
+<p>For our purposes, the last three notations are equivalent. RStudio knows about
+the columns in your data frame, so you can take advantage of the autocompletion
+feature to get the full and correct column name.</p>
+
+<blockquote>
+<h3>Challenge</h3>
+
+<ol>
+<li><p>Create a <code>data.frame</code> (<code>metadata_80</code>) containing only the observations from
+row 80 of the <code>metadata</code> dataset.</p></li>
+<li><p>Notice how <code>nrow()</code> gave you the number of rows in a <code>data.frame</code>?</p></li>
 </ol>
-</blockquote>
+
+<pre><code> * Use that number to pull out just that last row in the data frame.
+ * Compare that with what you see as the last row using `tail()` to make
+   sure it&#39;s meeting expectations.
+ * Pull out that last row using `nrow()` instead of the row number.
+ * Create a new data frame object (`metadata_last`) from that last row.
+</code></pre>
+
+<ol>
+<li><p>Use <code>nrow()</code> to extract the row that is in the middle of the data
+frame. Store the content of this row in an object named <code>metadata_middle</code>.</p></li>
+<li><p>Combine <code>nrow()</code> with the <code>-</code> notation above to reproduce the behavior of
+<code>head(metadata)</code> keeping just the first through 6th rows of the metadata.</p></li>
+</ol>
+
 <!---
 
 ```r
 ## Answers
-mapfile_80 <- mapfile[80, ]
-mapfile_last <- mapfile[nrow(mapfile), ]
-mapfile_middle <- mapfile[nrow(mapfile)/2, ]
-mapfile_head <- mapfile[-c(7:nrow(mapfile)),]
+metadata_80 <- metadata[80, ]
+metadata_last <- metadata[nrow(metadata), ]
+metadata_middle <- metadata[nrow(metadata)/2, ]
+metadata_head <- metadata[-c(7:nrow(metadata)),]
 ```
 --->
-</div>
-<div id="factors" class="section level2">
+
 <h2>Factors</h2>
-<p>When we did <code>str(mapfile)</code> we saw that some of the columns consist of integers, however, the columns <code>SampleID</code>, <code>FileInput</code>, <code>Source</code>, <code>Genotype</code>, and <code>Description</code> are of a special class called a <code>factor</code>. Factors are very useful and are actually something that make R particularly well suited to working with data, so we’re going to spend a little time introducing them.</p>
-<p>Factors are used to represent categorical data. Factors can be ordered or unordered, and understanding them is necessary for statistical analysis and for plotting.</p>
-<p>Factors are stored as integers, and have labels (text) associated with these unique integers. While factors look (and often behave) like character vectors, they are actually integers under the hood, and you need to be careful when treating them like strings.</p>
-<p>Once created, factors can only contain a pre-defined set of values, known as <em>levels</em>. By default, R always sorts <em>levels</em> in alphabetical order. For instance, if you have a factor with 2 levels:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mouse_source &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;CJS&quot;</span>, <span class="st">&quot;BZ&quot;</span>, <span class="st">&quot;BZ&quot;</span>, <span class="st">&quot;CJS&quot;</span>))</code></pre></div>
-<p>R will assign <code>1</code> to the level <code>&quot;BZ&quot;</code> and <code>2</code> to the level <code>&quot;CJS&quot;</code> (because <code>B</code> comes before <code>C</code>, even though the first element in this vector is <code>&quot;CJS&quot;</code>). You can check this by using the function <code>levels()</code>, and check the number of levels using <code>nlevels()</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(mouse_source)
-<span class="kw">nlevels</span>(mouse_source)</code></pre></div>
-<p>Sometimes, the order of the factors does not matter, other times you might want to specify the order because it is meaningful (e.g., “low”, “medium”, “high”), it improves your visualization, or it is required by a particular type of analysis. Here, one way to reorder our levels in the <code>sex</code> vector would be:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mouse_source <span class="co"># current order</span></code></pre></div>
-<pre><code>#&gt; [1] CJS BZ  BZ  CJS
-#&gt; Levels: BZ CJS</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mouse_source &lt;-<span class="st"> </span><span class="kw">factor</span>(mouse_source, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;CJS&quot;</span>, <span class="st">&quot;BZ&quot;</span>))
-mouse_source <span class="co"># after re-ordering</span></code></pre></div>
-<pre><code>#&gt; [1] CJS BZ  BZ  CJS
-#&gt; Levels: CJS BZ</code></pre>
-<p>In R’s memory, these factors are represented by integers (1, 2, 3), but are more informative than integers because factors are self describing: <code>&quot;CJS&quot;</code>, <code>&quot;BZ&quot;</code> is more descriptive than <code>1</code>, <code>2</code>. Which one is “BZ”? You wouldn’t be able to tell just from the integer data. Factors, on the other hand, have this information built in. It is particularly helpful when there are many levels (like the SampleID in our example dataset).</p>
-<div id="converting-factors" class="section level3">
+
+<p>When we did <code>str(metadata)</code> we saw that some of the columns consist of
+integers, however, multiple columns, such as <code>SampleID</code>, <code>ExperimentCenter</code>, <code>Sex</code>, <code>BodySuperSite</code>, and <code>ChronicCondition</code> are of a special class called a <code>factor</code>. Factors are very useful and are actually something that make R particularly well suited to working with data, so we&#39;re
+going to spend a little time introducing them.</p>
+
+<p>Factors are used to represent categorical data. Factors can be ordered or
+unordered, and understanding them is necessary for statistical analysis and for
+plotting.</p>
+
+<p>Factors are stored as integers, and have labels (text) associated with these
+unique integers. While factors look (and often behave) like character vectors,
+they are actually integers under the hood, and you need to be careful when
+treating them like strings.</p>
+
+<p>In the data frame we just imported, let&#39;s do </p>
+
+<pre><code class="r">str(metadata)
+</code></pre>
+
+<p>We can see the names of the multiple columns. And, we see that 
+some say things like <code>Factor w/ 30 levels</code></p>
+
+<p>When we read in a file, any column that contains text is automatically
+assumed to be a factor. Once created, factors can only contain a pre-defined set values, known as
+<em>levels</em>. By default, R always sorts <em>levels</em> in alphabetical order. </p>
+
+<p>For instance, we see that <code>Sex</code> is a Factor w/ 2 levels, <code>femail</code> and <code>male</code>.</p>
+
+<p>You can check this by using the function <code>levels()</code>, and check the
+number of levels using <code>nlevels()</code>:</p>
+
+<pre><code class="r">levels(metadata$Sex)
+nlevels(metadata$Sex)
+</code></pre>
+
+<p>For
+instance, if you have a factor with 2 levels:</p>
+
+<pre><code class="r">hmp_sex &lt;- factor(c(&quot;male&quot;, &quot;female&quot;, &quot;female&quot;, &quot;male&quot;))
+</code></pre>
+
+<p>R assigned <code>1</code> to the level <code>&quot;female&quot;</code> and <code>2</code> to the level <code>&quot;mail&quot;</code> (because
+<code>f</code> comes before <code>m</code>, even though the first element in this vector is
+<code>&quot;male&quot;</code>). You can check this by using the function <code>levels()</code>, and check the
+number of levels using <code>nlevels()</code>:</p>
+
+<pre><code class="r">levels(hmp_sex)
+nlevels(hmp_sex)
+</code></pre>
+
+<p>Sometimes, the order of the factors does not matter, other times you might want
+to specify the order because it is meaningful (e.g., &quot;low&quot;, &quot;medium&quot;, &quot;high&quot;),
+it improves your visualization, or it is required by a particular type of
+analysis. Additionally, specifying the
+order of the levels allows to compare levels:</p>
+
+<pre><code class="r">expression &lt;- factor(c(&quot;low&quot;, &quot;high&quot;, &quot;medium&quot;, &quot;high&quot;, &quot;low&quot;, &quot;medium&quot;, &quot;high&quot;))
+levels(expression)
+expression &lt;- factor(expression, levels=c(&quot;low&quot;, &quot;medium&quot;, &quot;high&quot;))
+levels(expression)
+min(expression) ## doesn&#39;t work
+expression &lt;- factor(expression, levels=c(&quot;low&quot;, &quot;medium&quot;, &quot;high&quot;), ordered=TRUE)
+levels(expression)
+min(expression) ## works!
+</code></pre>
+
+<p>In R&#39;s memory, these factors are represented by integers (1, 2, 3), but are more
+informative than integers because factors are self describing: <code>&quot;male&quot;</code>,
+<code>&quot;female&quot;</code> is more descriptive than <code>1</code>, <code>2</code>. Which one is &quot;female&quot;?  You wouldn&#39;t
+be able to tell just from the integer data. Factors, on the other hand, have
+this information built in. It is particularly helpful when there are many levels
+(like the SampleID in our example dataset).</p>
+
 <h3>Converting factors</h3>
-<p>If you need to convert a factor to a character vector, you use <code>as.character(x)</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.character</span>(mouse_source)</code></pre></div>
-<p>Converting factors where the levels appear as numbers (such as concentration levels, or years) to a numeric vector is a little trickier. The <code>as.numeric()</code> function returns the index values of the factor, not its levels, so it will result in an entirely new (and unwanted in this case) set of numbers. One method to avoid this is to convert factors to characters and then numbers.<br />
-Another method is to use the <code>levels()</code> function. Compare:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1983</span>, <span class="dv">1977</span>, <span class="dv">1998</span>, <span class="dv">1990</span>))
-<span class="kw">as.numeric</span>(f)               <span class="co"># Wrong! And there is no warning...</span>
-<span class="kw">as.numeric</span>(<span class="kw">as.character</span>(f)) <span class="co"># Works...</span>
-<span class="kw">as.numeric</span>(<span class="kw">levels</span>(f))[f]    <span class="co"># The recommended way.</span></code></pre></div>
+
+<p>If you need to convert a factor to a character vector, you use
+<code>as.character(x)</code>.</p>
+
+<p>Converting a factor to a numeric vector is however a little trickier, and you
+have to go via a character vector. Compare:</p>
+
+<pre><code class="r">as.character(mouse_source)
+</code></pre>
+
+<pre><code>#&gt; Error in eval(expr, envir, enclos): object &#39;mouse_source&#39; not found
+</code></pre>
+
 <p>Notice that in the <code>levels()</code> approach, three important steps occur:</p>
+
 <ul>
 <li>We obtain all the factor levels using <code>levels(f)</code></li>
 <li>We convert these levels to numeric values using <code>as.numeric(levels(f))</code></li>
-<li>We then access these numeric values using the underlying integers of the vector <code>f</code> inside the square brackets</li>
+<li>We then access these numeric values using the underlying integers of the
+vector <code>f</code> inside the square brackets</li>
 </ul>
-</div>
-<div id="renaming-factors" class="section level3">
-<h3>Renaming factors</h3>
-<p>When your data is stored as a factor, you can use the <code>plot()</code> function to get a quick glance at the number of observations represented by each factor level. Let’s look at the number of males and females captured over the course of the experiment:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## bar plot of the number of mice collected from BZ and CJS:
-<span class="co">#plot(mapfile$Source)</span></code></pre></div>
-<p>In addition to male and females, there are about 1700 individuals for which the sex information hasn’t been recorded. Additionally, for these individuals, there is no label to indicate that the information is missing. Let’s rename this label to something more meaningful. Before doing that, we’re going to pull out the data on sex and work with that data, so we’re not modifying the working copy of the data frame:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sex &lt;-<span class="st"> </span>mapfile$sex
-<span class="kw">head</span>(sex)</code></pre></div>
-<pre><code>#&gt; [1] M M        
-#&gt; Levels:  F M</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(sex)</code></pre></div>
-<pre><code>#&gt; [1] &quot;&quot;  &quot;F&quot; &quot;M&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(sex)[<span class="dv">1</span>] &lt;-<span class="st"> &quot;missing&quot;</span>
-<span class="kw">levels</span>(sex)</code></pre></div>
-<pre><code>#&gt; [1] &quot;missing&quot; &quot;F&quot;       &quot;M&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(sex)</code></pre></div>
-<pre><code>#&gt; [1] M       M       missing missing missing missing
-#&gt; Levels: missing F M</code></pre>
-<blockquote>
-<h3 id="challenge-2">Challenge</h3>
-<ul>
-<li>Rename “F” and “M” to “female” and “male” respectively.</li>
-<li>Now that we have renamed the factor level to “missing”, can you recreate the barplot such that “missing” is last (after “male”)?</li>
-</ul>
-</blockquote>
+
+<h3>Basic plotting</h3>
+
+<p>When your data is stored as a factor, you can use the <code>plot()</code> function to get a
+quick glance at the number of observations represented by each factor
+level. Let&#39;s look at the number of males and females captured over the course of
+the experiment:</p>
+
+<pre><code class="r">## bar plot of the number of male and female participants in the study:
+#plot(metadata$Sex)
+</code></pre>
+
+<h3>Challenge</h3>
+
+<p>The function <code>table()</code> tabulates observations and can be used to create
+bar plots quickly. For instance:</p>
+
+<pre><code class="r">## Question: How can you recreate this plot but by having &quot;control&quot;
+## being listed last instead of first?
+exprmt &lt;- factor(c(&quot;treat1&quot;, &quot;treat2&quot;, &quot;treat1&quot;, &quot;treat3&quot;, &quot;treat1&quot;, &quot;control&quot;,
+                   &quot;treat1&quot;, &quot;treat2&quot;, &quot;treat3&quot;))
+table(exprmt)
+</code></pre>
+
+<pre><code>#&gt; exprmt
+#&gt; control  treat1  treat2  treat3 
+#&gt;       1       4       2       2
+</code></pre>
+
+<pre><code class="r">barplot(table(exprmt))
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk wrong-order"></p>
+
 <!---
 
 ```r
-## Answers
-levels(sex)[2:3] <- c("female", "male")
-sex <- factor(sex, levels = c("female", "male", "missing"))
-plot(sex)
+exprmt <- factor(exprmt, levels=c("treat1", "treat2", "treat3", "control"))
+barplot(table(exprmt))
 ```
 
-<img src="img/R-ecology-correct-order-1.png" width="672" />
+![plot of chunk correct-order](img/R-ecology-correct-order-1.png)
 --->
-</div>
-<div id="using-stringsasfactorsfalse" class="section level3">
+
 <h3>Using <code>stringsAsFactors=FALSE</code></h3>
-<p>By default, when building or importing a data frame, the columns that contain characters (i.e., text) are coerced (=converted) into the <code>factor</code> data type. Depending on what you want to do with the data, you may want to keep these columns as <code>character</code>. To do so, <code>read.csv()</code> and <code>read.table()</code> have an argument called <code>stringsAsFactors</code> which can be set to <code>FALSE</code>.</p>
-<p>In most cases, it’s preferable to set <code>stringsAsFactors = FALSE</code> when importing your data, and converting as a factor only the columns that require this data type.</p>
-<p>Compare the output of <code>str(mapfile)</code> when setting <code>stringsAsFactors = TRUE</code> (default) and <code>stringsAsFactors = FALSE</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Compare the difference between when the data are being read as
+
+<p>By default, when building or importing a data frame, the columns that contain
+characters (i.e., text) are coerced (=converted) into the <code>factor</code> data
+type. Depending on what you want to do with the data, you may want to keep these
+columns as <code>character</code>. To do so, <code>read.csv()</code> and <code>read.table()</code> have an
+argument called <code>stringsAsFactors</code> which can be set to <code>FALSE</code>.</p>
+
+<p>In most cases, it&#39;s preferable to set <code>stringsAsFactors = FALSE</code> when importing
+your data, and converting as a factor only the columns that require this data
+type.</p>
+
+<p>Compare the output of <code>str(metadata)</code> when setting <code>stringsAsFactors = TRUE</code>
+(default) and <code>stringsAsFactors = FALSE</code>:</p>
+
+<pre><code class="r">## Compare the difference between when the data are being read as
 ## `factor`, and when they are being read as `character`.
-mapfile &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/mapfile.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>)
-<span class="kw">str</span>(mapfile)
-mapfile &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/mapfile.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-<span class="kw">str</span>(mapfile)
-## Convert the column &quot;plot_type&quot; into a factor
-mapfile$plot_type &lt;-<span class="st"> </span><span class="kw">factor</span>(mapfile$plot_type)</code></pre></div>
+metadata &lt;- read.csv(&quot;data/metadata.csv&quot;, sep = &quot;\t&quot;, stringsAsFactors = TRUE)
+str(metadata)
+metadata &lt;- read.csv(&quot;data/metadata.csv&quot;, sep = &quot;\t&quot;, stringsAsFactors = FALSE)
+str(metadata)
+## Convert the column &quot;Sex&quot; into a factor
+metadata$Sex &lt;- factor(metadata$Sex)
+str(metadata)
+</code></pre>
+
 <blockquote>
-<h3 id="challenge-3">Challenge</h3>
-<ol style="list-style-type: decimal">
-<li><p>We have seen how data frames are created when using the <code>read.csv()</code>, but they can also be created by hand with the <code>data.frame()</code> function. There are a few mistakes in this hand-crafted <code>data.frame</code>, can you spot and fix them? Don’t hesitate to experiment!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">animal_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">animal=</span><span class="kw">c</span>(<span class="st">&quot;dog&quot;</span>, <span class="st">&quot;cat&quot;</span>, <span class="st">&quot;sea cucumber&quot;</span>, <span class="st">&quot;sea urchin&quot;</span>),
-                          <span class="dt">feel=</span><span class="kw">c</span>(<span class="st">&quot;furry&quot;</span>, <span class="st">&quot;squishy&quot;</span>, <span class="st">&quot;spiny&quot;</span>),
-                          <span class="dt">weight=</span><span class="kw">c</span>(<span class="dv">45</span>, <span class="dv">8</span> <span class="fl">1.1</span>, <span class="fl">0.8</span>))</code></pre></div></li>
-<li>Can you predict the class for each of the columns in the following example? Check your guesses using <code>str(country_climate)</code>:
+<h3>Challenge</h3>
+
+<ol>
+<li><p>We have seen how data frames are created when using the <code>read.csv()</code>, but
+they can also be created by hand with the <code>data.frame()</code> function.  There are
+a few mistakes in this hand-crafted <code>data.frame</code>, can you spot and fix them?
+Don&#39;t hesitate to experiment!</p>
+
+<pre><code class="r">animal_data &lt;- data.frame(animal=c(&quot;dog&quot;, &quot;cat&quot;, &quot;sea cucumber&quot;, &quot;sea urchin&quot;),
+                          feel=c(&quot;furry&quot;, &quot;squishy&quot;, &quot;spiny&quot;),
+                          weight=c(45, 8 1.1, 0.8))
+</code></pre></li>
+<li><p>Can you predict the class for each of the columns in the following example?
+Check your guesses using <code>str(country_climate)</code>:</p>
+
 <ul>
-<li>Are they what you expected? Why? Why not?</li>
+<li>Are they what you expected?  Why? Why not?</li>
 <li>What would have been different if we had added <code>stringsAsFactors = FALSE</code> to this call?</li>
 <li>What would you need to change to ensure that each column had the accurate data type?</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">country_climate &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
-       <span class="dt">country=</span><span class="kw">c</span>(<span class="st">&quot;Canada&quot;</span>, <span class="st">&quot;Panama&quot;</span>, <span class="st">&quot;South Africa&quot;</span>, <span class="st">&quot;Australia&quot;</span>),
-       <span class="dt">climate=</span><span class="kw">c</span>(<span class="st">&quot;cold&quot;</span>, <span class="st">&quot;hot&quot;</span>, <span class="st">&quot;temperate&quot;</span>, <span class="st">&quot;hot/temperate&quot;</span>),
-       <span class="dt">temperature=</span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">30</span>, <span class="dv">18</span>, <span class="st">&quot;15&quot;</span>),
-       <span class="dt">northern_hemisphere=</span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="st">&quot;FALSE&quot;</span>),
-       <span class="dt">has_kangaroo=</span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="ot">FALSE</span>, <span class="dv">1</span>)
-       )</code></pre></div></li>
+
+<pre><code class="r">country_climate &lt;- data.frame(
+       country=c(&quot;Canada&quot;, &quot;Panama&quot;, &quot;South Africa&quot;, &quot;Australia&quot;),
+       climate=c(&quot;cold&quot;, &quot;hot&quot;, &quot;temperate&quot;, &quot;hot/temperate&quot;),
+       temperature=c(10, 30, 18, &quot;15&quot;),
+       northern_hemisphere=c(TRUE, TRUE, FALSE, &quot;FALSE&quot;),
+       has_kangaroo=c(FALSE, FALSE, FALSE, 1)
+       )
+</code></pre>
+
+<!--- Answers
+
+--></li>
 </ol>
-<p><!--- Answers
 
-   
+<p>The automatic conversion of data type is sometimes a blessing, sometimes an
+annoyance. Be aware that it exists, learn the rules, and double check that data
+you import in R are of the correct type within your data frame. If not, use it
+to your advantage to detect mistakes that might have been introduced during data
+entry (a letter in a column that should only contain numbers for instance).</p>
 
-   --></p>
-</blockquote>
-<p>The automatic conversion of data type is sometimes a blessing, sometimes an annoyance. Be aware that it exists, learn the rules, and double check that data you import in R are of the correct type within your data frame. If not, use it to your advantage to detect mistakes that might have been introduced during data entry (a letter in a column that should only contain numbers for instance).</p>
-<p style="text-align: right; font-size: small;">
-Page build on: 2017-09-29 10:54:49
-</p>
-</div>
-</div>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-08 21:10:16</p>
 
-<hr/>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
 
-<p><a href="http://datacarpentry.org/">Data Carpentry</a>,
-  2017. <a href="LICENSE.html">License</a>. <a href="CONTRIBUTING.html">Contributing</a>. <br/>
-  Questions?  Feedback?
-  Please <a href="https://github.com/datacarpentry/R-ecology-lesson/issues/new">file
-  an issue on GitHub</a>. <br/> On
-  Twitter: <a href="https://twitter.com/datacarpentry">@datacarpentry</a></p>
-
-
-</div>
-</div>
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='NA'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Looking at Metadata'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Indexing and subsetting data frames'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
 </body>
-</html>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
