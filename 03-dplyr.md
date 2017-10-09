@@ -3,15 +3,9 @@ title: Manipulating and analyzing data with dplyr; Exporting data
 author: Data Carpentry contributors
 ---
 
-```{r, echo=FALSE, purl=FALSE, message = FALSE}
-source("setup.R")
-metadata <- read.csv('data/metadata.csv', header = TRUE, sep = "\t")
 
-```
 
-```{r, echo=FALSE, purl=TRUE}
-### Manipulating and analyzing data with dplyr
-```
+
 
 ------------
 
@@ -50,7 +44,8 @@ work together well, such as **`tidyr`**, **`dplyr`**, **`ggplot2`**, etc. To loa
 the package type:
 
 
-```{r, message = FALSE, purl = FALSE}
+
+```r
 library("tidyverse")    ## load the tidyverse packages, incl. dplyr
 ```
 
@@ -83,14 +78,20 @@ We're going to learn some of the most common **`dplyr`** functions: `select()`,
 data frame, use `select()`. The first argument to this function is the data
 frame (`metadata`), and the subsequent arguments are the columns to keep.
 
-```{r, results = 'hide', purl = FALSE}
+
+```r
 select(metadata, SampleID, Sex, BodySuperSite)
 ```
 
 To choose rows based on a specific criteria, use `filter()`:
 
-```{r, purl = FALSE}
+
+```r
 filter(metadata, BodySuperSite == Skin)
+```
+
+```
+#> Error in filter_impl(.data, quo): Evaluation error: object 'Skin' not found.
 ```
 
 ## Pipes
@@ -112,10 +113,15 @@ with **`dplyr`**. If you use RStudio, you can type the pipe with <kbd>Ctrl</kbd>
 + <kbd>Shift</kbd> + <kbd>M</kbd> if you have a PC or <kbd>Cmd</kbd> + 
 <kbd>Shift</kbd> + <kbd>M</kbd> if you have a Mac.
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   filter(BodySuperSite == Skin) %>%
   select(SampleID, Sex, BodySuperSite)
+```
+
+```
+#> Error in filter_impl(.data, quo): Evaluation error: object 'Skin' not found.
 ```
 
 In the above, we use the pipe to send the `metadata` dataset first through
@@ -128,12 +134,23 @@ its right, we don't need to explicitly include it as an argument to the
 If we wanted to create a new object with this smaller version of the data, we
 could do so by assigning it a new name:
 
-```{r, purl = FALSE}
+
+```r
 metadata_skin <- metadata %>%
   filter(BodySuperSite == Skin) %>%
   select(SampleID, Sex, BodySuperSite)
+```
 
+```
+#> Error in filter_impl(.data, quo): Evaluation error: object 'Skin' not found.
+```
+
+```r
 metadata_skin
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata_skin' not found
 ```
 
 Note that the final data frame is the leftmost part of this expression.
@@ -143,7 +160,8 @@ Note that the final data frame is the leftmost part of this expression.
 >  Using pipes, subset the `metadata` to include rows where the Sex is male, and retain only the columns `SampleID` and `Age`.
 
 <!---
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 ## Answer
 metadata %>%
     filter(Sex == male) %>%
@@ -151,12 +169,7 @@ metadata %>%
 ```
 --->
 
-    ```{r, eval=FALSE, purl=TRUE, echo=FALSE}
-    ## Pipes Challenge:
-    ##  Using pipes, subset the data to include rows where the Sex is
-    ##  male, and retain only the columns `SampleID` and `Age.`
-
-    ```
+    
 
 ### Mutate
 
@@ -166,14 +179,16 @@ columns. For this we'll use `mutate()`.
 
 To create a new column of Age in months:
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   mutate(age_months = Age * 12)
 ```
 
 You can also create a second new column based on the first new column within the same call of `mutate()`:
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   mutate(age_months = Age * 12,
          age2 = age_months * 2)
@@ -183,7 +198,8 @@ If this runs off your screen and you just want to see the first few rows, you
 can use a pipe to view the `head()` of the data. (Pipes work with non-**`dplyr`**
 functions, too, as long as the **`dplyr`** or `magrittr` package is loaded).
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   mutate(age_months = Age * 12) %>%
   head
@@ -196,7 +212,8 @@ function with or without parentheses (e.g. `head` or `head()`).
 The first few rows of the output are full of `NA`s, so if we wanted to remove
 those we could insert a `filter()` in the chain:
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   filter(!is.na(Age)) %>%
   mutate(age_months = Age * 12) %>%
@@ -225,7 +242,8 @@ or summary function to each group. For example, if we wanted to group by
 Sex and find the number of rows of data for each 
 gender, we would do: 
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   group_by(Sex) %>%
   summarize(n())
@@ -245,7 +263,8 @@ remove).
 
 So to view mean `Age` by Sex:
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   group_by(Sex) %>%
   summarize(mean_age = mean(Age, na.rm = TRUE))
@@ -262,7 +281,8 @@ factors.
 
 You can also group by multiple columns:
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   group_by(Sex, BodySuperSite) %>%
   summarize(mean_age = mean(Age, na.rm = TRUE))
@@ -275,7 +295,8 @@ Number"). To avoid this, we can remove the missing values for weight before we
 attempt to calculate the summary statistics on Age. Because the missing
 values are removed, we can omit `na.rm = TRUE` when computing the mean:
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   filter(!is.na(Age)) %>%
   group_by(Sex, BodySuperSite) %>%
@@ -288,7 +309,8 @@ anymore. Recall that **`dplyr`** has changed our object from`data.frame` to
 at the end of your chain with the argument `n` specifying the number of rows to
 display:
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   filter(!is.na(Age)) %>%
   group_by(Sex, BodySuperSite) %>%
@@ -300,7 +322,8 @@ Once the data are grouped, you can also summarize multiple variables at the same
 time (and not necessarily on the same variable). For instance, we could add a
 column indicating the minimum Age for each BodySuperSite for each Sex:
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   filter(!is.na(Age)) %>%
   group_by(Sex, BodySuperSite) %>%
@@ -316,7 +339,8 @@ observations found for each factor or combination of factors. For this, **`dplyr
 provides `tally()`. For example, if we wanted to group by Sex and find the
 number of rows of data for each Sex, we would do:
 
-```{r, purl = FALSE}
+
+```r
 metadata %>%
   group_by(Sex) %>%
   tally
@@ -354,7 +378,8 @@ this dataset, the missing Samples are represented by an empty string and not an
 observations of individuals for which the Sex has been determined:
 
 
-```{r, purl=FALSE}
+
+```r
 metadata_complete <- metadata %>%
   filter(SampleID != "",         # remove missing SampleID
          !is.na(Age),           # remove missing Age
@@ -364,7 +389,7 @@ metadata_complete <- metadata %>%
 
 
 To make sure that everyone has the same dataset, check that `metadata_complete`
-has `r nrow(metadata_complete)` rows and `r ncol(metadata_complete)` columns by
+has 113 rows and 30 columns by
 typing `dim(metadata_complete)`.
 
 Now that our dataset is ready, we can save it as a CSV file in our `data_output`
@@ -372,7 +397,8 @@ folder. By default, `write.csv()` includes a column with row names (in our case
 the names are just the row numbers), so we need to add `row.names = FALSE` so
 they are not included:
 
-```{r, purl=FALSE, eval=FALSE}
+
+```r
 dir.create("data_output")
 
 write.csv(metadata_complete, file = "data_output/metadata_complete.csv",
@@ -380,4 +406,4 @@ write.csv(metadata_complete, file = "data_output/metadata_complete.csv",
 ```
 
 
-<p style="text-align: right; font-size: small;">Page build on: `r format(Sys.time())`</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-09 05:29:04</p>
