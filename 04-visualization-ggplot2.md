@@ -5,14 +5,9 @@ minutes: 60
 ---
 
 
-```{r setup, echo=FALSE, purl=FALSE}
-source("setup.R")
 
-```
 
-```{r, echo=FALSE, purl=TRUE}
-### Data Visualization with ggplot2
-```
+
 
 
 ------------
@@ -29,14 +24,16 @@ source("setup.R")
 
 We start by loading the required packages. **`ggplot2`** is included in the **`tidyverse`** package.
 
-```{r load-package, message=FALSE, purl=FALSE}
+
+```r
 library(ggplot2)
 library(tidyverse)
 ```
 
 If not still in the workspace, load the data we saved in the previous lesson.
 
-```{r load-data, eval=FALSE,  purl=FALSE}
+
+```r
 metadata <- read.csv('data/metadata.csv', header = TRUE, sep = "\t")
 ```
 
@@ -48,52 +45,86 @@ The mathematician Richard Hamming once said, "The purpose of computing is insigh
 When we are working with large sets of numbers it can be useful to display that information graphically. R has a number of built-in tools for basic graph types such as hisotgrams, scatter plots, bar charts, boxplots and much [more](http://www.statmethods.net/graphs/). We'll test a few of these out here on the `Age` vector from our metadata.
 
 
-```{r simplestats}
-metadata_age <- metadata$Age
 
+```r
+metadata_age <- metadata$Age
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
 ```
 
 ## Scatterplot
 Let's start with a **scatterplot**. A scatter plot provides a graphical view of the relationship between two sets of numbers. We don't have a variable in our metadata that is a continous variable, so there is nothing to plot it against but we can plot the values against their index values just to demonstrate the function.
 
-```{r scatter-plot1, fig.align='center'}
+
+```r
 plot(metadata_age)
+```
+
+```
+#> Error in plot(metadata_age): object 'metadata_age' not found
 ```
 
 Each point represents a clone and the value on the x-axis is the clone index in the file, where the values on the y-axis correspond to the genome size for the clone. For any plot you can customize many features of your graphs (fonts, colors, axes, titles) through [graphic options](http://www.statmethods.net/advgraphs/parameters.html)
 For example, we can change the shape of the data point using `pch`.
 
-```{r, fig.align='center'}
+
+```r
 plot(metadata_age, pch=8)
+```
+
+```
+#> Error in plot(metadata_age, pch = 8): object 'metadata_age' not found
 ```
 
 We can add a title to the plot by assigning a string to `main`:
 
-```{r, fig.align='center'}
+
+```r
 plot(metadata_age, pch=8, main="Scatter plot of age distribution")
+```
+
+```
+#> Error in plot(metadata_age, pch = 8, main = "Scatter plot of age distribution"): object 'metadata_age' not found
 ```
 
 ## Histogram
 Another way to visualize the distribution of ages is to use a histogram, we can do this buy using the `hist` function:
 
-```{r, fig.align='center'}
+
+```r
 hist(metadata_age)
+```
+
+```
+#> Error in hist(metadata_age): object 'metadata_age' not found
 ```
 
 ## Boxplot
 
 Using additional information from our metadata, we can use plots to compare values between the different body mass indices (BMIs) using a **boxplot**. A boxplot provides a graphical view of the median, quartiles, maximum, and minimum of a data set. 
 
-```{r boxplot, fig.align='center'}
+
+```r
 # Boxplot
 boxplot(metadata_age ~ BodyMassIndex, metadata)
 ```
 
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
 Similar to the scatterplots above, we can pass in arguments to add in extras like plot title, axis labels and colors.
 
-```{r, fig.align='center'}
+
+```r
 boxplot(metadata_age ~ BodyMassIndex, metadata,  col=c("pink","purple", "darkgrey"),
         main="Average expression differences between celltypes", ylab="Expression")
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
 ```
 
 
@@ -104,7 +135,8 @@ More recently, R users have moved away from base graphic options and towards a p
 
 `ggplot2` is best used on data in the `data.frame` form, so we will will work with `metadata` for the following figures. Let's start by loading the `ggplot2` library.
 
-```{r}
+
+```r
 library(ggplot2)
 ```
 
@@ -121,7 +153,8 @@ To build a ggplot, we need to:
 - use the `ggplot()` function and bind the plot to a specific data frame using the  
       `data` argument
 
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 ggplot(data = metadata)
 ```
 
@@ -133,7 +166,8 @@ Geometric objects are the actual marks we put on a plot. Examples include:
 
 A plot **must have at least one geom**; there is no upper limit. You can add a geom to a plot using the + operator
 
-```{r, eval=FALSE}
+
+```r
 ggplot(metadata) +
   geom_point() # note what happens here
 ```
@@ -149,16 +183,26 @@ Each type of geom usually has a **required set of aesthetics** to be set, and us
 To start, we will add position for the x- and y-axis since `geom_point` requires mappings for x and y, all others are optional.
 
 
-```{r, fig.align='center'}
+
+```r
 ggplot(data = metadata) +
   geom_point(aes(x = Age, y= BodyMassIndex))
 ```
 
+```
+#> Error in ggplot(data = metadata): object 'metadata' not found
+```
+
 The same figure will be generated if the aesthetics are place in the ggplot() function:
 
-```{r, fig.align='center'}
+
+```r
 ggplot(data = metadata, aes(x = Age, y= BodyMassIndex)) +
   geom_point()
+```
+
+```
+#> Error in ggplot(data = metadata, aes(x = Age, y = BodyMassIndex)): object 'metadata' not found
 ```
 
 If labels on the x-axis are hard to read, you can add an additional theme layer. The ggplot2 `theme` system handles non-data plot elements such as:
@@ -171,10 +215,15 @@ If labels on the x-axis are hard to read, you can add an additional theme layer.
 There are built-in themes we can use, or we can adjust specific elements. For demonstration purposes, let's change the x-axis labels to be plotted on a 45 degree angle with a small horizontal shift. We will also add some additional aesthetics by mapping them to other variables in our dataframe. _For example, the color of the points will reflect the number of generations and the shape will reflect citrate mutant status._ The size of the points can be adjusted within the `geom_point` but does not need to be included in `aes()` since the value is not mapping to a variable.
 
 
-```{r, fig.align='center'}
+
+```r
 ggplot(data = metadata, aes(x = Age, y= BodyMassIndex, color = BodySuperSite, shape = Sex)) +
   geom_point(size = rel(3.0)) +
   theme(axis.text.x = element_text(angle=45, hjust=1))
+```
+
+```
+#> Error in ggplot(data = metadata, aes(x = Age, y = BodyMassIndex, color = BodySuperSite, : object 'metadata' not found
 ```
 
 
@@ -182,25 +231,30 @@ ggplot(data = metadata, aes(x = Age, y= BodyMassIndex, color = BodySuperSite, sh
 
 To plot a histogram we require another geometric object `geom_bar`, which requires a statistical transformation. Some plot types (such as scatterplots) do not require transformations, each point is plotted at x and y coordinates equal to the original value. Other plots, such as boxplots, histograms, prediction lines etc. need to be transformed, and usually has a default statistic that can be changed via the `stat_bin` argument. 
 
-```{r, eval=FALSE}
+
+```r
 ggplot(data = metadata, aes(x = Age)) +
   geom_bar()
-  
 ```
 
 Try plotting with the default value and compare it to the plot using the binwidth values. How do they differ?
 
-```{r, fig.align='center'}
+
+```r
 ggplot(data = metadata, aes(x = Age)) +
   geom_bar(stat = "bin", binwidth=0.05)
-  
+```
+
+```
+#> Error in ggplot(data = metadata, aes(x = Age)): object 'metadata' not found
 ```
 
 ## Boxplot
 
 Now that we have all the required information, let's try plotting a boxplot similar to what we had done using the base plot functions at the start of this lesson. We can add some additional layers to include a plot title and change the axis labels. Explore the code below and all the different layers that we have added to understand what each layer contributes to the final graphic.
 
-```{r, fig.align='center'}
+
+```r
 ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)) +
   geom_boxplot() +
   ggtitle('Distribution of body mass index by sex') +
@@ -210,14 +264,18 @@ ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)) +
           axis.text.x = element_text(angle=45, hjust=1),
           axis.title = element_text(size = rel(1.5)),
           axis.text = element_text(size = rel(1.25)))
+```
 
+```
+#> Error in ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)): object 'metadata' not found
 ```
 
 
 By adding points to boxplot, we can have a better idea of the number of
 measurements and of their distribution:
 
-```{r, fig.align='center'}
+
+```r
 ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)) +
   geom_boxplot() +
   geom_jitter(alpha = 0.3, color = "tomato") +
@@ -229,7 +287,10 @@ ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)) +
           axis.text.x = element_text(angle=45, hjust=1),
           axis.title = element_text(size = rel(1.5)),
           axis.text = element_text(size = rel(1.25)))
+```
 
+```
+#> Error in ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)): object 'metadata' not found
 ```
 
 
@@ -272,7 +333,8 @@ The second option is to use R functions in the console, allowing you the flexibi
 2. Write the code that makes the plot.
 3. Close the connection to the new file (with your plot) using `dev.off()`.
 
-```{r, eval=FALSE}
+
+```r
 # Let's make a new directory where figures can be stored:
 
 dir.create("figures")
@@ -298,4 +360,4 @@ Resources:
 ---------
 We have only scratched the surface here. To learn more, see the [ggplot2 reference site](http://docs.ggplot2.org/), and Winston Chang's excellent [Cookbook for R](http://wiki.stdout.org/rcookbook/Graphs/) site. Though slightly out of date, [ggplot2: Elegant Graphics for Data Anaysis](http://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/0387981403) is still the definative book on this subject. Much of the material here was adpapted from [Introduction to R graphics with ggplot2 Tutorial at IQSS](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html).
 
-<p style="text-align: right; font-size: small;">Page build on: `r format(Sys.time())`</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-10 09:43:28</p>
