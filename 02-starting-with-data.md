@@ -72,55 +72,7 @@ head(metadata)
 ```
 
 ```
-#>    SampleID        SraSample BarcodeSequence LinkerPrimerSequence
-#> 1 SRR040576 SRS017663.575350    TCAGACGAGAAC   CCGTCAATTCMTTTRAGT
-#> 2 SRR040577 SRS022006.571394      TCAGACTTGC   CCGTCAATTCMTTTRAGT
-#> 3 SRR040578 SRS020030.572850   TCAGTTAAGATTC   CCGTCAATTCMTTTRAGT
-#> 4 SRR040579 SRS023617.570981     TCAGAAGCCGC   CCGTCAATTCMTTTRAGT
-#> 5 SRR040580 SRS016529.574547    TCAGACGAAGTC   CCGTCAATTCMTTTRAGT
-#> 6 SRR040581 SRS017428.573106    TCAGTGTCGGAC   CCGTCAATTCMTTTRAGT
-#>   SampleCollectDevice ExperimentCenter                     Title Depth
-#> 1                swab               BI HMP_production_phase_1161     0
-#> 2                swab               BI HMP_production_phase_2070     0
-#> 3                swab               BI HMP_production_phase_1601     0
-#> 4                swab               BI HMP_production_phase_2470     0
-#> 5                swab               BI  HMP_production_phase_901     0
-#> 6                swab               BI HMP_production_phase_1117     0
-#>   PFPH    Sex    BodySuperSite AnonymizedName Mislabeled Age AgeUnit
-#> 1  0.0   male             Oral         241775      FALSE  19   years
-#> 2  3.7 female          Airways         241747      FALSE  27   years
-#> 3  3.8 female Urogenital_tract         241847      FALSE  24   years
-#> 4  4.5 female             Oral         241702      FALSE  20   years
-#> 5  3.7 female             Oral         241831      FALSE  23   years
-#> 6  0.0   male             Skin         241703      FALSE  30   years
-#>   BodyMassIndex Obesity   EnvMatter Contaminated ChronicCondition
-#> 1            22       n ENVO:saliva        FALSE                n
-#> 2            23       n  ENVO:mucus        FALSE                n
-#> 3            30       n  ENVO:mucus        FALSE                y
-#> 4            26       n ENVO:saliva        FALSE                n
-#> 5            20       n ENVO:saliva        FALSE                n
-#> 6            24       n  ENVO:sebum        FALSE                n
-#>   MyocardInfarc StudyID CollectDay Atheroschlerosis Smoker
-#> 1             n     969          0                n   None
-#> 2             n     969        224                n   None
-#> 3             n     969          0                n   None
-#> 4             n     969        245                n   None
-#> 5             n     969          0                n   None
-#> 6             n     969          0                n   None
-#>                                              PCRPrimer VisitNo
-#> 1 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
-#> 2 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       2
-#> 3 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
-#> 4 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       2
-#> 5 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
-#> 6 FWD:CCATCTCATCCCTGCGTGTCTCCGA;REV:CCGTCAATTCMTTTRAGT       1
-#>   Hypertension INTPH Description
-#> 1            n   0.0   SRR040576
-#> 2            n   4.1   SRR040577
-#> 3            n   4.3   SRR040578
-#> 4            n   4.9   SRR040579
-#> 5            n   4.0   SRR040580
-#> 6            n   0.0   SRR040581
+#> Error in head(metadata): object 'metadata' not found
 ```
 
 > ### Note
@@ -158,6 +110,10 @@ with the function `str()`:
 
 ```r
 str(metadata)
+```
+
+```
+#> Error in str(metadata): object 'metadata' not found
 ```
 
 ## Inspecting `data.frame` Objects
@@ -219,12 +175,58 @@ different classes.
 
 ```r
 metadata[1, 1]   # first element in the first column of the data frame (as a vector)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[1, 6]   # first element in the 6th column (as a vector)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[, 1]    # first column in the data frame (as a vector)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[1]      # first column in the data frame (as a data.frame)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[1:3, 7] # first three elements in the 7th column (as a vector)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[3, ]    # the 3rd element for all columns (as a data.frame)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 head_metadata <- metadata[1:6, ] # equivalent to head_metadata <- head(metadata)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
 ```
 
 `:` is a special function that creates numeric vectors of integers in increasing
@@ -235,7 +237,18 @@ You can also exclude certain parts of a data frame using the "`-`" sign:
 
 ```r
 metadata[,-1]          # The whole data frame, except the first column
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[-c(7:116),]   # Equivalent to head(metadata)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
 ```
 
 As well as using numeric values to subset a `data.frame` (or `matrix`), columns
@@ -280,9 +293,34 @@ feature to get the full and correct column name.
 ```r
 ## Answers
 metadata_80 <- metadata[80, ]
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata_last <- metadata[nrow(metadata), ]
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata_middle <- metadata[nrow(metadata)/2, ]
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata_head <- metadata[-c(7:nrow(metadata)),]
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
 ```
 --->
 
@@ -310,6 +348,10 @@ In the data frame we just imported, let's do
 str(metadata)
 ```
 
+```
+#> Error in str(metadata): object 'metadata' not found
+```
+
 We can see the names of the multiple columns. And, we see that 
 some say things like `Factor w/ 116 levels`
 
@@ -321,6 +363,7 @@ For instance, we see that `Genotype` is a Factor w/ 4 levels, `WT`, `chemerin_KO
 
 You can check this by using the function `levels()`, and check the
 number of levels using `nlevels()`:
+
 
 
 ```r
@@ -382,11 +425,11 @@ have to go via a character vector. Compare:
 
 
 ```r
-as.character(mouse_source)
+as.character(metadata$Source)
 ```
 
 ```
-#> Error in eval(expr, envir, enclos): object 'mouse_source' not found
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
 ```
 
 Notice that in the `levels()` approach, three important steps occur:
@@ -401,13 +444,16 @@ Notice that in the `levels()` approach, three important steps occur:
 
 When your data is stored as a factor, you can use the `plot()` function to get a
 quick glance at the number of observations represented by each factor
-level. Let's look at the number of males and females captured over the course of
-the experiment:
+level. Let's look at the number of mice per treatment group:
 
 
 ```r
-## bar plot of the number of mice per treatment group:
-#plot(metadata$Genotype)
+## bar plot of the number of male and female participants in the study:
+plot(metadata$Genotype)
+```
+
+```
+#> Error in plot(metadata$Genotype): object 'metadata' not found
 ```
 
 
@@ -471,8 +517,8 @@ metadata <- read.csv("data/metadata.csv", sep = "\t", stringsAsFactors = TRUE)
 str(metadata)
 metadata <- read.csv("data/metadata.csv", sep = "\t", stringsAsFactors = FALSE)
 str(metadata)
-## Convert the column "Genotype" into a factor
-metadata$Genotype <- factor(metadata$Genotype)
+## Convert the column "Sex" into a factor
+metadata$Sex <- factor(metadata$Sex)
 str(metadata)
 ```
 
@@ -525,4 +571,4 @@ you import in R are of the correct type within your data frame. If not, use it
 to your advantage to detect mistakes that might have been introduced during data
 entry (a letter in a column that should only contain numbers for instance).
 
-<p style="text-align: right; font-size: small;">Page build on: 2017-10-08 21:10:16</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-13 22:18:39</p>
