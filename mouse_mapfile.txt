@@ -1,4 +1,4 @@
-#SampleID	BarcodeSequence	LinkerPrimerSequence	FileInput	Source	Mouse	Cage	Genotype	SamplingWeek	Description
+SampleID	BarcodeSequence	LinkerPrimerSequence	FileInput	Source	Mouse	Cage	Genotype	SamplingWeek	Description
 100CHE6KO			100CHE6KO_S357_L001_R1_001.fastq	BZ	100		chemerin_KO	6	100CHE6KO
 101CHE6WT			101CHE6WT_S368_L001_R1_001.fastq	BZ	101		WT	6	101CHE6WT
 102CHE6WT			102CHE6WT_S291_L001_R1_001.fastq	BZ	102		WT	6	102CHE6WT
