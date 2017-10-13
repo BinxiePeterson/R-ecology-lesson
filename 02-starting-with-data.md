@@ -23,43 +23,23 @@ minutes: 25
 
 
 
-We will be looking at a subset of the metadata of the [Human Microbiome Project](https://www.hmpdacc.org/hmp/)(HMP). This particular production phase represents pyrosequencing of 16S rRNA genes amplified from multiple body sites across hundreds of human subjects. 16S rRNA sequencing was used to characterize the complexity of microbial communities at individual body sites, and to determine whether there was a core microbiome at each site. Several body sites were studied, including the gastrointestinal and female urogenital tracts, oral cavity, nasal and pharyngeal tract, and skin.
+We will be looking at the metadata of a gene knockout study. The aim of this study was to determine whether knocking out the protein 'chemerin' affects gut microbial composition. In total, 116 mouse samples were acquired from two different facilities. Metadata associated with each sample is indicated in the mapping file (mouse_mapfile.txt), which we will download using RStudio. In this mapping file the genotypes of interest can be seen: wildtype (WT), chemerin knockout (chemerin_KO), chemerin receptor knockout (CMKLR1_KO) and a heterozygote for the receptor knockout (HET). Also of importance are the two source facilities: "BZ" and "CJS". It is generally a good idea to include as much metadata as possible, since this data can easily be explored later on.
 
-All of the information about the samples are stored in a metadata mapping file. The metadata mapping file of this dataset is stored as a comma separated value (CSV) file.
-Each row holds information for a single sample, and the columns represent:
+The metadata mapping file of this dataset is stored as a comma separated value (CSV) file.
+Each row holds information for a single mouse, and the columns represent:
 
-| Column                | Description                                       |
-|-----------------------|---------------------------------------------------|
-| SampleID              | Unique id for each sample                         |
-| SraSample             | xxxx             |
-| BarcodeSequence       | Barcode sequence used for each sample             |
-| LinkerPrimerSequence  | Linker/primer sequence used to amplify the sample |
-| SampleCollectDevice   | Name of .fastq input file                         |
-| ExperimentCenter      | BZ = ??? or CJS = ???                             |
-| Title                 | Unique number for each mouse                      |
-| Depth                 | WT = wild type, chemerin_KO = chemerin_knockout,  |
-| PFPH                  | CMKLR1_HE = ???, CMKLR1_KO = ???                  |
-| Sex                   | Week in which mouse was sampled                   |
-| BodySuperSite         | Unique id for each mouse                          |
-| AnonymizedName        | Unique id for each mouse                          |
-| Mislabeled            | Unique id for each mouse                          |
-| Age                   | Unique id for each mouse                          |
-| AgeUnit               | Unique id for each mouse                          |
-| BodyMassIndex         | Unique id for each mouse                          |
-| Obesity               | Unique id for each mouse                          |
-| EnvMatter             | Unique id for each mouse                          |
-| Contaminated          | Unique id for each mouse                          |
-| ChronicCondition      | Unique id for each mouse                          |
-| MyocardInfarc         | Unique id for each mouse                          |
-| StudyID               | Unique id for each mouse                          |
-| CollectDay            | Unique id for each mouse                          |
-| Atheroschlerosis      | Unique id for each mouse                          |
-| Smoker                | Unique id for each mouse                          |
-| PCRPrimer             | Unique id for each mouse                          |
-| VisitNo               | Unique id for each mouse                          |
-| Hypertension          | Unique id for each mouse                          |
-| INTPH                 | Unique id for each mouse                          |
-| Description           | Unique id for each mouse                          |
+| Column                | Description                                           |
+|-----------------------|-------------------------------------------------------|
+| SampleID              | Unique id for each sample                             |
+| BarcodeSequence       | Barcode sequence used for each sample (NA)            |
+| LinkerPrimerSequence  | Linker/primer sequence used to amplify the sample (NA)|
+| FileInput             | Name of .fastq input file                             |
+| Source                | BZ or CJS                                             |
+| Mouse                 | Unique number for each mouse                          |
+| Cage                  | Cage number (NA)                                      |
+| Genotype              | WT, chemerin_KO, CMKLR1_HE, or CMKLR1_KO              |
+| SamplingWeek          | Week in which mouse was sampled                       |
+| Description           | Unique id for each mouse                              |
 
 We are going to use the R function `download.file()` to download the CSV file
 that contains the metadata, and we will use `read.csv()` to
@@ -69,7 +49,7 @@ To download the metadata into the `data/` subdirectory, run the following:
 
 
 ```r
-download.file("https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mappingfile_HMP.txt",
+download.file("https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mouse_mapfile.txt",
               "data/metadata.csv")
 ```
 
@@ -312,7 +292,7 @@ metadata_head <- metadata[-c(7:nrow(metadata)),]
 
 
 When we did `str(metadata)` we saw that some of the columns consist of
-integers, however, multiple columns, such as `SampleID`, `ExperimentCenter`, `Sex`, `BodySuperSite`, and `ChronicCondition` are of a special class called a `factor`. Factors are very useful and are actually something that make R particularly well suited to working with data, so we're
+integers, however, multiple columns, such as `SampleID`, `FileInput`, `Source`, `Genotype`, and `Description` are of a special class called a `factor`. Factors are very useful and are actually something that make R particularly well suited to working with data, so we're
 going to spend a little time introducing them.
 
 Factors are used to represent categorical data. Factors can be ordered or
@@ -331,21 +311,21 @@ str(metadata)
 ```
 
 We can see the names of the multiple columns. And, we see that 
-some say things like `Factor w/ 30 levels`
+some say things like `Factor w/ 116 levels`
 
 When we read in a file, any column that contains text is automatically
 assumed to be a factor. Once created, factors can only contain a pre-defined set values, known as
 *levels*. By default, R always sorts *levels* in alphabetical order. 
 
-For instance, we see that `Sex` is a Factor w/ 2 levels, `femail` and `male`.
+For instance, we see that `Genotype` is a Factor w/ 4 levels, `WT`, `chemerin_KO`, `CMKLR1_HE`, and `CMKLR1_KO`.
 
 You can check this by using the function `levels()`, and check the
 number of levels using `nlevels()`:
 
 
 ```r
-levels(metadata$Sex)
-nlevels(metadata$Sex)
+levels(metadata$Genotype)
+nlevels(metadata$Genotype)
 ```
 
 For
@@ -353,7 +333,7 @@ instance, if you have a factor with 2 levels:
 
 
 ```r
-hmp_sex <- factor(c("male", "female", "female", "male"))
+sex <- factor(c("male", "female", "female", "male"))
 ```
 
 R assigned `1` to the level `"female"` and `2` to the level `"mail"` (because
@@ -363,8 +343,8 @@ number of levels using `nlevels()`:
 
 
 ```r
-levels(hmp_sex)
-nlevels(hmp_sex)
+levels(sex)
+nlevels(sex)
 ```
 
 Sometimes, the order of the factors does not matter, other times you might want
@@ -426,8 +406,8 @@ the experiment:
 
 
 ```r
-## bar plot of the number of male and female participants in the study:
-#plot(metadata$Sex)
+## bar plot of the number of mice per treatment group:
+#plot(metadata$Genotype)
 ```
 
 
@@ -491,8 +471,8 @@ metadata <- read.csv("data/metadata.csv", sep = "\t", stringsAsFactors = TRUE)
 str(metadata)
 metadata <- read.csv("data/metadata.csv", sep = "\t", stringsAsFactors = FALSE)
 str(metadata)
-## Convert the column "Sex" into a factor
-metadata$Sex <- factor(metadata$Sex)
+## Convert the column "Genotype" into a factor
+metadata$Genotype <- factor(metadata$Genotype)
 str(metadata)
 ```
 
