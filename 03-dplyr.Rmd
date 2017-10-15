@@ -147,7 +147,7 @@ Note that the final data frame is the leftmost part of this expression.
 ## Answer
 metadata %>%
     filter(Sex == M) %>%
-    <!-- select(SampleID, Genotype) -->
+    select(SampleID, Genotype)
 ```
 --->
 
@@ -168,15 +168,15 @@ To create a new column of Age in months:
 
 ```{r, purl = FALSE}
 metadata %>%
-  mutate(age_months = Age * 12)
+  mutate(Weight_kg = Weight / 1000)
 ```
 
 You can also create a second new column based on the first new column within the same call of `mutate()`:
 
 ```{r, purl = FALSE}
 metadata %>%
-  mutate(age_months = Age * 12,
-         age2 = age_months * 2)
+  mutate(Weight_kg = Weight / 1000,
+         Weight2 = Weight * 2)
 ```
 
 If this runs off your screen and you just want to see the first few rows, you
@@ -185,7 +185,7 @@ functions, too, as long as the **`dplyr`** or `magrittr` package is loaded).
 
 ```{r, purl = FALSE}
 metadata %>%
-  mutate(age_months = Age * 12) %>%
+  mutate(Weight_kg = Weight / 1000) %>%
   head
 ```
 
@@ -198,8 +198,8 @@ those we could insert a `filter()` in the chain:
 
 ```{r, purl = FALSE}
 metadata %>%
-  filter(!is.na(Age)) %>%
-  mutate(age_months = Age * 12) %>%
+  filter(!is.na(Weight)) %>%
+  mutate(Weight_kg = Weight / 1000) %>%
   head
 ```
 

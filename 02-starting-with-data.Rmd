@@ -43,6 +43,7 @@ Each row holds information for a single mouse, and the columns represent:
 | Source                | BZ or CJS                                             |
 | Mouse                 | Unique number for each mouse                          |
 | Sex                   | Sex of each mouse                                     |
+| Weight                | Weight of each mouse in grams                         |
 | Cage                  | Cage number (NA)                                      |
 | Genotype              | WT, chemerin_KO, CMKLR1_HE, or CMKLR1_KO              |
 | SamplingWeek          | Week in which mouse was sampled                       |
