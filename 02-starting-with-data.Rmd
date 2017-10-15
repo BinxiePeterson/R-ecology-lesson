@@ -29,7 +29,7 @@ source("setup.R")
 # Looking at metadata
 ```
 
-We will be looking at the metadata of a gene knockout study. The aim of this study was to determine whether knocking out the protein 'chemerin' affects gut microbial composition. In total, 116 mouse samples were acquired from two different facilities. Metadata associated with each sample is indicated in the mapping file (mouse_mapfile.txt), which we will download using RStudio. In this mapping file the genotypes of interest can be seen: wildtype (WT), chemerin knockout (chemerin_KO), chemerin receptor knockout (CMKLR1_KO) and a heterozygote for the receptor knockout (HET). Also of importance are the two source facilities: "BZ" and "CJS". It is generally a good idea to include as much metadata as possible, since this data can easily be explored later on.
+We will be looking at a modified version of the metadata of a gene knockout study. The aim of this study was to determine whether knocking out the protein 'chemerin' affects gut microbial composition. In total, 116 mouse samples were acquired from two different facilities. Metadata associated with each sample is indicated in the mapping file (mouse_mapfile.txt), which we will download using RStudio. In this mapping file the genotypes of interest can be seen: wildtype (WT), chemerin knockout (chemerin_KO), chemerin receptor knockout (CMKLR1_KO) and a heterozygote for the receptor knockout (HET). Also of importance are the two source facilities: "BZ" and "CJS". It is generally a good idea to include as much metadata as possible, since this data can easily be explored later on.
 
 The metadata mapping file of this dataset is stored as a comma separated value (CSV) file.
 Each row holds information for a single mouse, and the columns represent:
@@ -42,6 +42,7 @@ Each row holds information for a single mouse, and the columns represent:
 | FileInput             | Name of .fastq input file                             |
 | Source                | BZ or CJS                                             |
 | Mouse                 | Unique number for each mouse                          |
+| Sex                   | Sex of each mouse                                     |
 | Cage                  | Cage number (NA)                                      |
 | Genotype              | WT, chemerin_KO, CMKLR1_HE, or CMKLR1_KO              |
 | SamplingWeek          | Week in which mouse was sampled                       |
@@ -55,7 +56,7 @@ To download the metadata into the `data/` subdirectory, run the following:
 
 
 ```r
-download.file("https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mouse_mapfile.txt",
+download.file("https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mouse_mapfile.csv",
               "data/metadata.csv")
 ```
 
