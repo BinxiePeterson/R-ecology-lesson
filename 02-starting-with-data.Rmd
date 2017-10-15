@@ -64,7 +64,7 @@ You are now ready to load the metadata:
 
 
 ```r
-metadata <- read.csv('data/metadata.csv', header = TRUE, sep = "\t")
+metadata <- read.csv('data/metadata.csv', header = TRUE)
 ```
 
 This statement doesn't produce any output because, as you might recall,
@@ -164,7 +164,7 @@ objects besides `data.frame`.
 ## Answers
 ##
 ## * class: data frame
-## * how many rows: 116,  how many columns: 10
+## * how many rows: 116,  how many columns: 11
 ```
 --->
 
@@ -278,7 +278,7 @@ metadata_head <- metadata[-c(7:nrow(metadata)),]
 ```
 
 When we did `str(metadata)` we saw that some of the columns consist of
-integers, however, multiple columns, such as `SampleID`, `FileInput`, `Source`, `Genotype`, and `Description` are of a special class called a `factor`. Factors are very useful and are actually something that make R particularly well suited to working with data, so we're
+integers, however, multiple columns, such as `SampleID`, `FileInput`, `Source`, `Sex`, `Genotype`, and `Description` are of a special class called a `factor`. Factors are very useful and are actually something that make R particularly well suited to working with data, so we're
 going to spend a little time introducing them.
 
 Factors are used to represent categorical data. Factors can be ordered or
@@ -354,25 +354,6 @@ be able to tell just from the integer data. Factors, on the other hand, have
 this information built in. It is particularly helpful when there are many levels
 (like the SampleID in our example dataset).
 
-### Converting factors
-
-If you need to convert a factor to a character vector, you use
-`as.character(x)`.
-
-Converting a factor to a numeric vector is however a little trickier, and you
-have to go via a character vector. Compare:
-
-```{r, purl=FALSE}
-as.character(metadata$Source)
-```
-
-Notice that in the `levels()` approach, three important steps occur:
-
-* We obtain all the factor levels using `levels(f)`
-* We convert these levels to numeric values using `as.numeric(levels(f))`
-* We then access these numeric values using the underlying integers of the
-  vector `f` inside the square brackets
-
 
 ### Basic plotting
 
@@ -382,7 +363,7 @@ level. Let's look at the number of mice per treatment group:
 
 ```{r, purl=TRUE}
 ## bar plot of the number of male and female participants in the study:
-plot(metadata$Genotype)
+plot(metadata$Sex)
 ```
 
 
@@ -426,9 +407,9 @@ Compare the output of `str(metadata)` when setting `stringsAsFactors = TRUE`
 ```{r, eval=FALSE, purl=FALSE}
 ## Compare the difference between when the data are being read as
 ## `factor`, and when they are being read as `character`.
-metadata <- read.csv("data/metadata.csv", sep = "\t", stringsAsFactors = TRUE)
+metadata <- read.csv("data/metadata.csv", stringsAsFactors = TRUE)
 str(metadata)
-metadata <- read.csv("data/metadata.csv", sep = "\t", stringsAsFactors = FALSE)
+metadata <- read.csv("data/metadata.csv", stringsAsFactors = FALSE)
 str(metadata)
 ## Convert the column "Sex" into a factor
 metadata$Sex <- factor(metadata$Sex)
