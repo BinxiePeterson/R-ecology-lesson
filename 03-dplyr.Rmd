@@ -248,7 +248,7 @@ So to view mean `Age` by Sex:
 ```{r, purl = FALSE}
 metadata %>%
   group_by(Sex) %>%
-  summarize(mean_age = mean(Age, na.rm = TRUE))
+  summarize(mean_weight = mean(Weight, na.rm = TRUE))
 ```
 
 You may also have noticed that the output from these calls doesn't run off the
@@ -264,48 +264,32 @@ You can also group by multiple columns:
 
 ```{r, purl = FALSE}
 metadata %>%
-  group_by(Sex, BodySuperSite) %>%
-  summarize(mean_age = mean(Age, na.rm = TRUE))
+  group_by(Sex, Genotype) %>%
+  summarize(mean_weight = mean(Weight, na.rm = TRUE))
 ```
 
-When grouping both by `Sex` and `BodySuperSite`, the first rows are for individuals
-for which their Sex was not recorded. You may notice
-that the last column does not contain `NA` but `NaN` (which refers to "Not a
-Number"). To avoid this, we can remove the missing values for weight before we
-attempt to calculate the summary statistics on Age. Because the missing
+When grouping both by `Sex` and `Genotype`, the first rows are for individuals
+for which their Sex was not recorded. We can remove the missing values for weight before we
+attempt to calculate the summary statistics. Because the missing
 values are removed, we can omit `na.rm = TRUE` when computing the mean:
 
 ```{r, purl = FALSE}
 metadata %>%
-  filter(!is.na(Age)) %>%
-  group_by(Sex, BodySuperSite) %>%
-  summarize(mean_age = mean(Age))
-```
-
-Here, again, the output from these calls doesn't run off the screen
-anymore. Recall that **`dplyr`** has changed our object from`data.frame` to
-`tbl_df`. If you want to display more data, you can use the `print()` function
-at the end of your chain with the argument `n` specifying the number of rows to
-display:
-
-```{r, purl = FALSE}
-metadata %>%
-  filter(!is.na(Age)) %>%
-  group_by(Sex, BodySuperSite) %>%
-  summarize(mean_age = mean(Age)) %>%
-  print(n = 15)
+  filter(!is.na(Weight)) %>%
+  group_by(Sex, Genotype) %>%
+  summarize(mean_weight = mean(Weight))
 ```
 
 Once the data are grouped, you can also summarize multiple variables at the same
 time (and not necessarily on the same variable). For instance, we could add a
-column indicating the minimum Age for each BodySuperSite for each Sex:
+column indicating the minimum Weight for each Genotype for each Sex:
 
 ```{r, purl = FALSE}
 metadata %>%
-  filter(!is.na(Age)) %>%
-  group_by(Sex, BodySuperSite) %>%
-  summarize(mean_age = mean(Age),
-            min_age = min(Age))
+  filter(!is.na(Weight)) %>%
+  group_by(Sex, Genotype) %>%
+  summarize(mean_weight = mean(Weight),
+            min_weight = min(Weight))
 ```
 
 
@@ -347,18 +331,13 @@ re-generate them.
 In preparation for our next lesson on plotting, we are going to prepare a
 cleaned up version of the dataset that doesn't include any missing data.
 
-Remove observations for which the `SampleID` is missing. In
-this dataset, the missing Samples are represented by an empty string and not an
-`NA`. Let's also remove observations for which `Age` and the
-`BodyMassIndex` are missing. This dataset should also only contain
-observations of individuals for which the Sex has been determined:
-
+Remove observations for which the `Sex` is missing. In
+this dataset, the missing Sex is represented by an empty string and not an
+`NA`. Let's also remove observations for which `Weight` is missing. 
 
 ```{r, purl=FALSE}
 metadata_complete <- metadata %>%
-  filter(SampleID != "",         # remove missing SampleID
-         !is.na(Age),           # remove missing Age
-         !is.na(BodyMassIndex),  # remove missing BodyMassIndex
+  filter(!is.na(Weight),           # remove missing Weight
          Sex != "")                # remove missing Sex
 ```
 
