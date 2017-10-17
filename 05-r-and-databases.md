@@ -1,4 +1,5 @@
 ---
+layout: topic
 title: "SQL databases and R"
 author: Data Carpentry contributors
 ---
@@ -23782,4 +23783,4 @@ from flat files!
 reading the three `csv` files. Because all the data has to flow through R,
 this is not suitable for very large datasets.
 
-<p style="text-align: right; font-size: small;">Page build on: 2017-10-17 09:29:52</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-17 09:49:17</p>

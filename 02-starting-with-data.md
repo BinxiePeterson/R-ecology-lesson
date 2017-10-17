@@ -5,13 +5,9 @@ author: "Data Carpentry contributors"
 minutes: 25
 ---
 
-```{r setup, echo=FALSE}
-knitr::opts_chunk$set(error=TRUE)
-```
 
-```{r, echo=FALSE, purl=FALSE, message = FALSE}
-source("setup.R")
-```
+
+
 
 ------------
 
@@ -26,9 +22,7 @@ source("setup.R")
 
 # Looking at Metadata
 
-```{r, echo=FALSE, purl=TRUE}
-# Looking at metadata
-```
+
 
 We will be looking at a modified version of the metadata of a gene knockout study. The aim of this study was to determine whether knocking out the protein 'chemerin' affects gut microbial composition. In total, 116 mouse samples were acquired from two different facilities. Metadata associated with each sample is indicated in the mapping file (mouse_mapfile.txt), which we will download using RStudio. In this mapping file the genotypes of interest can be seen: wildtype (WT), chemerin knockout (chemerin_KO), chemerin receptor knockout (CMKLR1_KO) and a heterozygote for the receptor knockout (HET). Also of importance are the two source facilities: "BZ" and "CJS". It is generally a good idea to include as much metadata as possible, since this data can easily be explored later on.
 
@@ -75,8 +69,13 @@ loaded, we can print the variable's value: `metadata`.
 
 This means the data loaded properly. Let's check the top (the first 6 lines) of this data frame using the function `head()`:
 
-```{r, results='show', purl=FALSE}
+
+```r
 head(metadata)
+```
+
+```
+#> Error in head(metadata): object 'metadata' not found
 ```
 
 > ### Note
@@ -111,8 +110,13 @@ numeric, a character and a logical vector.
 We can see this when inspecting the <b>str</b>ucture of a data frame
 with the function `str()`:
 
-```{r, purl=FALSE}
+
+```r
 str(metadata)
+```
+
+```
+#> Error in str(metadata): object 'metadata' not found
 ```
 
 ## Inspecting `data.frame` Objects
@@ -153,30 +157,16 @@ objects besides `data.frame`.
 > * What is the class of the object `metadata`?
 > * How many rows and how many columns are in this object?
 
-```{r, echo=FALSE, purl=TRUE}
 
-## Challenge
-## Based on the output of `str(metadata)`, can you answer the following questions?
-## * What is the class of the object `metadata`?
-## * How many rows and how many columns are in this object?
-```
 
 <!---
-```{r, echo=FALSE, purl=FALSE}
-## Answers
-##
-## * class: data frame
-## * how many rows: 116,  how many columns: 11
-```
+
 --->
 
 
 ## Indexing and subsetting data frames
 
-```{r, echo=FALSE, purl=TRUE}
 
-## Indexing and subsetting data frames
-```
 
 
 Our data frame has rows and columns (it has 2 dimensions), if we want to
@@ -185,14 +175,61 @@ want from it. Row numbers come first, followed by column numbers. However, note
 that different ways of specifying these coordinates lead to results with
 different classes.
 
-```{r, purl=FALSE}
+
+```r
 metadata[1, 1]   # first element in the first column of the data frame (as a vector)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[1, 6]   # first element in the 6th column (as a vector)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[, 1]    # first column in the data frame (as a vector)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[1]      # first column in the data frame (as a data.frame)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[1:3, 7] # first three elements in the 7th column (as a vector)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[3, ]    # the 3rd element for all columns (as a data.frame)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 head_metadata <- metadata[1:6, ] # equivalent to head_metadata <- head(metadata)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
 ```
 
 `:` is a special function that creates numeric vectors of integers in increasing
@@ -200,15 +237,28 @@ or decreasing order, test `1:10` and `10:1` for instance.
 
 You can also exclude certain parts of a data frame using the "`-`" sign:
 
-```{r, purl=FALSE}
+
+```r
 metadata[,-1]          # The whole data frame, except the first column
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata[-c(7:116),]   # Equivalent to head(metadata)
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
 ```
 
 As well as using numeric values to subset a `data.frame` (or `matrix`), columns
 can be called by name, using one of the four following notations:
 
-```{r, eval = FALSE, purl=FALSE}
+
+```r
 metadata["SampleID"]       # Result is a data.frame
 metadata[, "SampleID"]     # Result is a vector
 metadata[["SampleID"]]     # Result is a vector
@@ -239,45 +289,48 @@ feature to get the full and correct column name.
 >    `head(metadata)` keeping just the first through 6th rows of the metadata.
 
 
-```{r, echo=FALSE, purl=TRUE}
-### Challenges:
-###
-### 1. Create a `data.frame` (`metadata_80`) containing only the
-###    observations from row 80 of the `metadata`.
-###
-### 2. Notice how `nrow()` gave you the number of rows in a `data.frame`?
-###
-###      * Use that number to pull out just that last row in the data frame
-###      * Compare that with what you see as the last row using `tail()` to make
-###        sure it's meeting expectations.
-###      * Pull out that last row using `nrow()` instead of the row number
-###      * Create a new data frame object (`metadata_last`) from that last row
-###
-### 3. Use `nrow()` to extract the row that is in the middle of the
-###    data frame. Store the content of this row in an object named
-###    `metadata_middle`.
-###
-### 4. Combine `nrow()` with the `-` notation above to reproduce the behavior of
-###    `head(metadata)` keeping just the first through 6th rows of the metadata.
 
-```
 
 <!---
-```{r, purl=FALSE}
+
+```r
 ## Answers
 metadata_80 <- metadata[80, ]
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata_last <- metadata[nrow(metadata), ]
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata_middle <- metadata[nrow(metadata)/2, ]
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
+```
+
+```r
 metadata_head <- metadata[-c(7:nrow(metadata)),]
+```
+
+```
+#> Error in eval(expr, envir, enclos): object 'metadata' not found
 ```
 --->
 
 
 ## Factors
 
-```{r, echo=FALSE, purl=TRUE}
-### Factors
-```
+
 
 When we did `str(metadata)` we saw that some of the columns consist of
 integers, however, multiple columns, such as `SampleID`, `FileInput`, `Source`, `Sex`, `Genotype`, and `Description` are of a special class called a `factor`. Factors are very useful and are actually something that make R particularly well suited to working with data, so we're
@@ -293,8 +346,13 @@ they are actually integers under the hood, and you need to be careful when
 treating them like strings.
 
 In the data frame we just imported, let's do 
-```{r, purl=TRUE}
+
+```r
 str(metadata)
+```
+
+```
+#> Error in str(metadata): object 'metadata' not found
 ```
 
 We can see the names of the multiple columns. And, we see that 
@@ -310,7 +368,8 @@ You can check this by using the function `levels()`, and check the
 number of levels using `nlevels()`:
 
 
-```{r, purl=FALSE, eval=FALSE}
+
+```r
 levels(metadata$Genotype)
 nlevels(metadata$Genotype)
 ```
@@ -318,7 +377,8 @@ nlevels(metadata$Genotype)
 For
 instance, if you have a factor with 2 levels:
 
-```{r, purl=TRUE}
+
+```r
 sex <- factor(c("male", "female", "female", "male"))
 ```
 
@@ -327,7 +387,8 @@ R assigned `1` to the level `"female"` and `2` to the level `"mail"` (because
 `"male"`). You can check this by using the function `levels()`, and check the
 number of levels using `nlevels()`:
 
-```{r, purl=FALSE}
+
+```r
 levels(sex)
 nlevels(sex)
 ```
@@ -338,7 +399,8 @@ it improves your visualization, or it is required by a particular type of
 analysis. Additionally, specifying the
 order of the levels allows to compare levels:
 
-```{r, purl=FALSE, error=TRUE, eval=FALSE}
+
+```r
 expression <- factor(c("low", "high", "medium", "high", "low", "medium", "high"))
 levels(expression)
 expression <- factor(expression, levels=c("low", "medium", "high"))
@@ -363,9 +425,14 @@ When your data is stored as a factor, you can use the `plot()` function to get a
 quick glance at the number of observations represented by each factor
 level. Let's look at the number of mice per treatment group:
 
-```{r, purl=TRUE}
+
+```r
 ## bar plot of the number of male and female participants in the study:
 plot(metadata$Sex)
+```
+
+```
+#> Error in plot(metadata$Sex): object 'metadata' not found
 ```
 
 
@@ -374,20 +441,35 @@ plot(metadata$Sex)
 The function `table()` tabulates observations and can be used to create
 bar plots quickly. For instance:
 
-```{r wrong-order, results='show', purl=TRUE}
+
+```r
 ## Question: How can you recreate this plot but by having "control"
 ## being listed last instead of first?
 exprmt <- factor(c("treat1", "treat2", "treat1", "treat3", "treat1", "control",
                    "treat1", "treat2", "treat3"))
 table(exprmt)
+```
+
+```
+#> exprmt
+#> control  treat1  treat2  treat3 
+#>       1       4       2       2
+```
+
+```r
 barplot(table(exprmt))
 ```
 
+![plot of chunk wrong-order](img/R-ecology-wrong-order-1.png)
+
 <!---
-```{r correct-order, purl=FALSE}
+
+```r
 exprmt <- factor(exprmt, levels=c("treat1", "treat2", "treat3", "control"))
 barplot(table(exprmt))
 ```
+
+![plot of chunk correct-order](img/R-ecology-correct-order-1.png)
 --->
 
 ### Using `stringsAsFactors=FALSE`
@@ -406,7 +488,8 @@ Compare the output of `str(metadata)` when setting `stringsAsFactors = TRUE`
 (default) and `stringsAsFactors = FALSE`:
 
 
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 ## Compare the difference between when the data are being read as
 ## `factor`, and when they are being read as `character`.
 metadata <- read.csv("data/metadata.csv", stringsAsFactors = TRUE)
@@ -426,20 +509,14 @@ str(metadata)
 >   a few mistakes in this hand-crafted `data.frame`, can you spot and fix them?
 >   Don't hesitate to experiment!
 >
->     ```{r, eval=FALSE, purl=FALSE}
+>     
+>     ```r
 >     animal_data <- data.frame(animal=c("dog", "cat", "sea cucumber", "sea urchin"),
 >                               feel=c("furry", "squishy", "spiny"),
 >                               weight=c(45, 8 1.1, 0.8))
 >     ```
 >
->     ```{r, eval=FALSE, purl=TRUE, echo=FALSE}
->     ## Challenge:
->     ##  There are a few mistakes in this hand-crafted `data.frame`,
->     ##  can you spot and fix them? Don't hesitate to experiment!
->     animal_data <- data.frame(animal=c(dog, cat, sea cucumber, sea urchin),
->                               feel=c("furry", "squishy", "spiny"),
->                               weight=c(45, 8 1.1, 0.8))
->     ```
+>     
 >
 > 2. Can you predict the class for each of the columns in the following example?
 >    Check your guesses using `str(country_climate)`:
@@ -447,7 +524,8 @@ str(metadata)
 >      * What would have been different if we had added `stringsAsFactors = FALSE` to this call?
 >      * What would you need to change to ensure that each column had the accurate data type?
 >
->     ```{r, eval=FALSE, purl=FALSE}
+>     
+>     ```r
 >     country_climate <- data.frame(
 >            country=c("Canada", "Panama", "South Africa", "Australia"),
 >            climate=c("cold", "hot", "temperate", "hot/temperate"),
@@ -457,40 +535,11 @@ str(metadata)
 >            )
 >     ```
 >
->    ```{r, eval=FALSE, purl=TRUE, echo=FALSE}
->    ## Challenge:
->    ##   Can you predict the class for each of the columns in the following
->    ##   example?
->    ##   Check your guesses using `str(country_climate)`:
->    ##   * Are they what you expected? Why? why not?
->    ##   * What would have been different if we had added `stringsAsFactors = FALSE`
->    ##     to this call?
->    ##   * What would you need to change to ensure that each column had the
->    ##     accurate data type?
->    country_climate <- data.frame(country=c("Canada", "Panama", "South Africa", "Australia"),
->                                   climate=c("cold", "hot", "temperate", "hot/temperate"),
->                                   temperature=c(10, 30, 18, "15"),
->                                   northern_hemisphere=c(TRUE, TRUE, FALSE, "FALSE"),
->                                   has_kangaroo=c(FALSE, FALSE, FALSE, 1))
->    ```
+>    
 >
 >    <!--- Answers
 >
->    ```{r, eval=FALSE, echo=FALSE, purl=FALSE}
->    ## Answers
->    ## * missing quotations around the names of the animals
->    ## * missing one entry in the "feel" column (probably for one of the furry animals)
->    ## * missing one comma in the weight column
->
->    ## Answers
->    ## * `country`, `climate`, `temperature`, and `northern_hemisphere` are
->    ##    factors; `has_kangaroo` is numeric.
->    ## * using `stringsAsFactors=FALSE` would have made them character instead of
->    ##   factors
->    ## * removing the quotes in temperature, northern_hemisphere, and replacing 1
->    ##   by TRUE in the `has_kangaroo` column would probably what was originally
->    ##   intended.
->    ```
+>    
 >
 >    -->
 >
@@ -501,4 +550,4 @@ you import in R are of the correct type within your data frame. If not, use it
 to your advantage to detect mistakes that might have been introduced during data
 entry (a letter in a column that should only contain numbers for instance).
 
-<p style="text-align: right; font-size: small;">Page build on: `r format(Sys.time())`</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-17 09:48:53</p>

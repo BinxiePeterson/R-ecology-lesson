@@ -6,9 +6,7 @@ minutes: 15
 ---
 
 
-```{r, echo=FALSE, purl=FALSE}
-knitr::opts_chunk$set(results='hide', fig.path='img/r-lesson-')
-```
+
 
 ------------
 
@@ -267,13 +265,15 @@ One of the most fastest ways to get help, is to use the RStudio help interface. 
 
 If you need help with a specific function, let's say `barplot()`, you can type:
 
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 ?mean
 ```
 
 If you just need to remind yourself of the names of the arguments, you can use:
 
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 args(mean)
 ```
 
@@ -284,7 +284,8 @@ If you are looking for a function to do a particular task, you can use the
 However, this only looks through the installed packages for help pages with a
 match to your search request
 
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 ??mean
 ```
 
@@ -343,8 +344,19 @@ To share an object with someone else, if it's relatively small, you can use the
 function `dput()`. It will output R code that can be used to recreate the exact
 same object as the one in memory:
 
-```{r, results='show', purl=FALSE}
+
+```r
 dput(head(iris)) # iris is an example data frame that comes with R and head() is a function that returns the first part of the data frame
+```
+
+```
+## structure(list(Sepal.Length = c(5.1, 4.9, 4.7, 4.6, 5, 5.4), 
+##     Sepal.Width = c(3.5, 3, 3.2, 3.1, 3.6, 3.9), Petal.Length = c(1.4, 
+##     1.4, 1.3, 1.5, 1.4, 1.7), Petal.Width = c(0.2, 0.2, 0.2, 
+##     0.2, 0.2, 0.4), Species = structure(c(1L, 1L, 1L, 1L, 1L, 
+##     1L), .Label = c("setosa", "versicolor", "virginica"), class = "factor")), .Names = c("Sepal.Length", 
+## "Sepal.Width", "Petal.Length", "Petal.Width", "Species"), row.names = c(NA, 
+## 6L), class = "data.frame")
 ```
 
 If the object is larger, provide either the raw file (i.e., your CSV file) with
@@ -352,7 +364,8 @@ your script up to the point of the error (and after removing everything that is
 not relevant to your issue). Alternatively, in particular if your question is
 not related to a data frame, you can save any R object to a file:
 
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 saveRDS(iris, file="/tmp/iris.rds")
 ```
 
@@ -361,7 +374,8 @@ directly on Stack Overflow. Instead, it can be sent to someone by email who can
 read it with the `readRDS()` command (here it is assumed that the downloaded
 file is in a `Downloads` folder in the user's home directory):
 
-```{r, eval=FALSE, purl=FALSE}
+
+```r
 some_data <- readRDS(file="~/Downloads/iris.rds")
 ```
 
@@ -370,8 +384,33 @@ as it provides critical information about your platform, the versions of R and
 the packages that you are using, and other information that can be very helpful
 to understand your problem.
 
-```{r, results='show', purl=FALSE}
+
+```r
 sessionInfo()
+```
+
+```
+## R version 3.3.3 (2017-03-06)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 14393)
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] knitr_1.17
+## 
+## loaded via a namespace (and not attached):
+## [1] slidify_0.5     magrittr_1.5    markdown_0.8    tools_3.3.3    
+## [5] whisker_0.3-2   yaml_2.1.14     stringi_1.1.5   stringr_1.2.0  
+## [9] evaluate_0.10.1
 ```
 
 ### Where to ask for help?
@@ -413,4 +452,4 @@ sessionInfo()
   has quite comprehensive advice on how to ask programming questions.
 * The [reprex](https://cran.rstudio.com/web/packages/reprex/) package is very helpful to create reproducible examples when asking for help. The [rOpenSci community call "How to ask questions so they get answered"], [Github link](https://github.com/ropensci/commcalls/issues/14) and [video recording](https://vimeo.com/208749032) includes a presentation of the reprex package and of its philosophy.
 
-<p style="text-align: right; font-size: small;">Page build on: `r format(Sys.time())`</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-17 09:48:43</p>
