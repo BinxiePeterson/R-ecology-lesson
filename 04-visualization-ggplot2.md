@@ -34,7 +34,7 @@ If not still in the workspace, load the data we saved in the previous lesson.
 
 
 ```r
-metadata <- read.csv('data/metadata.csv', header = TRUE, sep = "\t")
+metadata <- read.csv('data/metadata.csv', header = TRUE)
 ```
 
 
@@ -47,7 +47,7 @@ When we are working with large sets of numbers it can be useful to display that 
 
 
 ```r
-metadata_age <- metadata$Age
+metadata_weight <- metadata$Weight
 ```
 
 ```
@@ -59,56 +59,56 @@ Let's start with a **scatterplot**. A scatter plot provides a graphical view of 
 
 
 ```r
-plot(metadata_age)
+plot(metadata_weight)
 ```
 
 ```
-#> Error in plot(metadata_age): object 'metadata_age' not found
+#> Error in plot(metadata_weight): object 'metadata_weight' not found
 ```
 
-Each point represents a clone and the value on the x-axis is the clone index in the file, where the values on the y-axis correspond to the genome size for the clone. For any plot you can customize many features of your graphs (fonts, colors, axes, titles) through [graphic options](http://www.statmethods.net/advgraphs/parameters.html)
+Each point represents a clone and the value on the x-axis is the clone index in the file, where the values on the y-axis correspond to the weight for the clone. For any plot you can customize many features of your graphs (fonts, colors, axes, titles) through [graphic options](http://www.statmethods.net/advgraphs/parameters.html)
 For example, we can change the shape of the data point using `pch`.
 
 
 ```r
-plot(metadata_age, pch=8)
+plot(metadata_weight, pch=8)
 ```
 
 ```
-#> Error in plot(metadata_age, pch = 8): object 'metadata_age' not found
+#> Error in plot(metadata_weight, pch = 8): object 'metadata_weight' not found
 ```
 
 We can add a title to the plot by assigning a string to `main`:
 
 
 ```r
-plot(metadata_age, pch=8, main="Scatter plot of age distribution")
+plot(metadata_weight, pch=8, main="Scatter plot of weight distribution")
 ```
 
 ```
-#> Error in plot(metadata_age, pch = 8, main = "Scatter plot of age distribution"): object 'metadata_age' not found
+#> Error in plot(metadata_weight, pch = 8, main = "Scatter plot of weight distribution"): object 'metadata_weight' not found
 ```
 
 ## Histogram
-Another way to visualize the distribution of ages is to use a histogram, we can do this buy using the `hist` function:
+Another way to visualize the distribution of weight is to use a histogram, we can do this buy using the `hist` function:
 
 
 ```r
-hist(metadata_age)
+hist(metadata_weight)
 ```
 
 ```
-#> Error in hist(metadata_age): object 'metadata_age' not found
+#> Error in hist(metadata_weight): object 'metadata_weight' not found
 ```
 
 ## Boxplot
 
-Using additional information from our metadata, we can use plots to compare values between the different body mass indices (BMIs) using a **boxplot**. A boxplot provides a graphical view of the median, quartiles, maximum, and minimum of a data set. 
+Using additional information from our metadata, we can use plots to compare weights between the different genotypes using a **boxplot**. A boxplot provides a graphical view of the median, quartiles, maximum, and minimum of a data set. 
 
 
 ```r
 # Boxplot
-boxplot(metadata_age ~ BodyMassIndex, metadata)
+boxplot(metadata_weight ~ Genotype, metadata)
 ```
 
 ```
@@ -119,8 +119,8 @@ Similar to the scatterplots above, we can pass in arguments to add in extras lik
 
 
 ```r
-boxplot(metadata_age ~ BodyMassIndex, metadata,  col=c("pink","purple", "darkgrey"),
-        main="Average expression differences between celltypes", ylab="Expression")
+boxplot(metadata_weight ~ Genotype, metadata,  col=c("pink","purple", "darkgrey", "blue"),
+        main="Average weight differences between genotypes", ylab="Weight")
 ```
 
 ```
@@ -133,7 +133,7 @@ boxplot(metadata_age ~ BodyMassIndex, metadata,  col=c("pink","purple", "darkgre
 
 More recently, R users have moved away from base graphic options and towards a plotting package called [`ggplot2`](http://docs.ggplot2.org/) that adds a lot of functionality to the basic plots seen above. The syntax takes some getting used to but it's extremely powerful and flexible. We can start by re-creating some of the above plots but using ggplot functions to get a feel for the syntax.
 
-`ggplot2` is best used on data in the `data.frame` form, so we will will work with `metadata` for the following figures. Let's start by loading the `ggplot2` library.
+`ggplot2` is best used on data in the `data.frame` form, so we will continue working with `metadata_complete` for the following figures. Let's start by loading the `ggplot2` library.
 
 
 ```r
@@ -168,7 +168,7 @@ A plot **must have at least one geom**; there is no upper limit. You can add a g
 
 
 ```r
-ggplot(metadata) +
+ggplot(metadata_complete) +
   geom_point() # note what happens here
 ```
 
@@ -185,24 +185,24 @@ To start, we will add position for the x- and y-axis since `geom_point` requires
 
 
 ```r
-ggplot(data = metadata) +
-  geom_point(aes(x = Age, y= BodyMassIndex))
+ggplot(data = metadata_complete) +
+  geom_point(aes(x = Genotype, y= Weight))
 ```
 
 ```
-#> Error in ggplot(data = metadata): object 'metadata' not found
+#> Error in ggplot(data = metadata_complete): object 'metadata_complete' not found
 ```
 
-The same figure will be generated if the aesthetics are place in the ggplot() function:
+The same figure will be generated if the aesthetics are placed in the ggplot() function:
 
 
 ```r
-ggplot(data = metadata, aes(x = Age, y= BodyMassIndex)) +
+ggplot(data = metadata_complete, aes(x = Genotype, y= Weight)) +
   geom_point()
 ```
 
 ```
-#> Error in ggplot(data = metadata, aes(x = Age, y = BodyMassIndex)): object 'metadata' not found
+#> Error in ggplot(data = metadata_complete, aes(x = Genotype, y = Weight)): object 'metadata_complete' not found
 ```
 
 If labels on the x-axis are hard to read, you can add an additional theme layer. The ggplot2 `theme` system handles non-data plot elements such as:
@@ -217,13 +217,13 @@ There are built-in themes we can use, or we can adjust specific elements. For de
 
 
 ```r
-ggplot(data = metadata, aes(x = Age, y= BodyMassIndex, color = BodySuperSite, shape = Sex)) +
+ggplot(data = metadata_complete, aes(x = Genotype, y= Weight, color = Source, shape = Sex)) +
   geom_point(size = rel(3.0)) +
   theme(axis.text.x = element_text(angle=45, hjust=1))
 ```
 
 ```
-#> Error in ggplot(data = metadata, aes(x = Age, y = BodyMassIndex, color = BodySuperSite, : object 'metadata' not found
+#> Error in ggplot(data = metadata_complete, aes(x = Genotype, y = Weight, : object 'metadata_complete' not found
 ```
 
 
@@ -233,21 +233,10 @@ To plot a histogram we require another geometric object `geom_bar`, which requir
 
 
 ```r
-ggplot(data = metadata, aes(x = Age)) +
+ggplot(data = metadata_complete, aes(x = Weight)) +
   geom_bar()
 ```
 
-Try plotting with the default value and compare it to the plot using the binwidth values. How do they differ?
-
-
-```r
-ggplot(data = metadata, aes(x = Age)) +
-  geom_bar(stat = "bin", binwidth=0.05)
-```
-
-```
-#> Error in ggplot(data = metadata, aes(x = Age)): object 'metadata' not found
-```
 
 ## Boxplot
 
@@ -255,11 +244,11 @@ Now that we have all the required information, let's try plotting a boxplot simi
 
 
 ```r
-ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)) +
+ggplot(data = metadata_complete, aes(x = Genotype, y = Weight)) +
   geom_boxplot() +
-  ggtitle('Distribution of body mass index by sex') +
-  xlab('Gender') +
-  ylab('Body mass index') +
+  ggtitle('Distribution of weight by genotype') +
+  xlab('Genotype') +
+  ylab('Weight') +
   theme(panel.grid.major = element_line(size = .5, color = "grey"),
           axis.text.x = element_text(angle=45, hjust=1),
           axis.title = element_text(size = rel(1.5)),
@@ -267,7 +256,7 @@ ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)) +
 ```
 
 ```
-#> Error in ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)): object 'metadata' not found
+#> Error in ggplot(data = metadata_complete, aes(x = Genotype, y = Weight)): object 'metadata_complete' not found
 ```
 
 
@@ -276,13 +265,13 @@ measurements and of their distribution:
 
 
 ```r
-ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)) +
+ggplot(data = metadata_complete, aes(x = Genotype, y = Weight)) +
   geom_boxplot() +
   geom_jitter(alpha = 0.3, color = "tomato") +
   theme_bw() +
-  ggtitle('Distribution of body mass index by sex') +
-  xlab('Gender') +
-  ylab('Body mass index') +
+  ggtitle('Distribution of weight by genotype') +
+  xlab('Genotype') +
+  ylab('Weight') +
   theme(panel.grid.major = element_line(size = .5, color = "grey"),
           axis.text.x = element_text(angle=45, hjust=1),
           axis.title = element_text(size = rel(1.5)),
@@ -290,7 +279,7 @@ ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)) +
 ```
 
 ```
-#> Error in ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)): object 'metadata' not found
+#> Error in ggplot(data = metadata_complete, aes(x = Genotype, y = Weight)): object 'metadata_complete' not found
 ```
 
 
@@ -341,17 +330,18 @@ dir.create("figures")
 
 pdf("figures/boxplot.pdf")
 
-ggplot(data = metadata, aes(x = Sex, y = BodyMassIndex)) +
+ggplot(data = metadata_complete, aes(x = Genotype, y = Weight)) +
   geom_boxplot() +
   geom_jitter(alpha = 0.3, color = "tomato") +
   theme_bw() +
-  ggtitle('Distribution of body mass index by sex') +
-  xlab('Gender') +
-  ylab('Body mass index') +
+  ggtitle('Distribution of weight by genotype') +
+  xlab('Genotype') +
+  ylab('Weight') +
   theme(panel.grid.major = element_line(size = .5, color = "grey"),
           axis.text.x = element_text(angle=45, hjust=1),
           axis.title = element_text(size = rel(1.5)),
           axis.text = element_text(size = rel(1.25)))
+
 
 dev.off()
 ```
@@ -360,4 +350,4 @@ Resources:
 ---------
 We have only scratched the surface here. To learn more, see the [ggplot2 reference site](http://docs.ggplot2.org/), and Winston Chang's excellent [Cookbook for R](http://wiki.stdout.org/rcookbook/Graphs/) site. Though slightly out of date, [ggplot2: Elegant Graphics for Data Anaysis](http://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/0387981403) is still the definative book on this subject. Much of the material here was adpapted from [Introduction to R graphics with ggplot2 Tutorial at IQSS](http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html).
 
-<p style="text-align: right; font-size: small;">Page build on: 2017-10-10 09:43:28</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-17 09:29:34</p>

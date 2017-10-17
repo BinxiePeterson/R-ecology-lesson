@@ -80,18 +80,14 @@ frame (`metadata`), and the subsequent arguments are the columns to keep.
 
 
 ```r
-select(metadata, SampleID, Sex, BodySuperSite)
+select(metadata, SampleID, Sex, Genotype)
 ```
 
 To choose rows based on a specific criteria, use `filter()`:
 
 
 ```r
-filter(metadata, BodySuperSite == Skin)
-```
-
-```
-#> Error in filter_impl(.data, quo): Evaluation error: object 'Skin' not found.
+filter(metadata, Genotype == 'WT')
 ```
 
 ## Pipes
@@ -116,17 +112,13 @@ with **`dplyr`**. If you use RStudio, you can type the pipe with <kbd>Ctrl</kbd>
 
 ```r
 metadata %>%
-  filter(BodySuperSite == Skin) %>%
-  select(SampleID, Sex, BodySuperSite)
-```
-
-```
-#> Error in filter_impl(.data, quo): Evaluation error: object 'Skin' not found.
+  filter(Genotype == 'WT') %>%
+  select(SampleID, Sex, Genotype)
 ```
 
 In the above, we use the pipe to send the `metadata` dataset first through
-`filter()` to keep rows where `BodySuperSite` is equeal to Skin, then through `select()`
-to keep only the `SampleID`, `Sex`, and `BodySuperSite` columns. Since `%>%` takes
+`filter()` to keep rows where `Genotype` is equeal to Wild Type, then through `select()`
+to keep only the `SampleID`, `Sex`, and `Genotype` columns. Since `%>%` takes
 the object on its left and passes it as the first argument to the function on
 its right, we don't need to explicitly include it as an argument to the
 `filter()` and `select()` functions anymore.
@@ -136,36 +128,26 @@ could do so by assigning it a new name:
 
 
 ```r
-metadata_skin <- metadata %>%
-  filter(BodySuperSite == Skin) %>%
-  select(SampleID, Sex, BodySuperSite)
-```
+metadata_WT <- metadata %>%
+  filter(Genotype == 'WT') %>%
+  select(SampleID, Sex, Genotype)
 
-```
-#> Error in filter_impl(.data, quo): Evaluation error: object 'Skin' not found.
-```
-
-```r
-metadata_skin
-```
-
-```
-#> Error in eval(expr, envir, enclos): object 'metadata_skin' not found
+metadata_WT
 ```
 
 Note that the final data frame is the leftmost part of this expression.
 
 > ### Challenge {.challenge}
 >
->  Using pipes, subset the `metadata` to include rows where the Sex is male, and retain only the columns `SampleID` and `Age`.
+>  Using pipes, subset the `metadata` to include rows where the Sex is male, and retain only the columns `SampleID` and `Genotype`.
 
 <!---
 
 ```r
 ## Answer
 metadata %>%
-    filter(Sex == male) %>%
-    select(SampleID, Age)
+    filter(Sex == M) %>%
+    select(SampleID, Genotype)
 ```
 --->
 
@@ -182,7 +164,7 @@ To create a new column of Age in months:
 
 ```r
 metadata %>%
-  mutate(age_months = Age * 12)
+  mutate(Weight_kg = Weight / 1000)
 ```
 
 You can also create a second new column based on the first new column within the same call of `mutate()`:
@@ -190,8 +172,8 @@ You can also create a second new column based on the first new column within the
 
 ```r
 metadata %>%
-  mutate(age_months = Age * 12,
-         age2 = age_months * 2)
+  mutate(Weight_kg = Weight / 1000,
+         Weight2 = Weight * 2)
 ```
 
 If this runs off your screen and you just want to see the first few rows, you
@@ -201,7 +183,7 @@ functions, too, as long as the **`dplyr`** or `magrittr` package is loaded).
 
 ```r
 metadata %>%
-  mutate(age_months = Age * 12) %>%
+  mutate(Weight_kg = Weight / 1000) %>%
   head
 ```
 
@@ -215,8 +197,8 @@ those we could insert a `filter()` in the chain:
 
 ```r
 metadata %>%
-  filter(!is.na(Age)) %>%
-  mutate(age_months = Age * 12) %>%
+  filter(!is.na(Weight)) %>%
+  mutate(Weight_kg = Weight / 1000) %>%
   head
 ```
 
@@ -267,7 +249,7 @@ So to view mean `Age` by Sex:
 ```r
 metadata %>%
   group_by(Sex) %>%
-  summarize(mean_age = mean(Age, na.rm = TRUE))
+  summarize(mean_weight = mean(Weight, na.rm = TRUE))
 ```
 
 You may also have noticed that the output from these calls doesn't run off the
@@ -284,51 +266,34 @@ You can also group by multiple columns:
 
 ```r
 metadata %>%
-  group_by(Sex, BodySuperSite) %>%
-  summarize(mean_age = mean(Age, na.rm = TRUE))
+  group_by(Sex, Genotype) %>%
+  summarize(mean_weight = mean(Weight, na.rm = TRUE))
 ```
 
-When grouping both by `Sex` and `BodySuperSite`, the first rows are for individuals
-for which their Sex was not recorded. You may notice
-that the last column does not contain `NA` but `NaN` (which refers to "Not a
-Number"). To avoid this, we can remove the missing values for weight before we
-attempt to calculate the summary statistics on Age. Because the missing
+When grouping both by `Sex` and `Genotype`, the first rows are for individuals
+for which their Sex was not recorded. We can remove the missing values for weight before we
+attempt to calculate the summary statistics. Because the missing
 values are removed, we can omit `na.rm = TRUE` when computing the mean:
 
 
 ```r
 metadata %>%
-  filter(!is.na(Age)) %>%
-  group_by(Sex, BodySuperSite) %>%
-  summarize(mean_age = mean(Age))
-```
-
-Here, again, the output from these calls doesn't run off the screen
-anymore. Recall that **`dplyr`** has changed our object from`data.frame` to
-`tbl_df`. If you want to display more data, you can use the `print()` function
-at the end of your chain with the argument `n` specifying the number of rows to
-display:
-
-
-```r
-metadata %>%
-  filter(!is.na(Age)) %>%
-  group_by(Sex, BodySuperSite) %>%
-  summarize(mean_age = mean(Age)) %>%
-  print(n = 15)
+  filter(!is.na(Weight)) %>%
+  group_by(Sex, Genotype) %>%
+  summarize(mean_weight = mean(Weight))
 ```
 
 Once the data are grouped, you can also summarize multiple variables at the same
 time (and not necessarily on the same variable). For instance, we could add a
-column indicating the minimum Age for each BodySuperSite for each Sex:
+column indicating the minimum Weight for each Genotype for each Sex:
 
 
 ```r
 metadata %>%
-  filter(!is.na(Age)) %>%
-  group_by(Sex, BodySuperSite) %>%
-  summarize(mean_age = mean(Age),
-            min_age = min(Age))
+  filter(!is.na(Weight)) %>%
+  group_by(Sex, Genotype) %>%
+  summarize(mean_weight = mean(Weight),
+            min_weight = min(Weight))
 ```
 
 
@@ -371,25 +336,20 @@ re-generate them.
 In preparation for our next lesson on plotting, we are going to prepare a
 cleaned up version of the dataset that doesn't include any missing data.
 
-Remove observations for which the `SampleID` is missing. In
-this dataset, the missing Samples are represented by an empty string and not an
-`NA`. Let's also remove observations for which `Age` and the
-`BodyMassIndex` are missing. This dataset should also only contain
-observations of individuals for which the Sex has been determined:
-
+Remove observations for which the `Sex` is missing. In
+this dataset, the missing Sex is represented by an empty string and not an
+`NA`. Let's also remove observations for which `Weight` is missing. 
 
 
 ```r
 metadata_complete <- metadata %>%
-  filter(SampleID != "",         # remove missing SampleID
-         !is.na(Age),           # remove missing Age
-         !is.na(BodyMassIndex),  # remove missing BodyMassIndex
+  filter(!is.na(Weight),           # remove missing Weight
          Sex != "")                # remove missing Sex
 ```
 
 
 To make sure that everyone has the same dataset, check that `metadata_complete`
-has 113 rows and 30 columns by
+has 99 rows and 11 columns by
 typing `dim(metadata_complete)`.
 
 Now that our dataset is ready, we can save it as a CSV file in our `data_output`
@@ -406,4 +366,4 @@ write.csv(metadata_complete, file = "data_output/metadata_complete.csv",
 ```
 
 
-<p style="text-align: right; font-size: small;">Page build on: 2017-10-09 05:29:04</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-17 09:29:27</p>

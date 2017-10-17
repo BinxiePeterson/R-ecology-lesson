@@ -121,15 +121,12 @@ back into R only what you need for analysis.</p>
 data frame, use <code>select()</code>. The first argument to this function is the data
 frame (<code>metadata</code>), and the subsequent arguments are the columns to keep.</p>
 
-<pre><code class="r">select(metadata, SampleID, Sex, BodySuperSite)
+<pre><code class="r">select(metadata, SampleID, Sex, Genotype)
 </code></pre>
 
 <p>To choose rows based on a specific criteria, use <code>filter()</code>:</p>
 
-<pre><code class="r">filter(metadata, BodySuperSite == Skin)
-</code></pre>
-
-<pre><code>#&gt; Error in filter_impl(.data, quo): Evaluation error: object &#39;Skin&#39; not found.
+<pre><code class="r">filter(metadata, Genotype == &#39;WT&#39;)
 </code></pre>
 
 <h2>Pipes</h2>
@@ -155,16 +152,13 @@ with <strong><code>dplyr</code></strong>. If you use RStudio, you can type the p
 </ul>
 
 <pre><code class="r">metadata %&gt;%
-  filter(BodySuperSite == Skin) %&gt;%
-  select(SampleID, Sex, BodySuperSite)
-</code></pre>
-
-<pre><code>#&gt; Error in filter_impl(.data, quo): Evaluation error: object &#39;Skin&#39; not found.
+  filter(Genotype == &#39;WT&#39;) %&gt;%
+  select(SampleID, Sex, Genotype)
 </code></pre>
 
 <p>In the above, we use the pipe to send the <code>metadata</code> dataset first through
-<code>filter()</code> to keep rows where <code>BodySuperSite</code> is equeal to Skin, then through <code>select()</code>
-to keep only the <code>SampleID</code>, <code>Sex</code>, and <code>BodySuperSite</code> columns. Since <code>%&gt;%</code> takes
+<code>filter()</code> to keep rows where <code>Genotype</code> is equeal to Wild Type, then through <code>select()</code>
+to keep only the <code>SampleID</code>, <code>Sex</code>, and <code>Genotype</code> columns. Since <code>%&gt;%</code> takes
 the object on its left and passes it as the first argument to the function on
 its right, we don&#39;t need to explicitly include it as an argument to the
 <code>filter()</code> and <code>select()</code> functions anymore.</p>
@@ -172,18 +166,11 @@ its right, we don&#39;t need to explicitly include it as an argument to the
 <p>If we wanted to create a new object with this smaller version of the data, we
 could do so by assigning it a new name:</p>
 
-<pre><code class="r">metadata_skin &lt;- metadata %&gt;%
-  filter(BodySuperSite == Skin) %&gt;%
-  select(SampleID, Sex, BodySuperSite)
-</code></pre>
+<pre><code class="r">metadata_WT &lt;- metadata %&gt;%
+  filter(Genotype == &#39;WT&#39;) %&gt;%
+  select(SampleID, Sex, Genotype)
 
-<pre><code>#&gt; Error in filter_impl(.data, quo): Evaluation error: object &#39;Skin&#39; not found.
-</code></pre>
-
-<pre><code class="r">metadata_skin
-</code></pre>
-
-<pre><code>#&gt; Error in eval(expr, envir, enclos): object &#39;metadata_skin&#39; not found
+metadata_WT
 </code></pre>
 
 <p>Note that the final data frame is the leftmost part of this expression.</p>
@@ -191,7 +178,7 @@ could do so by assigning it a new name:</p>
 <blockquote>
 <h3>Challenge {.challenge}</h3>
 
-<p>Using pipes, subset the <code>metadata</code> to include rows where the Sex is male, and retain only the columns <code>SampleID</code> and <code>Age</code>.</p>
+<p>Using pipes, subset the <code>metadata</code> to include rows where the Sex is male, and retain only the columns <code>SampleID</code> and <code>Genotype</code>.</p>
 </blockquote>
 
 <!---
@@ -199,8 +186,8 @@ could do so by assigning it a new name:</p>
 ```r
 ## Answer
 metadata %>%
-    filter(Sex == male) %>%
-    select(SampleID, Age)
+    filter(Sex == M) %>%
+    select(SampleID, Genotype)
 ```
 --->
 
@@ -213,14 +200,14 @@ columns. For this we&#39;ll use <code>mutate()</code>.</p>
 <p>To create a new column of Age in months:</p>
 
 <pre><code class="r">metadata %&gt;%
-  mutate(age_months = Age * 12)
+  mutate(Weight_kg = Weight / 1000)
 </code></pre>
 
 <p>You can also create a second new column based on the first new column within the same call of <code>mutate()</code>:</p>
 
 <pre><code class="r">metadata %&gt;%
-  mutate(age_months = Age * 12,
-         age2 = age_months * 2)
+  mutate(Weight_kg = Weight / 1000,
+         Weight2 = Weight * 2)
 </code></pre>
 
 <p>If this runs off your screen and you just want to see the first few rows, you
@@ -228,7 +215,7 @@ can use a pipe to view the <code>head()</code> of the data. (Pipes work with non
 functions, too, as long as the **<code>dplyr</code>** or <code>magrittr</code> package is loaded).</p>
 
 <pre><code class="r">metadata %&gt;%
-  mutate(age_months = Age * 12) %&gt;%
+  mutate(Weight_kg = Weight / 1000) %&gt;%
   head
 </code></pre>
 
@@ -240,8 +227,8 @@ function with or without parentheses (e.g. <code>head</code> or <code>head()</co
 those we could insert a <code>filter()</code> in the chain:</p>
 
 <pre><code class="r">metadata %&gt;%
-  filter(!is.na(Age)) %&gt;%
-  mutate(age_months = Age * 12) %&gt;%
+  filter(!is.na(Weight)) %&gt;%
+  mutate(Weight_kg = Weight / 1000) %&gt;%
   head
 </code></pre>
 
@@ -286,7 +273,7 @@ remove).</p>
 
 <pre><code class="r">metadata %&gt;%
   group_by(Sex) %&gt;%
-  summarize(mean_age = mean(Age, na.rm = TRUE))
+  summarize(mean_weight = mean(Weight, na.rm = TRUE))
 </code></pre>
 
 <p>You may also have noticed that the output from these calls doesn&#39;t run off the
@@ -301,45 +288,30 @@ factors.</p>
 <p>You can also group by multiple columns:</p>
 
 <pre><code class="r">metadata %&gt;%
-  group_by(Sex, BodySuperSite) %&gt;%
-  summarize(mean_age = mean(Age, na.rm = TRUE))
+  group_by(Sex, Genotype) %&gt;%
+  summarize(mean_weight = mean(Weight, na.rm = TRUE))
 </code></pre>
 
-<p>When grouping both by <code>Sex</code> and <code>BodySuperSite</code>, the first rows are for individuals
-for which their Sex was not recorded. You may notice
-that the last column does not contain <code>NA</code> but <code>NaN</code> (which refers to &quot;Not a
-Number&quot;). To avoid this, we can remove the missing values for weight before we
-attempt to calculate the summary statistics on Age. Because the missing
+<p>When grouping both by <code>Sex</code> and <code>Genotype</code>, the first rows are for individuals
+for which their Sex was not recorded. We can remove the missing values for weight before we
+attempt to calculate the summary statistics. Because the missing
 values are removed, we can omit <code>na.rm = TRUE</code> when computing the mean:</p>
 
 <pre><code class="r">metadata %&gt;%
-  filter(!is.na(Age)) %&gt;%
-  group_by(Sex, BodySuperSite) %&gt;%
-  summarize(mean_age = mean(Age))
-</code></pre>
-
-<p>Here, again, the output from these calls doesn&#39;t run off the screen
-anymore. Recall that **<code>dplyr</code>** has changed our object from<code>data.frame</code> to
-<code>tbl_df</code>. If you want to display more data, you can use the <code>print()</code> function
-at the end of your chain with the argument <code>n</code> specifying the number of rows to
-display:</p>
-
-<pre><code class="r">metadata %&gt;%
-  filter(!is.na(Age)) %&gt;%
-  group_by(Sex, BodySuperSite) %&gt;%
-  summarize(mean_age = mean(Age)) %&gt;%
-  print(n = 15)
+  filter(!is.na(Weight)) %&gt;%
+  group_by(Sex, Genotype) %&gt;%
+  summarize(mean_weight = mean(Weight))
 </code></pre>
 
 <p>Once the data are grouped, you can also summarize multiple variables at the same
 time (and not necessarily on the same variable). For instance, we could add a
-column indicating the minimum Age for each BodySuperSite for each Sex:</p>
+column indicating the minimum Weight for each Genotype for each Sex:</p>
 
 <pre><code class="r">metadata %&gt;%
-  filter(!is.na(Age)) %&gt;%
-  group_by(Sex, BodySuperSite) %&gt;%
-  summarize(mean_age = mean(Age),
-            min_age = min(Age))
+  filter(!is.na(Weight)) %&gt;%
+  group_by(Sex, Genotype) %&gt;%
+  summarize(mean_weight = mean(Weight),
+            min_weight = min(Weight))
 </code></pre>
 
 <h4>Tallying</h4>
@@ -378,21 +350,17 @@ re-generate them.</p>
 <p>In preparation for our next lesson on plotting, we are going to prepare a
 cleaned up version of the dataset that doesn&#39;t include any missing data.</p>
 
-<p>Remove observations for which the <code>SampleID</code> is missing. In
-this dataset, the missing Samples are represented by an empty string and not an
-<code>NA</code>. Let&#39;s also remove observations for which <code>Age</code> and the
-<code>BodyMassIndex</code> are missing. This dataset should also only contain
-observations of individuals for which the Sex has been determined:</p>
+<p>Remove observations for which the <code>Sex</code> is missing. In
+this dataset, the missing Sex is represented by an empty string and not an
+<code>NA</code>. Let&#39;s also remove observations for which <code>Weight</code> is missing. </p>
 
 <pre><code class="r">metadata_complete &lt;- metadata %&gt;%
-  filter(SampleID != &quot;&quot;,         # remove missing SampleID
-         !is.na(Age),           # remove missing Age
-         !is.na(BodyMassIndex),  # remove missing BodyMassIndex
+  filter(!is.na(Weight),           # remove missing Weight
          Sex != &quot;&quot;)                # remove missing Sex
 </code></pre>
 
 <p>To make sure that everyone has the same dataset, check that <code>metadata_complete</code>
-has 113 rows and 30 columns by
+has 99 rows and 11 columns by
 typing <code>dim(metadata_complete)</code>.</p>
 
 <p>Now that our dataset is ready, we can save it as a CSV file in our <code>data_output</code>
@@ -406,7 +374,7 @@ write.csv(metadata_complete, file = &quot;data_output/metadata_complete.csv&quot
           row.names = FALSE)
 </code></pre>
 
-<p style="text-align: right; font-size: small;">Page build on: 2017-10-09 05:29:04</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-17 09:29:27</p>
 
   </article>
   <!-- Presenter Notes -->

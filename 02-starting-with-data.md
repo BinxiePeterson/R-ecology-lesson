@@ -23,7 +23,7 @@ minutes: 25
 
 
 
-We will be looking at the metadata of a gene knockout study. The aim of this study was to determine whether knocking out the protein 'chemerin' affects gut microbial composition. In total, 116 mouse samples were acquired from two different facilities. Metadata associated with each sample is indicated in the mapping file (mouse_mapfile.txt), which we will download using RStudio. In this mapping file the genotypes of interest can be seen: wildtype (WT), chemerin knockout (chemerin_KO), chemerin receptor knockout (CMKLR1_KO) and a heterozygote for the receptor knockout (HET). Also of importance are the two source facilities: "BZ" and "CJS". It is generally a good idea to include as much metadata as possible, since this data can easily be explored later on.
+We will be looking at a modified version of the metadata of a gene knockout study. The aim of this study was to determine whether knocking out the protein 'chemerin' affects gut microbial composition. In total, 116 mouse samples were acquired from two different facilities. Metadata associated with each sample is indicated in the mapping file (mouse_mapfile.txt), which we will download using RStudio. In this mapping file the genotypes of interest can be seen: wildtype (WT), chemerin knockout (chemerin_KO), chemerin receptor knockout (CMKLR1_KO) and a heterozygote for the receptor knockout (HET). Also of importance are the two source facilities: "BZ" and "CJS". It is generally a good idea to include as much metadata as possible, since this data can easily be explored later on.
 
 The metadata mapping file of this dataset is stored as a comma separated value (CSV) file.
 Each row holds information for a single mouse, and the columns represent:
@@ -36,6 +36,8 @@ Each row holds information for a single mouse, and the columns represent:
 | FileInput             | Name of .fastq input file                             |
 | Source                | BZ or CJS                                             |
 | Mouse                 | Unique number for each mouse                          |
+| Sex                   | Sex of each mouse                                     |
+| Weight                | Weight of each mouse in grams                         |
 | Cage                  | Cage number (NA)                                      |
 | Genotype              | WT, chemerin_KO, CMKLR1_HE, or CMKLR1_KO              |
 | SamplingWeek          | Week in which mouse was sampled                       |
@@ -49,7 +51,7 @@ To download the metadata into the `data/` subdirectory, run the following:
 
 
 ```r
-download.file("https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mouse_mapfile.txt",
+download.file("https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mouse_mapfile.csv",
               "data/metadata.csv")
 ```
 
@@ -57,7 +59,7 @@ You are now ready to load the metadata:
 
 
 ```r
-metadata <- read.csv('data/metadata.csv', header = TRUE, sep = "\t")
+metadata <- read.csv('data/metadata.csv', header = TRUE)
 ```
 
 This statement doesn't produce any output because, as you might recall,
@@ -330,7 +332,7 @@ metadata_head <- metadata[-c(7:nrow(metadata)),]
 
 
 When we did `str(metadata)` we saw that some of the columns consist of
-integers, however, multiple columns, such as `SampleID`, `FileInput`, `Source`, `Genotype`, and `Description` are of a special class called a `factor`. Factors are very useful and are actually something that make R particularly well suited to working with data, so we're
+integers, however, multiple columns, such as `SampleID`, `FileInput`, `Source`, `Sex`, `Genotype`, and `Description` are of a special class called a `factor`. Factors are very useful and are actually something that make R particularly well suited to working with data, so we're
 going to spend a little time introducing them.
 
 Factors are used to represent categorical data. Factors can be ordered or
@@ -415,30 +417,6 @@ be able to tell just from the integer data. Factors, on the other hand, have
 this information built in. It is particularly helpful when there are many levels
 (like the SampleID in our example dataset).
 
-### Converting factors
-
-If you need to convert a factor to a character vector, you use
-`as.character(x)`.
-
-Converting a factor to a numeric vector is however a little trickier, and you
-have to go via a character vector. Compare:
-
-
-```r
-as.character(metadata$Source)
-```
-
-```
-#> Error in eval(expr, envir, enclos): object 'metadata' not found
-```
-
-Notice that in the `levels()` approach, three important steps occur:
-
-* We obtain all the factor levels using `levels(f)`
-* We convert these levels to numeric values using `as.numeric(levels(f))`
-* We then access these numeric values using the underlying integers of the
-  vector `f` inside the square brackets
-
 
 ### Basic plotting
 
@@ -449,11 +427,11 @@ level. Let's look at the number of mice per treatment group:
 
 ```r
 ## bar plot of the number of male and female participants in the study:
-plot(metadata$Genotype)
+plot(metadata$Sex)
 ```
 
 ```
-#> Error in plot(metadata$Genotype): object 'metadata' not found
+#> Error in plot(metadata$Sex): object 'metadata' not found
 ```
 
 
@@ -513,9 +491,9 @@ Compare the output of `str(metadata)` when setting `stringsAsFactors = TRUE`
 ```r
 ## Compare the difference between when the data are being read as
 ## `factor`, and when they are being read as `character`.
-metadata <- read.csv("data/metadata.csv", sep = "\t", stringsAsFactors = TRUE)
+metadata <- read.csv("data/metadata.csv", stringsAsFactors = TRUE)
 str(metadata)
-metadata <- read.csv("data/metadata.csv", sep = "\t", stringsAsFactors = FALSE)
+metadata <- read.csv("data/metadata.csv", stringsAsFactors = FALSE)
 str(metadata)
 ## Convert the column "Sex" into a factor
 metadata$Sex <- factor(metadata$Sex)
@@ -571,4 +549,4 @@ you import in R are of the correct type within your data frame. If not, use it
 to your advantage to detect mistakes that might have been introduced during data
 entry (a letter in a column that should only contain numbers for instance).
 
-<p style="text-align: right; font-size: small;">Page build on: 2017-10-13 22:18:39</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-17 09:29:19</p>

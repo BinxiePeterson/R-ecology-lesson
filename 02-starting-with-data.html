@@ -68,7 +68,7 @@
     <h1>Looking at Metadata</h1>
   </hgroup>
   <article data-timings="">
-    <p>We will be looking at the metadata of a gene knockout study. The aim of this study was to determine whether knocking out the protein &#39;chemerin&#39; affects gut microbial composition. In total, 116 mouse samples were acquired from two different facilities. Metadata associated with each sample is indicated in the mapping file (mouse_mapfile.txt), which we will download using RStudio. In this mapping file the genotypes of interest can be seen: wildtype (WT), chemerin knockout (chemerin_KO), chemerin receptor knockout (CMKLR1_KO) and a heterozygote for the receptor knockout (HET). Also of importance are the two source facilities: &quot;BZ&quot; and &quot;CJS&quot;. It is generally a good idea to include as much metadata as possible, since this data can easily be explored later on.</p>
+    <p>We will be looking at a modified version of the metadata of a gene knockout study. The aim of this study was to determine whether knocking out the protein &#39;chemerin&#39; affects gut microbial composition. In total, 116 mouse samples were acquired from two different facilities. Metadata associated with each sample is indicated in the mapping file (mouse_mapfile.txt), which we will download using RStudio. In this mapping file the genotypes of interest can be seen: wildtype (WT), chemerin knockout (chemerin_KO), chemerin receptor knockout (CMKLR1_KO) and a heterozygote for the receptor knockout (HET). Also of importance are the two source facilities: &quot;BZ&quot; and &quot;CJS&quot;. It is generally a good idea to include as much metadata as possible, since this data can easily be explored later on.</p>
 
 <p>The metadata mapping file of this dataset is stored as a comma separated value (CSV) file.
 Each row holds information for a single mouse, and the columns represent:</p>
@@ -104,6 +104,14 @@ Each row holds information for a single mouse, and the columns represent:</p>
 <td>Unique number for each mouse</td>
 </tr>
 <tr>
+<td>Sex</td>
+<td>Sex of each mouse</td>
+</tr>
+<tr>
+<td>Weight</td>
+<td>Weight of each mouse in grams</td>
+</tr>
+<tr>
 <td>Cage</td>
 <td>Cage number (NA)</td>
 </tr>
@@ -127,13 +135,13 @@ load into memory the content of the CSV file as an object of class <code>data.fr
 
 <p>To download the metadata into the <code>data/</code> subdirectory, run the following:</p>
 
-<pre><code class="r">download.file(&quot;https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mouse_mapfile.txt&quot;,
+<pre><code class="r">download.file(&quot;https://raw.githubusercontent.com/BinxiePeterson/introduction-to-R-for-16S/gh-pages/mouse_mapfile.csv&quot;,
               &quot;data/metadata.csv&quot;)
 </code></pre>
 
 <p>You are now ready to load the metadata:</p>
 
-<pre><code class="r">metadata &lt;- read.csv(&#39;data/metadata.csv&#39;, header = TRUE, sep = &quot;\t&quot;)
+<pre><code class="r">metadata &lt;- read.csv(&#39;data/metadata.csv&#39;, header = TRUE)
 </code></pre>
 
 <p>This statement doesn&#39;t produce any output because, as you might recall,
@@ -388,7 +396,7 @@ metadata_head <- metadata[-c(7:nrow(metadata)),]
 <h2>Factors</h2>
 
 <p>When we did <code>str(metadata)</code> we saw that some of the columns consist of
-integers, however, multiple columns, such as <code>SampleID</code>, <code>FileInput</code>, <code>Source</code>, <code>Genotype</code>, and <code>Description</code> are of a special class called a <code>factor</code>. Factors are very useful and are actually something that make R particularly well suited to working with data, so we&#39;re
+integers, however, multiple columns, such as <code>SampleID</code>, <code>FileInput</code>, <code>Source</code>, <code>Sex</code>, <code>Genotype</code>, and <code>Description</code> are of a special class called a <code>factor</code>. Factors are very useful and are actually something that make R particularly well suited to working with data, so we&#39;re
 going to spend a little time introducing them.</p>
 
 <p>Factors are used to represent categorical data. Factors can be ordered or
@@ -462,29 +470,6 @@ be able to tell just from the integer data. Factors, on the other hand, have
 this information built in. It is particularly helpful when there are many levels
 (like the SampleID in our example dataset).</p>
 
-<h3>Converting factors</h3>
-
-<p>If you need to convert a factor to a character vector, you use
-<code>as.character(x)</code>.</p>
-
-<p>Converting a factor to a numeric vector is however a little trickier, and you
-have to go via a character vector. Compare:</p>
-
-<pre><code class="r">as.character(metadata$Source)
-</code></pre>
-
-<pre><code>#&gt; Error in eval(expr, envir, enclos): object &#39;metadata&#39; not found
-</code></pre>
-
-<p>Notice that in the <code>levels()</code> approach, three important steps occur:</p>
-
-<ul>
-<li>We obtain all the factor levels using <code>levels(f)</code></li>
-<li>We convert these levels to numeric values using <code>as.numeric(levels(f))</code></li>
-<li>We then access these numeric values using the underlying integers of the
-vector <code>f</code> inside the square brackets</li>
-</ul>
-
 <h3>Basic plotting</h3>
 
 <p>When your data is stored as a factor, you can use the <code>plot()</code> function to get a
@@ -492,10 +477,10 @@ quick glance at the number of observations represented by each factor
 level. Let&#39;s look at the number of mice per treatment group:</p>
 
 <pre><code class="r">## bar plot of the number of male and female participants in the study:
-plot(metadata$Genotype)
+plot(metadata$Sex)
 </code></pre>
 
-<pre><code>#&gt; Error in plot(metadata$Genotype): object &#39;metadata&#39; not found
+<pre><code>#&gt; Error in plot(metadata$Sex): object &#39;metadata&#39; not found
 </code></pre>
 
 <h3>Challenge</h3>
@@ -547,9 +532,9 @@ type.</p>
 
 <pre><code class="r">## Compare the difference between when the data are being read as
 ## `factor`, and when they are being read as `character`.
-metadata &lt;- read.csv(&quot;data/metadata.csv&quot;, sep = &quot;\t&quot;, stringsAsFactors = TRUE)
+metadata &lt;- read.csv(&quot;data/metadata.csv&quot;, stringsAsFactors = TRUE)
 str(metadata)
-metadata &lt;- read.csv(&quot;data/metadata.csv&quot;, sep = &quot;\t&quot;, stringsAsFactors = FALSE)
+metadata &lt;- read.csv(&quot;data/metadata.csv&quot;, stringsAsFactors = FALSE)
 str(metadata)
 ## Convert the column &quot;Sex&quot; into a factor
 metadata$Sex &lt;- factor(metadata$Sex)
@@ -598,7 +583,7 @@ you import in R are of the correct type within your data frame. If not, use it
 to your advantage to detect mistakes that might have been introduced during data
 entry (a letter in a column that should only contain numbers for instance).</p>
 
-<p style="text-align: right; font-size: small;">Page build on: 2017-10-13 22:18:39</p>
+<p style="text-align: right; font-size: small;">Page build on: 2017-10-17 09:29:19</p>
 
   </article>
   <!-- Presenter Notes -->
